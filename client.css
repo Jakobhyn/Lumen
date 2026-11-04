@@ -339,14 +339,29 @@ body {
     box-shadow: none !important;
 }
 
+/* Only .Anchor inside each link takes the click, so it carries the padding
+   and the hover; the wrapper around it stays flat. */
 .AppDetailsMain .LinkInner {
-    color: var(--lumen-text-2) !important;
-    font-family: var(--lumen-font) !important;
+    padding: 0 !important;
+    background: none !important;
+}
+
+.AppDetailsMain .LinkInner .Anchor {
     border-radius: 6px;
+    cursor: pointer;
+    color: var(--lumen-text-2) !important;
     transition: background var(--lumen-dur) ease, color var(--lumen-dur) ease;
 }
 
-.AppDetailsMain .LinkInner:hover { background: var(--lumen-card-hover) !important; color: var(--lumen-text) !important; }
+.AppDetailsMain .LinkInner .Link {
+    padding: 8px 16px !important;
+    background: none !important;
+    font-family: var(--lumen-font) !important;
+    color: inherit !important;
+}
+
+.AppDetailsMain .LinkInner .Anchor:hover,
+.AppDetailsMain .LinkInner .Anchor:focus-visible { background: var(--lumen-card-hover) !important; color: var(--lumen-text) !important; }
 
 .AppDetailsMain .AppDetailsSection:not(.LinksSection) {
     background: var(--lumen-card) !important;

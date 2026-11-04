@@ -128,7 +128,7 @@
 .AppDetailsMain .InPage .PlayBar .RightControls .MenuButton { width: 34px !important; height: 34px !important; }
 
 .AppDetailsMain .LinksSection { padding: 0 32px !important; }
-.AppDetailsMain .LinkInner { font-size: 15px !important; padding: 10px 16px !important; }
+.AppDetailsMain .LinkInner .Link { font-size: 15px !important; padding: 10px 18px !important; }
 
 /* "More" under the links (js/library-more.js): a gently bobbing arrow that
    glides down to the activity and achievements. */
