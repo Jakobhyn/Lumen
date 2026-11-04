@@ -3,23 +3,68 @@
     "author": "Jakob",
     "description": "A calm, dark Fluent-style theme with a cinematic store page: the trailer plays across the whole window behind the logo, price and buttons.",
     "version": "0.1.0",
-    "tags": ["Dark", "Minimal", "Fluent", "Cinematic"],
-
+    "tags": [
+        "Dark",
+        "Minimal",
+        "Fluent",
+        "Cinematic"
+    ],
     "RootColors": "root-colors.css",
-
     "Conditions": {
         "Accent": {
             "description": "The accent color for buttons, selection and links. Custom uses the color from the Colors page.",
             "tab": "Colors",
             "default": "Windows",
             "values": {
-                "Windows": { "TargetCss": { "affects": [".*"], "src": "options/accent-windows.css" } },
+                "Windows": {
+                    "TargetCss": {
+                        "affects": [
+                            ".*"
+                        ],
+                        "src": "options/accent-windows.css"
+                    }
+                },
                 "Sky": {},
-                "Violet": { "TargetCss": { "affects": [".*"], "src": "options/accent-violet.css" } },
-                "Mint": { "TargetCss": { "affects": [".*"], "src": "options/accent-mint.css" } },
-                "Amber": { "TargetCss": { "affects": [".*"], "src": "options/accent-amber.css" } },
-                "Rose": { "TargetCss": { "affects": [".*"], "src": "options/accent-rose.css" } },
-                "Custom": { "TargetCss": { "affects": [".*"], "src": "options/accent-custom.css" } }
+                "Violet": {
+                    "TargetCss": {
+                        "affects": [
+                            ".*"
+                        ],
+                        "src": "options/accent-violet.css"
+                    }
+                },
+                "Mint": {
+                    "TargetCss": {
+                        "affects": [
+                            ".*"
+                        ],
+                        "src": "options/accent-mint.css"
+                    }
+                },
+                "Amber": {
+                    "TargetCss": {
+                        "affects": [
+                            ".*"
+                        ],
+                        "src": "options/accent-amber.css"
+                    }
+                },
+                "Rose": {
+                    "TargetCss": {
+                        "affects": [
+                            ".*"
+                        ],
+                        "src": "options/accent-rose.css"
+                    }
+                },
+                "Custom": {
+                    "TargetCss": {
+                        "affects": [
+                            ".*"
+                        ],
+                        "src": "options/accent-custom.css"
+                    }
+                }
             }
         },
         "Header": {
@@ -28,8 +73,18 @@
             "default": "Compact",
             "values": {
                 "Compact": {
-                    "TargetCss": { "affects": ["^(Steam|Steam Games List)$"], "src": "options/header-compact.css" },
-                    "TargetJs": { "affects": ["^(Steam|Steam Games List)$"], "src": "js/header-search.js" }
+                    "TargetCss": {
+                        "affects": [
+                            "^(Steam|Steam Games List)$"
+                        ],
+                        "src": "options/header-compact.css"
+                    },
+                    "TargetJs": {
+                        "affects": [
+                            "^(Steam|Steam Games List)$"
+                        ],
+                        "src": "js/header-search.js"
+                    }
                 },
                 "Classic": {}
             }
@@ -39,8 +94,31 @@
             "tab": "Library",
             "default": "Cinematic",
             "values": {
-                "Cinematic": { "TargetCss": { "affects": ["^(Steam|Steam Games List)$"], "src": "options/library-cinematic.css" } },
+                "Cinematic": {
+                    "TargetCss": {
+                        "affects": [
+                            "^(Steam|Steam Games List)$"
+                        ],
+                        "src": "options/library-cinematic.css"
+                    }
+                },
                 "Classic": {}
+            }
+        },
+        "Library trailer": {
+            "description": "On: the game page plays the store trailer muted behind the logo and play bar, with the art as poster until it starts. Off: only the art.",
+            "tab": "Library",
+            "default": "On",
+            "values": {
+                "On": {
+                    "TargetJs": {
+                        "affects": [
+                            "^(Steam|Steam Games List)$"
+                        ],
+                        "src": "js/library-trailer.js"
+                    }
+                },
+                "Off": {}
             }
         },
         "Store trailer": {
@@ -49,16 +127,33 @@
             "default": "Cinematic",
             "values": {
                 "Cinematic": {},
-                "Still": { "TargetCss": { "affects": [".*"], "src": "options/hero-still.css" } },
-                "Classic": { "TargetCss": { "affects": [".*"], "src": "options/hero-off.css" } }
+                "Still": {
+                    "TargetCss": {
+                        "affects": [
+                            ".*"
+                        ],
+                        "src": "options/hero-still.css"
+                    }
+                },
+                "Classic": {
+                    "TargetCss": {
+                        "affects": [
+                            ".*"
+                        ],
+                        "src": "options/hero-off.css"
+                    }
+                }
             }
         }
     },
-
     "Patches": [
         {
             "MatchRegexString": ".*",
             "TargetCss": "tokens.css"
+        },
+        {
+            "MatchRegexString": "^(Steam|Steam Games List)$",
+            "TargetJs": "shared/dash.js"
         },
         {
             "MatchRegexString": "^(Steam|Steam Games List|Friends List|.* Menu|Menu|.*Supernav)$",
@@ -75,6 +170,10 @@
         {
             "MatchRegexString": "^https://(store\\.steampowered|steamcommunity)\\.com/.*",
             "TargetCss": "webkit.css"
+        },
+        {
+            "MatchRegexString": "^https://store.steampowered.com/app/.*",
+            "TargetJs": "shared/dash.js"
         },
         {
             "MatchRegexString": "^https://store\\.steampowered\\.com/app/.*",

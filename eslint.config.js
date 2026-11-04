@@ -6,7 +6,7 @@ module.exports = [
     js.configs.recommended,
     {
         // Theme scripts (and the probe evaluated by tools/cdp.js) run inside Steam's Chromium windows.
-        files: ["store/**/*.js", "js/**/*.js", "tools/probe.js"],
+        files: ["store/**/*.js", "js/**/*.js", "shared/**/*.js", "tools/probe.js"],
         languageOptions: { sourceType: "script", globals: { ...globals.browser } },
     },
     {

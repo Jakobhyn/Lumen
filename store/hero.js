@@ -1,75 +1,13 @@
 // Lumen: cinematic store page.
 // Plays the game's trailer muted across the whole window and lays the logo,
 // short description, price and buttons over it. Steam ships trailers only as
-// DASH/HLS streams, so a tiny Media Source player feeds the video chunks.
+// DASH/HLS streams; shared/dash.js (window.LumenDash) plays them.
 (() => {
     if (window.__lumenHero) return;
     window.__lumenHero = true;
 
     const root = document.documentElement;
     const giveUp = () => root.classList.add("lumen-hero-off");
-
-    // ---- tiny DASH player (static, number-based SegmentTemplate, video only) ----
-
-    function parseDuration(iso) {
-        const m = /PT(?:(\d+)H)?(?:(\d+)M)?(?:([\d.]+)S)?/.exec(iso || "");
-        return m ? (+m[1] || 0) * 3600 + (+m[2] || 0) * 60 + (+m[3] || 0) : 0;
-    }
-
-    async function loadManifest(url) {
-        const xml = new DOMParser().parseFromString(await (await fetch(url)).text(), "application/xml");
-        const set = [...xml.querySelectorAll("AdaptationSet")].find(a => a.getAttribute("contentType") === "video");
-        if (!set) return null;
-
-        // Pick the stream that fits the window: smallest one at least as wide, else the biggest.
-        const want = Math.min(1920, window.innerWidth * (window.devicePixelRatio || 1));
-        const reps = [...set.querySelectorAll("Representation")].sort((a, b) => a.getAttribute("width") - b.getAttribute("width"));
-        const rep = reps.find(r => +r.getAttribute("width") >= want) || reps[reps.length - 1];
-        const tpl = rep.querySelector("SegmentTemplate") || set.querySelector("SegmentTemplate");
-        if (!tpl) return null;
-
-        const id = rep.getAttribute("id");
-        const total = parseDuration(xml.documentElement.getAttribute("mediaPresentationDuration"));
-        const segment = tpl.getAttribute("duration") / (tpl.getAttribute("timescale") || 1);
-        const fill = (s, n) => s.replace("$RepresentationID$", id).replace(/\$Number%0(\d+)d\$/, (_, w) => String(n).padStart(+w, "0")).replace("$Number$", n);
-        const base = new URL(".", url);
-        const first = +(tpl.getAttribute("startNumber") || 1);
-
-        return {
-            mime: `${rep.getAttribute("mimeType")}; codecs="${rep.getAttribute("codecs")}"`,
-            init: new URL(fill(tpl.getAttribute("initialization"), 0), base).href,
-            chunks: Array.from({ length: Math.ceil(total / segment) }, (_, i) => new URL(fill(tpl.getAttribute("media"), first + i), base).href),
-        };
-    }
-
-    async function play(video, manifestUrl) {
-        const stream = await loadManifest(manifestUrl);
-        if (!stream || !window.MediaSource || !MediaSource.isTypeSupported(stream.mime)) return false;
-
-        const source = new MediaSource();
-        video.src = URL.createObjectURL(source);
-        await new Promise(r => source.addEventListener("sourceopen", r, { once: true }));
-        const buffer = source.addSourceBuffer(stream.mime);
-        const append = data => new Promise((resolve, reject) => {
-            buffer.addEventListener("updateend", resolve, { once: true });
-            buffer.addEventListener("error", reject, { once: true });
-            buffer.appendBuffer(data);
-        });
-        const get = async url => new Uint8Array(await (await fetch(url)).arrayBuffer());
-
-        await append(await get(stream.init));
-        // Fetch one chunk ahead so playback never waits on the network.
-        let next = get(stream.chunks[0]);
-        for (let i = 0; i < stream.chunks.length; i++) {
-            const data = await next;
-            if (i + 1 < stream.chunks.length) next = get(stream.chunks[i + 1]);
-            await append(data);
-            if (i === 0) video.play().catch(() => {});
-            if (!video.isConnected) return true;
-        }
-        source.endOfStream();
-        return true;
-    }
 
     // ---- hero ----
 
@@ -163,7 +101,7 @@
         const manifest = trailer?.dashManifests?.find(u => u.includes("h264"));
         if (manifest && getComputedStyle(root).getPropertyValue("--lumen-hero-video").trim() !== "off") {
             video.addEventListener("playing", () => hero.classList.add("is-playing"), { once: true });
-            play(video, manifest).catch(e => console.warn("[Lumen] trailer:", e));
+            window.LumenDash?.play(video, manifest)?.catch(e => console.warn("[Lumen] trailer:", e));
             // Pause when scrolled away, resume when back.
             new IntersectionObserver(([e]) => e.isIntersecting ? video.play().catch(() => {}) : video.pause()).observe(hero);
         }
