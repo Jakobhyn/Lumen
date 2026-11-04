@@ -1,10 +1,17 @@
 // Talk to Steam's CEF windows over the remote debugging port.
 //   node cdp.js list
-//   node cdp.js eval <titleRegex|urlRegex> <file.js | -e "expr">
-//   node cdp.js shot <titleRegex|urlRegex> <out.png> [maxWidth]
-//   node cdp.js nav <regex> <url>
+//   node cdp.js eval <target> <file.js | -e "expr">
+//   node cdp.js shot <target> <out.png>
+//   node cdp.js nav <target> <url>
+// <target> matches a window title, else its URL: "^Steam$" is an exact
+// match, anything else matches as a substring ("store.steampowered.com/app").
 const fs = require("fs");
-const [cmd, match, arg, arg2, arg3] = process.argv.slice(2);
+const [cmd, match, arg, arg2] = process.argv.slice(2);
+
+function matcher(pattern) {
+  const exact = /^\^(.*)\$$/.exec(pattern);
+  return exact ? s => s === exact[1] : s => s.includes(pattern);
+}
 
 async function targets() {
   return (await (await fetch("http://127.0.0.1:8080/json")).json()).filter(t => t.webSocketDebuggerUrl);
@@ -21,8 +28,8 @@ function session(wsUrl) {
 (async () => {
   const list = await targets();
   if (cmd === "list") { for (const t of list) console.log(`${t.type.padEnd(8)} ${JSON.stringify(t.title).slice(0, 60).padEnd(60)} ${t.url.slice(0, 110)}`); return; }
-  const re = new RegExp(match);
-  const t = list.find(t => re.test(t.title)) || list.find(t => re.test(t.url));
+  const hit = matcher(match);
+  const t = list.find(t => hit(t.title)) || list.find(t => hit(t.url));
   if (!t) { console.error("no target for", match); process.exit(1); }
   const s = await session(t.webSocketDebuggerUrl);
   if (cmd === "eval") {

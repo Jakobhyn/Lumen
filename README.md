@@ -48,11 +48,22 @@ node tools/cdp.js shot "^Steam$" main.png             # screenshot a window
 sh tools/push.sh "^Steam$" client.css                 # live-inject CSS without restarting
 ```
 
-## Checks and releases
+## Checks, tests and CI
 
-`node tools/check.js` verifies that `skin.json` parses, every file it references exists,
-CSS `url()`s resolve, scripts pass `node --check`, and `root-colors.css` holds only opaque
-`#rrggbb` values. CI runs it on every pull request and push to `main`.
+```sh
+npm ci          # dev tooling only; the theme itself has no dependencies
+npm run ci      # everything CI runs: check, lint, test
+```
+
+- `npm run check` (`tools/check.js`): `skin.json` parses, every file it references exists,
+  CSS `url()`s resolve, scripts pass `node --check`, and `root-colors.css` holds only opaque
+  `#rrggbb` values.
+- `npm run lint`: ESLint for the scripts, Stylelint for the CSS.
+- `npm test`: Node's test runner with jsdom: the store hero on a trimmed store page
+  (bundles vs. the game's own price, Classic mode, fallbacks), the header search, and the checks.
+
+Every pull request must pass **Validate**, **Lint**, **Test** and **CodeQL** before it can be
+merged into `main`; dependency review, secret scanning and Dependabot run alongside.
 
 To release, bump `version` in `skin.json`, merge, then push a matching tag:
 

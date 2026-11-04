@@ -9,7 +9,8 @@ const fs = require("fs");
 const path = require("path");
 const { execFileSync } = require("child_process");
 
-const root = path.resolve(__dirname, "..");
+// LUMEN_ROOT lets the tests point the checks at a fixture theme.
+const root = path.resolve(process.env.LUMEN_ROOT || path.join(__dirname, ".."));
 const errors = [];
 const fail = msg => errors.push(msg);
 const exists = rel => fs.existsSync(path.join(root, rel));
@@ -42,7 +43,7 @@ for (const [name, cond] of Object.entries(skin.Conditions || {})) {
 for (const rel of refs) if (!exists(rel)) fail(`skin.json references missing file: ${rel}`);
 
 // Theme files (everything except dev tooling)
-const skip = new Set([".git", ".github", "tools", "dev", "node_modules"]);
+const skip = new Set([".git", ".github", "tools", "test", "dev", "node_modules"]);
 function walk(dir) {
     return fs.readdirSync(dir, { withFileTypes: true }).flatMap(d => {
         if (skip.has(d.name)) return [];
