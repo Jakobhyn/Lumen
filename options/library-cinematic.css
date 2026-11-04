@@ -1,0 +1,121 @@
+/* Library game page: Cinematic. Like the store page: the game's hero art
+   fills most of the window and slowly drifts, the logo sits large at the
+   bottom left, and the play bar floats on the art instead of below it. */
+
+.AppDetailsMain .Body.ScrollContainer {
+    background: var(--lumen-bg) !important;
+    background-image: none !important;
+}
+
+.AppDetailsMain .HeaderLoaded,
+.AppDetailsMain .TopCapsule,
+.AppDetailsMain .TopCapsule > div {
+    height: max(64vh, 440px) !important;
+    max-height: none !important;
+}
+
+.AppDetailsMain .TopCapsule { overflow: hidden; }
+
+/* The art itself. Steam's scroll parallax (translateZ + scale(2)) is
+   switched off; with the taller header it blew the art up to twice its size. */
+.AppDetailsMain .HeaderBackgroundImage {
+    transform: none !important;
+    position: absolute !important;
+    inset: 0 !important;
+    height: 100% !important;
+}
+
+.AppDetailsMain .ImgContainer {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden;
+}
+
+@keyframes lumen-drift {
+    from { transform: scale(1.02) translate(0, 0); }
+    to { transform: scale(1.1) translate(-1.5%, -1%); }
+}
+
+.AppDetailsMain .ImgContainer img {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    max-width: none !important;
+    margin: 0 !important;
+    object-fit: cover;
+    object-position: 60% 30%;
+    transform-origin: 60% 40%;
+    animation: lumen-drift 40s ease-in-out infinite alternate;
+}
+
+/* Steam's blurred copies of the art (loading placeholder, glass backdrop) */
+.AppDetailsMain .ImgBlur,
+.AppDetailsMain .TopGradient,
+.AppDetailsMain .Backdrop { display: none !important; }
+
+/* Shade toward the bottom and left so the logo and play bar stay readable */
+.AppDetailsMain .TopCapsule::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+        linear-gradient(to top, var(--lumen-bg) 0%, rgba(32, 32, 32, 0.8) 16%, rgba(32, 32, 32, 0) 50%),
+        linear-gradient(to right, rgba(20, 20, 20, 0.6) 0%, rgba(20, 20, 20, 0) 50%);
+}
+
+/* Logo: a bigger box low on the left; Steam still places the logo inside it
+   as set in "Adjust logo position". */
+.AppDetailsMain .BoxSizerContainer {
+    z-index: 2;
+    top: auto !important;
+    bottom: 96px !important;
+    left: 40px !important;
+    right: 40px !important;
+    width: auto !important;
+    height: 46% !important;
+}
+
+.AppDetailsMain .TitleLogo { filter: drop-shadow(0 6px 24px rgba(0, 0, 0, 0.55)); }
+
+/* Play bar floats on the bottom of the art */
+.AppDetailsMain .Container.InPage {
+    position: relative;
+    z-index: 3;
+    margin-top: -86px;
+}
+
+.AppDetailsMain .PlayBar.Glassy {
+    background: transparent !important;
+    background-image: none !important;
+    backdrop-filter: none !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+.AppDetailsMain .PlayBar .InnerContainer { padding-left: 40px !important; padding-right: 40px !important; }
+
+/* The play button in the accent color, like "Add to Cart" in the store */
+.AppDetailsMain .Green .PlayButton,
+.PlayBar .Green .PlayButton {
+    background: var(--lumen-accent) !important;
+    background-image: none !important;
+    color: var(--lumen-on-accent) !important;
+    border-radius: var(--lumen-radius) !important;
+    box-shadow: 0 6px 24px color-mix(in srgb, var(--lumen-accent) 35%, transparent) !important;
+    transition: background var(--lumen-dur) ease, transform var(--lumen-dur) var(--lumen-ease) !important;
+}
+
+.AppDetailsMain .Green .PlayButton:hover { background: var(--lumen-accent-hover) !important; }
+.AppDetailsMain .Green .PlayButton:active { transform: scale(0.97); }
+.AppDetailsMain .Green .PlayButton svg { color: var(--lumen-on-accent) !important; fill: currentColor; }
+
+@media (prefers-reduced-motion: reduce) {
+    .AppDetailsMain .ImgContainer img { animation: none; }
+}

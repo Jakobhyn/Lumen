@@ -224,6 +224,49 @@ body {
     border-radius: var(--lumen-radius-sm) !important;
 }
 
+/* Game page panels: links bar, activity, news, achievements, friends */
+.AppDetailsMain .LinksSection > .Panel,
+.AppDetailsMain .BoxCarousel,
+.AppDetailsMain .PartnerEvent,
+.AppDetailsMain .PartnerEventMediumImage_Container,
+.AppDetailsMain .EventBody {
+    background: var(--lumen-card) !important;
+    background-image: none !important;
+    border: 1px solid var(--lumen-stroke);
+    border-radius: var(--lumen-radius) !important;
+}
+
+.AppDetailsMain .ReviewContainer,
+.AppDetailsMain .RatingContainer {
+    background: var(--lumen-card-hover) !important;
+    border-radius: var(--lumen-radius);
+}
+
+.AppDetailsMain .ReviewThumbButton {
+    background: var(--lumen-card-hover) !important;
+    border: 1px solid var(--lumen-stroke);
+    border-radius: var(--lumen-radius-sm) !important;
+    color: var(--lumen-text) !important;
+}
+
+.AppDetailsMain .ReviewThumbButton:hover { background: var(--lumen-accent-soft) !important; color: var(--lumen-accent) !important; }
+
+.AppDetailsMain .Highlight,
+.AppDetailsMain .HiddenLabel,
+.AppDetailsMain .AdditionalItem {
+    background: var(--lumen-layer) !important;
+    background-image: none !important;
+}
+
+.AppDetailsMain .PostTextEntryArea,
+.AppDetailsMain .PostButton,
+.AppDetailsMain .chatSubmitButton {
+    background: var(--lumen-card) !important;
+    border: 1px solid var(--lumen-stroke);
+}
+
+.AppDetailsMain .SectionHeader.HeaderStyles { background-image: none !important; }
+
 /* Page grounds that Steam paints with blue-grey gradients */
 .AppDetailsTransitionGroup,
 .DownloadsPage {
