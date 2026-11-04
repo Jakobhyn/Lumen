@@ -46,6 +46,21 @@ node tools/cdp.js shot "^Steam$" main.png             # screenshot a window
 sh tools/push.sh "^Steam$" client.css                 # live-inject CSS without restarting
 ```
 
+## Checks and releases
+
+`node tools/check.js` verifies that `skin.json` parses, every file it references exists,
+CSS `url()`s resolve, scripts pass `node --check`, and `root-colors.css` holds only opaque
+`#rrggbb` values. CI runs it on every pull request and push to `main`.
+
+To release, bump `version` in `skin.json`, merge, then push a matching tag:
+
+```sh
+git tag v0.2.0
+git push origin v0.2.0
+```
+
+The Release workflow attaches `Lumen.zip` (without `tools/`) to a new GitHub release.
+
 ## License
 
 [MIT](LICENSE)
