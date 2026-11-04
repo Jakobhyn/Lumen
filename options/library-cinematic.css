@@ -2,7 +2,11 @@
    fills most of the window and slowly drifts, the logo sits large at the
    bottom left, and the play bar floats on the art instead of below it. */
 
+/* The scroll area is a size container so the art can fill exactly one
+   screen: art + play bar, then the links and the "More" button below it;
+   activity, achievements and the rest start just below the fold. */
 .AppDetailsMain .Body.ScrollContainer {
+    container-type: size;
     background: var(--lumen-bg) !important;
     background-image: none !important;
 }
@@ -10,9 +14,14 @@
 .AppDetailsMain .HeaderLoaded,
 .AppDetailsMain .TopCapsule,
 .AppDetailsMain .TopCapsule > div {
-    height: max(64vh, 440px) !important;
+    height: max(calc(100cqh - var(--lumen-below-art)), 440px) !important;
     max-height: none !important;
 }
+
+/* Space kept below the art for the links and "More". Shared copies of a
+   game add a "From your Steam library" line, so the art gives up room for it. */
+.AppDetailsMain .Body.ScrollContainer { --lumen-below-art: 110px; }
+.AppDetailsMain .Body.ScrollContainer:has(.SharedLibrary) { --lumen-below-art: 133px; }
 
 .AppDetailsMain .TopCapsule { overflow: hidden; }
 
@@ -89,11 +98,11 @@
 .AppDetailsMain .BoxSizerContainer {
     z-index: 2;
     top: auto !important;
-    bottom: 96px !important;
+    bottom: 120px !important;
     left: 40px !important;
     right: 40px !important;
     width: auto !important;
-    height: 46% !important;
+    height: 60% !important;
 }
 
 .AppDetailsMain .TitleLogo { filter: drop-shadow(0 6px 24px rgba(0, 0, 0, 0.55)); }
@@ -102,10 +111,58 @@
 .AppDetailsMain .Container.InPage {
     position: relative;
     z-index: 3;
-    margin-top: -86px;
+    margin-top: -104px;
 }
 
-.AppDetailsMain .PlayBar.Glassy {
+/* A bigger play bar and links on the cinematic page */
+.AppDetailsMain .InPage .PlayBar .PlayButton {
+    min-width: 200px !important;
+    height: 56px !important;
+}
+
+.AppDetailsMain .InPage .PlayBar .PlayButton .ButtonText { font-size: 18px !important; }
+.AppDetailsMain .InPage .PlayBar .PlayBarLabel { font-size: 16px !important; line-height: 20px !important; }
+.AppDetailsMain .InPage .PlayBar .GameStatRight > div:not(.PlayBarLabel) { font-size: 14px !important; }
+.AppDetailsMain .InPage .PlayBar .GameStatIcon svg { width: 30px !important; height: 30px !important; }
+.AppDetailsMain .InPage .PlayBar .Row { min-height: 72px; }
+.AppDetailsMain .InPage .PlayBar .RightControls .MenuButton { width: 34px !important; height: 34px !important; }
+
+.AppDetailsMain .LinksSection { padding: 0 32px !important; }
+.AppDetailsMain .LinkInner { font-size: 15px !important; padding: 10px 16px !important; }
+
+/* "More" under the links (js/library-more.js): a gently bobbing arrow that
+   glides down to the activity and achievements. */
+.lumen-more {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    margin: 4px auto 0;
+    padding: 6px 18px 8px;
+    border: 0;
+    border-radius: var(--lumen-radius);
+    background: transparent;
+    color: var(--lumen-text-2);
+    font: 600 13px var(--lumen-font);
+    cursor: pointer;
+    transition: opacity 300ms ease, background var(--lumen-dur) ease, color var(--lumen-dur) ease;
+}
+
+.lumen-more:hover { background: var(--lumen-card-hover); color: var(--lumen-text); }
+.lumen-more.is-away { opacity: 0; pointer-events: none; }
+
+@keyframes lumen-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+}
+
+.lumen-more svg { width: 18px; height: 18px; animation: lumen-bob 1.8s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+    .lumen-more svg { animation: none; }
+}
+
+.AppDetailsMain .InPage .PlayBar.Glassy {
     background: transparent !important;
     background-image: none !important;
     backdrop-filter: none !important;

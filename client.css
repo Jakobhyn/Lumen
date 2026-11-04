@@ -224,8 +224,280 @@ body {
     border-radius: var(--lumen-radius-sm) !important;
 }
 
-/* Game page panels: links bar, activity, news, achievements, friends */
+/* Game page: play bar in sentence case, a flat accent Play button and
+   square tool buttons, plain text links, and every section as a card. */
+.AppDetailsMain .PlayBarLabel {
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    font: 600 14px/18px var(--lumen-font) !important;
+    color: var(--lumen-text) !important;
+}
+
+.AppDetailsMain .LastPlayedInfo,
+.AppDetailsMain .GameStatRight > div:not(.PlayBarLabel) {
+    color: var(--lumen-text-3) !important;
+    font-family: var(--lumen-font) !important;
+}
+
+.AppDetailsMain .GameStatIcon svg,
+.AppDetailsMain .GameStat svg { color: var(--lumen-text-2) !important; }
+
+.AppDetailsMain .PlayButton {
+    min-width: 150px !important;
+    height: 46px !important;
+    justify-content: center !important;
+}
+
+.AppDetailsMain .PlayButton .ButtonText {
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    font: 600 16px var(--lumen-font) !important;
+}
+
+.AppDetailsMain .Green .PlayButton svg { display: none !important; }
+
+/* Everything in a play bar sits on one centre line: Steam pads the bar's top
+   and gives the button's wrappers a smaller fixed height than the button. */
+.AppDetailsMain .PlayBar.Glassy,
+.AppDetailsMain .PlayBar .InnerContainer {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.AppDetailsMain .PlayBar .Row,
+.AppDetailsMain .PlayBar .ActionSection,
+.AppDetailsMain .PlayBar .ActionSection > div,
+.AppDetailsMain .PlayBar .StatusAndStats,
+.AppDetailsMain .PlayBar .RightControls,
+.AppDetailsMain .PlayBar .RightControls > div {
+    display: flex !important;
+    align-items: center !important;
+    height: auto !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.AppDetailsMain .PlayBar .Row { min-height: 64px; }
+
+/* "From your Steam library. Change preferred copy" under shared games: one quiet line. */
+.AppDetailsMain .PlayBar .Row.SharedLibrary {
+    min-height: 0 !important;
+    margin-top: -6px !important;
+    padding: 0 !important;
+    font: 13px var(--lumen-font) !important;
+    color: var(--lumen-text-3) !important;
+}
+
+.AppDetailsMain .PlayBar .Row.SharedLibrary a,
+.AppDetailsMain .PlayBar .Row.SharedLibrary [class*="Link"] { color: var(--lumen-accent) !important; }
+
+/* Remote Play device picker next to Play: joined to the button in the accent. */
+.AppDetailsMain .Green .PlayButton:has(+ .StreamingSelector) { border-radius: var(--lumen-radius) 0 0 var(--lumen-radius) !important; }
+
+.AppDetailsMain .StreamingSelector {
+    align-self: stretch !important;
+    width: 30px !important;
+    height: auto !important;
+    margin-left: 1px !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background: var(--lumen-accent) !important;
+    background-image: none !important;
+    border-radius: 0 var(--lumen-radius) var(--lumen-radius) 0 !important;
+    color: var(--lumen-on-accent) !important;
+}
+
+.AppDetailsMain .StreamingSelector:hover { background: var(--lumen-accent-hover) !important; }
+.AppDetailsMain .StreamingSelector svg { width: 12px !important; height: 12px !important; color: var(--lumen-on-accent) !important; fill: currentColor !important; }
+.AppDetailsMain .PlayBar .RightControls > div { gap: 6px; }
+
+.AppDetailsMain .RightControls .MenuButton {
+    width: 32px !important;
+    height: 32px !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: var(--lumen-card-hover) !important;
+    border-radius: 6px !important;
+    transition: background var(--lumen-dur) ease;
+}
+
+.AppDetailsMain .RightControls .MenuButton:hover { background: rgba(255, 255, 255, 0.12) !important; }
+.AppDetailsMain .RightControls .FavoriteButton svg { color: var(--lumen-accent) !important; }
+.AppDetailsMain .RightControls .MenuButton svg,
+.AppDetailsMain .RightControls .MenuButton > div { width: 16px !important; height: 16px !important; margin: 0 !important; }
+
+.AppDetailsMain .LinksSection,
 .AppDetailsMain .LinksSection > .Panel,
+.AppDetailsMain .LinksSectionBody {
+    background: transparent !important;
+    background-image: none !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+.AppDetailsMain .LinkInner {
+    color: var(--lumen-text-2) !important;
+    font-family: var(--lumen-font) !important;
+    border-radius: 6px;
+    transition: background var(--lumen-dur) ease, color var(--lumen-dur) ease;
+}
+
+.AppDetailsMain .LinkInner:hover { background: var(--lumen-card-hover) !important; color: var(--lumen-text) !important; }
+
+.AppDetailsMain .AppDetailsSection:not(.LinksSection) {
+    background: var(--lumen-card) !important;
+    border: 1px solid var(--lumen-stroke);
+    border-radius: var(--lumen-radius);
+    padding: 14px 6px 6px !important;
+    margin-bottom: 16px !important;
+    box-sizing: border-box;
+}
+
+.AppDetailsMain .AppDetailsSection .SectionHeader {
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    font: 600 16px var(--lumen-font) !important;
+    color: var(--lumen-text) !important;
+    background-image: none !important;
+    margin-bottom: 8px !important;
+}
+
+/* Steam paints its own gradient box inside every section; the card is enough. */
+.AppDetailsMain .AppDetailsSection:not(.LinksSection) > .Panel {
+    background: transparent !important;
+    background-image: none !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+.AppDetailsMain .AppDetailsSection .SectionHeader .LabelText { text-transform: none !important; color: var(--lumen-text) !important; }
+
+/* The play bar that floats at the top once you scroll down: a rounded
+   acrylic strip with the game's icon and name, like the cards below it. */
+.AppDetailsMain .StickyHeader .PlayBar.Glassy {
+    width: auto !important;
+    margin: 8px 16px 0 !important;
+    background: rgba(32, 32, 32, 0.72) !important;
+    background-image: none !important;
+    backdrop-filter: blur(28px) saturate(1.4) !important;
+    border: 1px solid var(--lumen-stroke-strong) !important;
+    border-radius: var(--lumen-radius) !important;
+    box-shadow: var(--lumen-shadow) !important;
+}
+
+.AppDetailsMain .StickyHeader .PlayBar .InnerContainer { padding: 0 12px !important; }
+.AppDetailsMain .StickyHeader .PlayBar .Row { align-items: center !important; }
+.AppDetailsMain .StickyHeader > :not(.PlayBar) { display: none !important; } /* Steam's shadow strip */
+
+.AppDetailsMain .StickyHeader .PlayBar .Green .PlayButton,
+.AppDetailsMain .StickyHeader .PlayButton {
+    min-width: 160px !important;
+    height: 38px !important;
+    box-shadow: none !important;
+}
+
+.AppDetailsMain .StickyHeader .PlayButton .ButtonText { font-size: 15px !important; }
+.AppDetailsMain .StickyHeader .PlayBar .Row { min-height: 52px; }
+.AppDetailsMain .StickyHeader .RightControls .MenuButton { width: 30px !important; height: 30px !important; }
+.AppDetailsMain .StickyHeader .PlayBarGameName { color: var(--lumen-text) !important; font: 600 14px var(--lumen-font) !important; }
+.AppDetailsMain .StickyHeader .PlayBarGameIcon { border-radius: 6px; overflow: hidden; }
+/* Steam pins the icon and name to the top of a taller box; centre them. */
+.AppDetailsMain .StickyHeader .PlayBarIconAndGame { top: 0 !important; bottom: 0 !important; margin: auto 0 !important; }
+
+/* Activity: the post box joins the "Activity" title as one card, and every
+   feed entry is its own card with its date on the right (the date comes from
+   Steam's day heading via js/library-activity.js; the heading is hidden). */
+.AppDetailsMain .AppDetailsSection:has(.AppActivityDay) {
+    background: transparent !important;
+    border: 0 !important;
+    padding: 0 !important;
+}
+
+.AppDetailsMain .AppDetailsSection:has(.AppActivityDay) > .SectionHeader {
+    margin: 0 !important;
+    padding: 14px 16px 8px !important;
+    background: var(--lumen-card) !important;
+    border: 1px solid var(--lumen-stroke);
+    border-bottom: 0;
+    border-radius: var(--lumen-radius) var(--lumen-radius) 0 0;
+}
+
+/* Line the post box up with the title: drop the inner margins and padding. */
+.AppDetailsMain .AppDetailsSection:has(.AppActivityDay) > .Panel { margin: 0 !important; }
+.AppDetailsMain .AppDetailsSection:has(.AppActivityDay) .Body.InnerContainer { padding: 0 !important; }
+
+.AppDetailsMain .AppDetailsSection:has(.AppActivityDay) .PostTextEntry {
+    margin: 0 0 20px !important;
+    padding: 4px 16px 14px !important;
+    background: var(--lumen-card) !important;
+    border: 1px solid var(--lumen-stroke);
+    border-top: 0;
+    border-radius: 0 0 var(--lumen-radius) var(--lumen-radius);
+}
+
+.AppDetailsMain .AppActivityDay > .AppActivityDate { display: none !important; }
+.AppDetailsMain .AppActivityDay { border: 0 !important; padding: 0 !important; margin: 0 !important; }
+
+.AppDetailsMain .AppActivityDay [data-lumen-date] {
+    position: relative;
+    margin: 0 0 16px !important;
+    background: var(--lumen-card) !important;
+    border: 1px solid var(--lumen-stroke);
+    border-radius: var(--lumen-radius);
+    overflow: hidden;
+}
+
+.AppDetailsMain .AppActivityDay [data-lumen-date]::after {
+    content: attr(data-lumen-date);
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    padding-right: 22px;
+    color: var(--lumen-text-3);
+    font: 12px/16px var(--lumen-font);
+    letter-spacing: 0.04em;
+    background: no-repeat right center / 14px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6.25' fill='none' stroke='%23ffffff8a' stroke-width='1.3'/%3E%3Cpath d='M8 4.5V8l2.3 1.6' fill='none' stroke='%23ffffff8a' stroke-width='1.3' stroke-linecap='round'/%3E%3C/svg%3E");
+    pointer-events: none;
+}
+
+/* Inside a card everything keeps 20px from the sides: Steam only indents
+   the achievement grid on the left, which pushed it off centre. */
+.AppDetailsMain .AppActivityDay [data-lumen-date] .EventHeadline {
+    padding: 8px 20px !important;
+    border-bottom: 1px solid var(--lumen-stroke);
+}
+
+.AppDetailsMain .AppActivityDay [data-lumen-date] .EventBody {
+    margin: 0 !important;
+    padding: 6px 20px !important;
+}
+
+.AppDetailsMain .AppActivityDay [data-lumen-date] .EventBody > .Panel {
+    padding: 10px 0 !important;
+    gap: 12px 20px !important;
+}
+
+.AppDetailsMain .AppActivityDay [data-lumen-date] .PartnerEventMediumImage_Contents { padding: 20px !important; }
+
+.AppDetailsMain .AppActivityDay [data-lumen-date] .RatingBar,
+.AppDetailsMain .AppActivityDay [data-lumen-date] .CommentThread > div {
+    padding: 0 20px 8px !important;
+}
+
+.AppDetailsMain .AppActivityDay [data-lumen-date] .PartnerEvent,
+.AppDetailsMain .AppActivityDay [data-lumen-date] .PartnerEventMediumImage_Container,
+.AppDetailsMain .AppActivityDay [data-lumen-date] .Event,
+.AppDetailsMain .AppActivityDay [data-lumen-date] .EventBody {
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+}
+
+/* Panels inside the cards */
 .AppDetailsMain .BoxCarousel,
 .AppDetailsMain .PartnerEvent,
 .AppDetailsMain .PartnerEventMediumImage_Container,
