@@ -283,21 +283,35 @@ body {
     flex: 1;
     gap: 6px;
     height: 100% !important;
-    padding: 0 !important;
-    align-items: center !important;
+    padding: 3px 0 0 !important;
+    box-sizing: border-box;
+    align-items: baseline !important;   /* name and count share a baseline */
 }
 
 .SectionHeaderContent .SectionName {
     text-transform: none !important;
     letter-spacing: 0 !important;
     font: 600 14px/20px var(--lumen-font) !important;
-    height: 20px !important;
+    height: auto !important;
     overflow: visible !important;
     color: var(--lumen-text) !important;
 }
 
-.SectionHeaderContent .SectionCount { margin: 0 !important; height: 20px !important; font: 12px/21px var(--lumen-font) !important; color: var(--lumen-text-3) !important; }
-.SectionHeaderContent .SectionRule { display: none !important; }
+.SectionHeaderContent .SectionCount { margin: 0 !important; height: auto !important; font: 12px/20px var(--lumen-font) !important; color: var(--lumen-text-3) !important; }
+/* A thin line from the title to the chevron */
+.SectionHeaderContent .SectionRule {
+    display: block !important;
+    flex: 1;
+    align-self: center;
+    height: 1px !important;
+    min-width: 12px;
+    margin: 0 8px 0 4px !important;
+    transform: translateY(-1px);
+    opacity: 1 !important;   /* Steam fades its rule to 20% */
+    background: var(--lumen-stroke-strong) !important;
+    background-image: none !important;
+    border: 0 !important;
+}
 
 .LeftListSizableContainer .CollapseIconParent > :first-child {
     order: 2;
