@@ -1,6 +1,6 @@
 #!/bin/sh
 # Live-inject a theme CSS file into a Steam window for quick iteration:
-#   sh push.sh <targetRegex> <css file> [screenshot.png]
+#   sh push.sh <target> <css file> [screenshot.png]
 T="$1"; CSS="$2"; SHOT="$3"
 node -e '
 const css = require("fs").readFileSync(process.argv[1], "utf8");
