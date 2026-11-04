@@ -162,47 +162,152 @@ body {
 .BottomBar .Text,
 .BottomBar .Queue { color: var(--lumen-text-3) !important; }
 
-/* ---- Library: left game list ---- */
+/* ---- Library: left game list ----
+   Fluent navigation pane: one icon row on top (Home, Collections, the list
+   view picker, then Steam's two filters), sentence-case section titles with
+   a chevron on the right, and slightly larger entries. */
 
 .LeftListSizableContainer > div {
     background: var(--lumen-bg-deep) !important;
+    background-image: none !important;
     border-right: 1px solid var(--lumen-stroke);
 }
 
-.GameListHomeAndSearch { background: transparent !important; }
-
-.HomeBox .Bar {
-    background: var(--lumen-card) !important;
-    border-radius: var(--lumen-radius) !important;
-    color: var(--lumen-text-2) !important;
+/* Home + Collections and the view/filters bar share one row. */
+.LeftListSizableContainer > div {
+    display: grid !important;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto minmax(0, 1fr);
+    align-items: center;
+    padding: 6px 6px 0 !important;
+    box-sizing: border-box;
 }
 
-.HomeBox .Bar:hover { background: var(--lumen-card-hover) !important; }
-.HomeBox .Bar.Selected { background: var(--lumen-card-hover) !important; color: var(--lumen-text) !important; }
+.LeftListSizableContainer > div > .GameListHomeAndSearch { grid-area: 1 / 1; }
+.LeftListSizableContainer > div > .Bar { grid-area: 1 / 2; min-width: 0; }
+.LeftListSizableContainer > div > :nth-child(3) { grid-area: 2 / 1 / 3 / -1; }
+.LeftListSizableContainer > div > :nth-child(4) { grid-area: 3 / 1 / 4 / -1; align-self: stretch; min-height: 0; }
 
-.SearchBar .MenuHeader,
-.SearchInput,
-.SearchInput + *,
-.SearchBar [class*="Container"]:has(> .SearchInput) {
-    background: var(--lumen-card) !important;
-    border: 1px solid var(--lumen-stroke) !important;
-    border-radius: var(--lumen-radius-sm) !important;
+.GameListHomeAndSearch,
+.LeftListSizableContainer .Bar {
+    background: transparent !important;
+    height: 40px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 2px;
 }
 
-.SearchInput { border: 0 !important; }
+.LeftListSizableContainer .Bar { justify-content: space-between !important; }
 
-.SectionHeaderContent {
-    color: var(--lumen-text-3) !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.04em;
+/* Square icon buttons: Home, Collections and the view picker */
+.HomeBox,
+.HomeBox .Bar,
+.CollectionsButton .CollectionButton,
+.SearchBar .MenuHeader {
+    width: 34px !important;
+    min-width: 34px !important;
+    height: 34px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 6px !important;
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
 }
 
+.HomeBox .Bar:hover,
+.CollectionsButton .CollectionButton:hover,
+.SearchBar .MenuHeader:hover { background: var(--lumen-card-hover) !important; }
+
+.HomeBox .Bar.Selected { background: var(--lumen-accent-soft) !important; }
+
+.HomeBox .Bar .Icon svg,
+.HomeBox .Bar .Label,
+.SearchBar .MenuHeader > * { display: none !important; }
+
+.HomeBox .Bar .Icon,
+.SearchBar .MenuHeader::before {
+    content: "";
+    display: block !important;
+    width: 18px !important;
+    height: 18px !important;
+    margin: 8px !important;
+    background: var(--lumen-text-2);
+}
+
+.HomeBox .Bar .Icon { -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 7L8 2.5 13.5 7v6a.5.5 0 0 1-.5.5h-3v-4h-4v4H3a.5.5 0 0 1-.5-.5z'/%3E%3C/svg%3E") center / contain no-repeat; }
+.HomeBox .Bar.Selected .Icon { background: var(--lumen-accent); }
+.SearchBar .MenuHeader::before { -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.5 4h8M5.5 8h8M5.5 12h8M2.5 4h.01M2.5 8h.01M2.5 12h.01'/%3E%3C/svg%3E") center / contain no-repeat; }
+
+.SearchBar { flex: none !important; }
+.SearchBar .ScrollToTop { display: none !important; }
+
+.ViewFiltersBar { margin-right: 4px; }
+.ViewFiltersBar .CheckboxWithImage { border-radius: 6px; }
+.ViewFiltersBar .CheckboxWithImage:hover { background: var(--lumen-card-hover); }
+
+/* Section titles: "Favorites (19)" in sentence case, chevron on the right */
+.LeftListSizableContainer .CollapseIconParent {
+    display: flex !important;
+    align-items: center;
+    background: transparent !important;
+    background-image: none !important;
+    padding: 0 10px 0 8px !important;
+    border-radius: 6px;
+}
+
+.LeftListSizableContainer .CollapseIconParent:hover { background: var(--lumen-card) !important; }
+
+.SectionHeaderContent { flex: 1; gap: 6px; }
+
+.SectionHeaderContent .SectionName {
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    font: 600 14px var(--lumen-font) !important;
+    color: var(--lumen-text) !important;
+}
+
+.SectionHeaderContent .SectionCount { font: 12px var(--lumen-font) !important; color: var(--lumen-text-3) !important; }
+.SectionHeaderContent .SectionRule { display: none !important; }
+
+.LeftListSizableContainer .CollapseIconParent > :first-child { order: 2; width: 14px !important; display: flex; justify-content: center; }
+.LeftListSizableContainer .CollapseIconParent > :first-child svg { display: none !important; }
+
+.LeftListSizableContainer .CollapseIconParent > :first-child::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-left: 1.5px solid var(--lumen-text-2);
+    border-top: 1.5px solid var(--lumen-text-2);
+    transform: translateY(2px) rotate(45deg);
+    transition: transform 200ms var(--lumen-ease);
+}
+
+.LeftListSizableContainer .CollapseIconParent > .Collapsed::before { transform: translateY(-2px) rotate(225deg); }
+
+/* Entries */
 .GameListEntryContainer {
-    border-radius: var(--lumen-radius-sm);
+    margin: 0 4px;
+    padding-left: 6px;
+    border-radius: 6px;
     color: var(--lumen-text-2);
+    font: 14px var(--lumen-font) !important;
 }
 
-.GameListEntryContainer:hover { background: var(--lumen-card-hover) !important; }
+.GameListEntryContainer .GameIcon,
+.GameListEntryContainer .GameIcon img { width: 20px !important; height: 20px !important; border-radius: 4px; }
+
+.GameListEntryContainer:hover { background: var(--lumen-card) !important; }
+/* Steam marks the row wrapper around the entry as Selected. */
+.LeftListSizableContainer .Focusable.Selected:has(> .GameListEntryContainer) {
+    box-shadow: none !important;
+    border-radius: 6px;
+}
+
+.LeftListSizableContainer .Focusable.Selected:has(> .GameListEntryContainer),
+.Selected > .GameListEntryContainer { background: var(--lumen-card-hover) !important; color: var(--lumen-text) !important; }
 
 /* ---- Library: home and game pages ---- */
 
