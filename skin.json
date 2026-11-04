@@ -162,6 +162,10 @@
             "TargetJs": "shared/dash.js"
         },
         {
+            "MatchRegexString": "^(Steam|Steam Games List)$",
+            "TargetJs": "js/library-activity.js"
+        },
+        {
             "MatchRegexString": "^(Steam|Steam Games List|Friends List|.* Menu|Menu|.*Supernav)$",
             "TargetCss": "client.css"
         },

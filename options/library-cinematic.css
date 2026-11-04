@@ -112,16 +112,16 @@
 }
 
 /* A bigger play bar and links on the cinematic page */
-.AppDetailsMain .PlayBar .PlayButton {
+.AppDetailsMain .InPage .PlayBar .PlayButton {
     min-width: 200px !important;
     height: 56px !important;
 }
 
-.AppDetailsMain .PlayBar .PlayButton .ButtonText { font-size: 18px !important; }
-.AppDetailsMain .PlayBar .PlayBarLabel { font-size: 16px !important; line-height: 20px !important; }
-.AppDetailsMain .PlayBar .GameStatRight > div:not(.PlayBarLabel) { font-size: 14px !important; }
-.AppDetailsMain .PlayBar .GameStatIcon svg { width: 30px !important; height: 30px !important; }
-.AppDetailsMain .PlayBar .RightControls .MenuButton { width: 44px !important; height: 44px !important; }
+.AppDetailsMain .InPage .PlayBar .PlayButton .ButtonText { font-size: 18px !important; }
+.AppDetailsMain .InPage .PlayBar .PlayBarLabel { font-size: 16px !important; line-height: 20px !important; }
+.AppDetailsMain .InPage .PlayBar .GameStatRight > div:not(.PlayBarLabel) { font-size: 14px !important; }
+.AppDetailsMain .InPage .PlayBar .GameStatIcon svg { width: 30px !important; height: 30px !important; }
+.AppDetailsMain .InPage .PlayBar .RightControls .MenuButton { width: 44px !important; height: 44px !important; }
 
 .AppDetailsMain .LinksSection { padding: 0 32px !important; }
 .AppDetailsMain .LinkInner { font-size: 15px !important; padding: 10px 16px !important; }
@@ -158,7 +158,7 @@
     .lumen-more svg { animation: none; }
 }
 
-.AppDetailsMain .PlayBar.Glassy {
+.AppDetailsMain .InPage .PlayBar.Glassy {
     background: transparent !important;
     background-image: none !important;
     backdrop-filter: none !important;

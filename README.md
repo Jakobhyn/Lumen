@@ -36,6 +36,7 @@ A calm, dark Fluent-style theme for the Steam client, built for [Millennium](htt
 | `shared/dash.js` | Tiny DASH player for Steam's trailers, used by store and library |
 | `store/` | Cinematic store hero |
 | `js/library-trailer.js` | Store trailer behind the library game page |
+| `js/library-activity.js` | Puts each activity entry's date on its card |
 | `js/library-more.js` | "More" button that glides from the art down to the game page content |
 | `js/header-search.js` | The search field in the compact header |
 | `options/` | Files switched on by the settings |
