@@ -498,9 +498,42 @@ body {
 
 .AppDetailsMain .AppActivityDay [data-lumen-date] .PartnerEventMediumImage_Contents { padding: 20px !important; }
 
-.AppDetailsMain .AppActivityDay [data-lumen-date] .RatingBar,
-.AppDetailsMain .AppActivityDay [data-lumen-date] .CommentThread > div {
-    padding: 0 20px 8px !important;
+/* Comment and like counts: one row 20px from the right edge. News posts
+   have the row directly in the card, other entries inside the comment
+   thread, which nests a second rating bar that must not get the padding. */
+.AppDetailsMain .AppActivityDay [data-lumen-date] > .RatingBar,
+.AppDetailsMain .AppActivityDay [data-lumen-date] .ActivityCommentThreadMinimized {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    padding: 0 14px 10px !important;
+    justify-content: flex-end !important;
+}
+
+/* News posts: line the counts up with the other cards (their thread adds 6px). */
+.AppDetailsMain .AppActivityDay [data-lumen-date] > .RatingBar { padding-right: 20px !important; }
+
+.AppDetailsMain .AppActivityDay [data-lumen-date] .RatingContainer {
+    background: none !important;
+    padding: 0 !important;
+}
+
+.AppDetailsMain .AppActivityDay [data-lumen-date] .RatingContainer .RatingBar {
+    width: auto !important;
+    padding: 0 !important;
+}
+
+.AppDetailsMain .AppActivityDay [data-lumen-date] .CommentButton,
+.AppDetailsMain .AppActivityDay [data-lumen-date] .LikeButton {
+    padding: 0 6px 0 10px !important;
+    border-radius: 6px;
+    color: var(--lumen-text-3);
+    transition: background var(--lumen-dur) ease, color var(--lumen-dur) ease;
+}
+
+.AppDetailsMain .AppActivityDay [data-lumen-date] .CommentButton:hover,
+.AppDetailsMain .AppActivityDay [data-lumen-date] .LikeButton:hover {
+    background: var(--lumen-card-hover) !important;
+    color: var(--lumen-text);
 }
 
 .AppDetailsMain .AppActivityDay [data-lumen-date] .PartnerEvent,
