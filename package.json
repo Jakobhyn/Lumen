@@ -1,0 +1,22 @@
+{
+  "name": "lumen-steam-theme",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Dev tooling for the Lumen Millennium theme (lint, tests, checks). Not part of the theme itself.",
+  "license": "MIT",
+  "scripts": {
+    "check": "node tools/check.js",
+    "lint": "npm run lint:js && npm run lint:css",
+    "lint:js": "eslint .",
+    "lint:css": "stylelint \"**/*.css\"",
+    "test": "node --test \"test/*.test.js\"",
+    "ci": "npm run check && npm run lint && npm test"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.5",
+    "eslint": "9.39.5",
+    "globals": "15.15.0",
+    "jsdom": "25.0.1",
+    "stylelint": "16.26.1"
+  }
+}

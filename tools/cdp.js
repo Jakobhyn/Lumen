@@ -4,7 +4,7 @@
 //   node cdp.js shot <titleRegex|urlRegex> <out.png> [maxWidth]
 //   node cdp.js nav <regex> <url>
 const fs = require("fs");
-const [cmd, match, arg, arg2, arg3] = process.argv.slice(2);
+const [cmd, match, arg, arg2] = process.argv.slice(2);
 
 async function targets() {
   return (await (await fetch("http://127.0.0.1:8080/json")).json()).filter(t => t.webSocketDebuggerUrl);
