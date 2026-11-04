@@ -464,9 +464,28 @@ body {
     pointer-events: none;
 }
 
+/* Inside a card everything keeps 20px from the sides: Steam only indents
+   the achievement grid on the left, which pushed it off centre. */
 .AppDetailsMain .AppActivityDay [data-lumen-date] .EventHeadline {
-    padding: 4px 12px !important;
+    padding: 8px 20px !important;
     border-bottom: 1px solid var(--lumen-stroke);
+}
+
+.AppDetailsMain .AppActivityDay [data-lumen-date] .EventBody {
+    margin: 0 !important;
+    padding: 6px 20px !important;
+}
+
+.AppDetailsMain .AppActivityDay [data-lumen-date] .EventBody > .Panel {
+    padding: 10px 0 !important;
+    gap: 12px 20px !important;
+}
+
+.AppDetailsMain .AppActivityDay [data-lumen-date] .PartnerEventMediumImage_Contents { padding: 20px !important; }
+
+.AppDetailsMain .AppActivityDay [data-lumen-date] .RatingBar,
+.AppDetailsMain .AppActivityDay [data-lumen-date] .CommentThread > div {
+    padding: 0 20px 8px !important;
 }
 
 .AppDetailsMain .AppActivityDay [data-lumen-date] .PartnerEvent,
