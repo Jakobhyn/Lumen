@@ -278,6 +278,38 @@ body {
 }
 
 .AppDetailsMain .PlayBar .Row { min-height: 64px; }
+
+/* "From your Steam library. Change preferred copy" under shared games: one quiet line. */
+.AppDetailsMain .PlayBar .Row.SharedLibrary {
+    min-height: 0 !important;
+    margin-top: -6px !important;
+    padding: 0 !important;
+    font: 13px var(--lumen-font) !important;
+    color: var(--lumen-text-3) !important;
+}
+
+.AppDetailsMain .PlayBar .Row.SharedLibrary a,
+.AppDetailsMain .PlayBar .Row.SharedLibrary [class*="Link"] { color: var(--lumen-accent) !important; }
+
+/* Remote Play device picker next to Play: joined to the button in the accent. */
+.AppDetailsMain .Green .PlayButton:has(+ .StreamingSelector) { border-radius: var(--lumen-radius) 0 0 var(--lumen-radius) !important; }
+
+.AppDetailsMain .StreamingSelector {
+    align-self: stretch !important;
+    width: 30px !important;
+    height: auto !important;
+    margin-left: 1px !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background: var(--lumen-accent) !important;
+    background-image: none !important;
+    border-radius: 0 var(--lumen-radius) var(--lumen-radius) 0 !important;
+    color: var(--lumen-on-accent) !important;
+}
+
+.AppDetailsMain .StreamingSelector:hover { background: var(--lumen-accent-hover) !important; }
+.AppDetailsMain .StreamingSelector svg { width: 12px !important; height: 12px !important; color: var(--lumen-on-accent) !important; fill: currentColor !important; }
 .AppDetailsMain .PlayBar .RightControls > div { gap: 6px; }
 
 .AppDetailsMain .RightControls .MenuButton {

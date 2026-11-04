@@ -18,7 +18,10 @@
     max-height: none !important;
 }
 
-:root { --lumen-below-art: 110px; }
+/* Space kept below the art for the links and "More". Shared copies of a
+   game add a "From your Steam library" line, so the art gives up room for it. */
+.AppDetailsMain .Body.ScrollContainer { --lumen-below-art: 110px; }
+.AppDetailsMain .Body.ScrollContainer:has(.SharedLibrary) { --lumen-below-art: 133px; }
 
 .AppDetailsMain .TopCapsule { overflow: hidden; }
 
