@@ -1,8 +1,8 @@
 /* Bottom bar: Floating. Steam's bar at the bottom of the window goes away
-   and its three buttons float over the content as round acrylic buttons:
-   "Add a Game" bottom left, downloads in the middle, friends & chat bottom
-   right. While something downloads, the middle button widens into a pill
-   with Steam's own progress. */
+   and its three buttons float side by side in the bottom right corner as
+   round acrylic buttons: Add a Game, Downloads, Friends & Chat. While
+   something downloads, the downloads button widens into a pill with
+   Steam's own progress and pushes Add a Game to the left. */
 
 /* The bar's slot collapses so pages run to the bottom edge. */
 .BottomBar {
@@ -10,9 +10,13 @@
     left: 0;
     right: 0;
     bottom: 14px;
-    height: 0 !important;
+    height: 42px !important;
     min-height: 0 !important;
-    padding: 0 !important;
+    padding: 0 28px 0 0 !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: flex-end !important;
+    gap: 10px;
     background: none !important;
     border: 0 !important;
     box-shadow: none !important;
@@ -31,8 +35,8 @@ div:has(> .BottomBar) {
 .BottomBar .AddGameButton,
 .BottomBar .FriendsButton,
 .BottomBar .DownloadStatus > div {
-    position: absolute;
-    bottom: 0;
+    position: relative;
+    flex: none;
     height: 42px !important;
     min-width: 42px;
     box-sizing: border-box;
@@ -60,8 +64,8 @@ div:has(> .BottomBar) {
 .BottomBar .FriendsButton:active,
 .BottomBar .DownloadStatus > div:active { transform: scale(0.95); }
 
-.BottomBar .AddGameButton { left: 16px; width: 42px; }
-.BottomBar .FriendsButton { right: 28px; width: 42px; }
+.BottomBar .AddGameButton,
+.BottomBar .FriendsButton { width: 42px; }
 
 /* Icons only on the round buttons; the text stays as a tooltip-free label for screen readers. */
 .BottomBar .AddGameButton .Text,
@@ -81,20 +85,9 @@ div:has(> .BottomBar) {
     color: var(--lumen-text) !important;
 }
 
-/* Downloads in the middle */
-.BottomBar .DownloadStatus {
-    position: static !important;
-    width: 0 !important;
-    height: 0 !important;
-    padding: 0 !important;
-}
-
-.BottomBar .DownloadStatus > div {
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.BottomBar .DownloadStatus > div:active { transform: translateX(-50%) scale(0.95); }
+/* Downloads between the two: Steam's full-width wrapper steps aside. */
+.BottomBar .DownloadStatus { display: contents !important; }
+.BottomBar .AddGameButton, .BottomBar .FriendsButton, .BottomBar .DownloadStatus > div { margin: 0 !important; }
 
 /* Idle ("Manage Downloads"): a round button with the download icon. */
 .BottomBar .DownloadStatus > div:has(.Queue) { width: 42px; }
@@ -126,8 +119,8 @@ div:has(> .BottomBar) {
 /* Steam's window resize grip stays reachable in the corner. */
 .window_resize_grip { z-index: 60; }
 
-/* Cinematic game page: lift "More" above the floating buttons and keep the
-   content starting right at the window's bottom edge. */
+/* Cinematic game page: leave room under "More" for the floating buttons and
+   keep the content starting right at the window's bottom edge. */
 .AppDetailsMain .Body.ScrollContainer { --lumen-below-art: 176px; }
 .AppDetailsMain .Body.ScrollContainer:has(.SharedLibrary) { --lumen-below-art: 199px; }
 .lumen-more { margin-bottom: 56px; }
