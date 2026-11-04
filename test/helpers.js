@@ -14,6 +14,9 @@ function page(html, { url = "https://store.steampowered.com/app/1942280/Brotato/
     for (const [name, value] of Object.entries(vars)) window.document.documentElement.style.setProperty(name, value);
     // jsdom lacks these; the theme only needs them to exist.
     window.IntersectionObserver = class { observe() {} disconnect() {} };
+    window.matchMedia = () => ({ matches: false, addEventListener() {} });
+    window.HTMLMediaElement.prototype.play = () => Promise.resolve();
+    window.HTMLMediaElement.prototype.pause = () => {};
     window.fetch = () => Promise.reject(new Error("no network in tests"));
     window.console.warn = () => {};
     return window;

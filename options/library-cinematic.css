@@ -53,6 +53,20 @@
     animation: lumen-drift 40s ease-in-out infinite alternate;
 }
 
+/* The store trailer over the art (js/library-trailer.js); it fades in once it plays. */
+.AppDetailsMain .lumen-trailer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    pointer-events: none;
+}
+
+.AppDetailsMain .lumen-trailer.is-playing { opacity: 1; }
+
 /* Steam's blurred copies of the art (loading placeholder, glass backdrop) */
 .AppDetailsMain .ImgBlur,
 .AppDetailsMain .TopGradient,

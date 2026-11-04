@@ -3,7 +3,7 @@
 A calm, dark Fluent-style theme for the Steam client, built for [Millennium](https://steambrew.app).
 
 - **Cinematic store page**: a game's trailer plays muted across the whole window, with the logo, short description, price and buttons on top.
-- **Cinematic library page**: a game's art fills most of the window with a large logo and the play bar floating on top.
+- **Cinematic library page**: the game's store trailer plays muted across most of the window (its art as poster), with a large logo and the play bar floating on top.
 - **One-row header**: back/forward, the Steam menu as a logo, the Store/Library/Community/profile tabs, a game search in the middle, and a plain bell and avatar on the right.
 - **Neutral greys** instead of Steam's blue tones, Segoe UI Variable, rounded corners and Fluent-style buttons and menus.
 - **Accent color** that follows Windows, one of the presets, or any color you pick.
@@ -21,6 +21,7 @@ A calm, dark Fluent-style theme for the Steam client, built for [Millennium](htt
 | Colors | Accent | Windows (default), Sky, Violet, Mint, Amber, Rose, Custom |
 | Window | Header | Compact (default), Classic |
 | Library | Library page | Cinematic (default), Classic |
+| Library | Library trailer | On (default), Off |
 | Store | Store trailer | Cinematic (default), Still, Classic |
 
 ## Layout
@@ -32,7 +33,9 @@ A calm, dark Fluent-style theme for the Steam client, built for [Millennium](htt
 | `root-colors.css` | Colors editable in the Millennium settings |
 | `client.css` | Client windows: frame, library, downloads, menus, friends |
 | `webkit.css` | Store and community pages |
-| `store/` | Cinematic store hero (trailer player and layout) |
+| `shared/dash.js` | Tiny DASH player for Steam's trailers, used by store and library |
+| `store/` | Cinematic store hero |
+| `js/library-trailer.js` | Store trailer behind the library game page |
 | `js/header-search.js` | The search field in the compact header |
 | `options/` | Files switched on by the settings |
 | `tools/` | Dev helpers that talk to Steam over CEF remote debugging |
