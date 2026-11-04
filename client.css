@@ -256,9 +256,38 @@ body {
 
 .AppDetailsMain .Green .PlayButton svg { display: none !important; }
 
+/* Everything in a play bar sits on one centre line: Steam pads the bar's top
+   and gives the button's wrappers a smaller fixed height than the button. */
+.AppDetailsMain .PlayBar.Glassy,
+.AppDetailsMain .PlayBar .InnerContainer {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.AppDetailsMain .PlayBar .Row,
+.AppDetailsMain .PlayBar .ActionSection,
+.AppDetailsMain .PlayBar .ActionSection > div,
+.AppDetailsMain .PlayBar .StatusAndStats,
+.AppDetailsMain .PlayBar .RightControls,
+.AppDetailsMain .PlayBar .RightControls > div {
+    display: flex !important;
+    align-items: center !important;
+    height: auto !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.AppDetailsMain .PlayBar .Row { min-height: 64px; }
+.AppDetailsMain .PlayBar .RightControls > div { gap: 6px; }
+
 .AppDetailsMain .RightControls .MenuButton {
-    width: 36px !important;
-    height: 36px !important;
+    width: 32px !important;
+    height: 32px !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    margin: 0 !important;
+    padding: 0 !important;
     background: var(--lumen-card-hover) !important;
     border-radius: 6px !important;
     transition: background var(--lumen-dur) ease;
@@ -266,6 +295,8 @@ body {
 
 .AppDetailsMain .RightControls .MenuButton:hover { background: rgba(255, 255, 255, 0.12) !important; }
 .AppDetailsMain .RightControls .FavoriteButton svg { color: var(--lumen-accent) !important; }
+.AppDetailsMain .RightControls .MenuButton svg,
+.AppDetailsMain .RightControls .MenuButton > div { width: 16px !important; height: 16px !important; margin: 0 !important; }
 
 .AppDetailsMain .LinksSection,
 .AppDetailsMain .LinksSection > .Panel,
@@ -338,9 +369,12 @@ body {
 }
 
 .AppDetailsMain .StickyHeader .PlayButton .ButtonText { font-size: 15px !important; }
-.AppDetailsMain .StickyHeader .RightControls .MenuButton { width: 36px !important; height: 36px !important; }
+.AppDetailsMain .StickyHeader .PlayBar .Row { min-height: 52px; }
+.AppDetailsMain .StickyHeader .RightControls .MenuButton { width: 30px !important; height: 30px !important; }
 .AppDetailsMain .StickyHeader .PlayBarGameName { color: var(--lumen-text) !important; font: 600 14px var(--lumen-font) !important; }
 .AppDetailsMain .StickyHeader .PlayBarGameIcon { border-radius: 6px; overflow: hidden; }
+/* Steam pins the icon and name to the top of a taller box; centre them. */
+.AppDetailsMain .StickyHeader .PlayBarIconAndGame { top: 0 !important; bottom: 0 !important; margin: auto 0 !important; }
 
 /* Activity: the post box joins the "Activity" title as one card, and every
    feed entry is its own card with its date on the right (the date comes from

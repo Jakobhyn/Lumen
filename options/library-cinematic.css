@@ -121,7 +121,8 @@
 .AppDetailsMain .InPage .PlayBar .PlayBarLabel { font-size: 16px !important; line-height: 20px !important; }
 .AppDetailsMain .InPage .PlayBar .GameStatRight > div:not(.PlayBarLabel) { font-size: 14px !important; }
 .AppDetailsMain .InPage .PlayBar .GameStatIcon svg { width: 30px !important; height: 30px !important; }
-.AppDetailsMain .InPage .PlayBar .RightControls .MenuButton { width: 44px !important; height: 44px !important; }
+.AppDetailsMain .InPage .PlayBar .Row { min-height: 72px; }
+.AppDetailsMain .InPage .PlayBar .RightControls .MenuButton { width: 34px !important; height: 34px !important; }
 
 .AppDetailsMain .LinksSection { padding: 0 32px !important; }
 .AppDetailsMain .LinkInner { font-size: 15px !important; padding: 10px 16px !important; }
