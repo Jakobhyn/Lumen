@@ -498,20 +498,23 @@ body {
 
 .AppDetailsMain .AppActivityDay [data-lumen-date] .PartnerEventMediumImage_Contents { padding: 20px !important; }
 
-/* Comment and like counts: one row 20px from the right edge. News posts
-   have the row directly in the card, other entries inside the comment
-   thread (its class changes once shown, so go by structure), which nests a
-   second rating bar that must not get the padding. */
+/* Comment and like counts: a footer strip under each card, mirroring the
+   headline strip on top, so the buttons and their hover stay inside it.
+   News posts have the row directly in the card, other entries inside the
+   comment thread (its class changes once shown, so go by structure), which
+   nests a second rating bar that must not get the strip. */
 .AppDetailsMain .AppActivityDay [data-lumen-date] > .RatingBar,
 .AppDetailsMain .AppActivityDay [data-lumen-date] .CommentThread > div {
     box-sizing: border-box !important;
     width: 100% !important;
-    padding: 0 20px 4px !important;
+    min-height: 44px !important;
+    margin: 0 !important;
+    padding: 6px 20px !important;
+    display: flex !important;
+    align-items: center !important;
     justify-content: flex-end !important;
+    border-top: 1px solid var(--lumen-stroke) !important;
 }
-
-/* News posts: same right edge as the comment thread row. */
-.AppDetailsMain .AppActivityDay [data-lumen-date] > .RatingBar { padding-right: 20px !important; }
 
 .AppDetailsMain .AppActivityDay [data-lumen-date] .RatingContainer {
     background: none !important;
