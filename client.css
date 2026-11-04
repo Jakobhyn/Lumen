@@ -167,14 +167,14 @@ body {
    view picker, then Steam's two filters), sentence-case section titles with
    a chevron on the right, and slightly larger entries. */
 
-.LeftListSizableContainer > div {
+.LeftListSizableContainer > div:first-child {
     background: var(--lumen-bg-deep) !important;
     background-image: none !important;
     border-right: 1px solid var(--lumen-stroke);
 }
 
 /* Home + Collections and the view/filters bar share one row. */
-.LeftListSizableContainer > div {
+.LeftListSizableContainer > div:first-child {
     display: grid !important;
     grid-template-columns: auto 1fr;
     grid-template-rows: auto auto minmax(0, 1fr);
@@ -183,10 +183,10 @@ body {
     box-sizing: border-box;
 }
 
-.LeftListSizableContainer > div > .GameListHomeAndSearch { grid-area: 1 / 1; }
-.LeftListSizableContainer > div > .Bar { grid-area: 1 / 2; min-width: 0; }
-.LeftListSizableContainer > div > :nth-child(3) { grid-area: 2 / 1 / 3 / -1; }
-.LeftListSizableContainer > div > :nth-child(4) { grid-area: 3 / 1 / 4 / -1; align-self: stretch; min-height: 0; }
+.LeftListSizableContainer > div:first-child > .GameListHomeAndSearch { grid-area: 1 / 1; }
+.LeftListSizableContainer > div:first-child > .Bar { grid-area: 1 / 2; min-width: 0; }
+.LeftListSizableContainer > div:first-child > :nth-child(3) { grid-area: 2 / 1 / 3 / -1; }
+.LeftListSizableContainer > div:first-child > :nth-child(4) { grid-area: 3 / 1 / 4 / -1; align-self: stretch; min-height: 0; }
 
 .GameListHomeAndSearch,
 .LeftListSizableContainer .Bar {
@@ -199,6 +199,12 @@ body {
 }
 
 .LeftListSizableContainer .Bar { justify-content: space-between !important; }
+
+/* The resize handle between list and page: invisible, still draggable. */
+.LibraryWindowDivider { background: transparent !important; }
+
+/* Steam's blue-grey placeholder for the address bar above library pages */
+.URLBarReplacement { display: none !important; }
 
 /* Steam draws a shadow line beside Home + Collections, which made them look boxed in. */
 .GameListHomeAndSearch,
@@ -297,7 +303,14 @@ body {
     color: var(--lumen-text) !important;
 }
 
-.SectionHeaderContent .SectionCount { margin: 0 !important; height: auto !important; font: 12px/20px var(--lumen-font) !important; color: var(--lumen-text-3) !important; }
+.SectionHeaderContent .SectionCount {
+    margin: 0 !important;
+    height: auto !important;
+    font: 12px/20px var(--lumen-font) !important;
+    color: var(--lumen-text-3) !important;
+    position: relative;
+    top: -1px;   /* optical centre: the small digits read low on the shared baseline */
+}
 /* A thin line from the title to the chevron */
 .SectionHeaderContent .SectionRule {
     display: block !important;
