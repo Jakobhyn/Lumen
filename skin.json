@@ -89,6 +89,22 @@
                 "Classic": {}
             }
         },
+        "Bottom bar": {
+            "description": "Floating: the bar at the bottom of the window goes away; Add a Game, Downloads and Friends & Chat float as round buttons (downloads widen into a progress pill). Classic: Steam's bar.",
+            "tab": "Window",
+            "default": "Floating",
+            "values": {
+                "Floating": {
+                    "TargetCss": {
+                        "affects": [
+                            "^(Steam|Steam Games List)$"
+                        ],
+                        "src": "options/bottom-floating.css"
+                    }
+                },
+                "Classic": {}
+            }
+        },
         "Library page": {
             "description": "Cinematic: the game fills the first screen (trailer or art), with a large logo, a bigger play bar and links, and a More button that glides down to activity and achievements. Classic: Steam's header.",
             "tab": "Library",
