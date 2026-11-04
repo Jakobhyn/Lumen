@@ -1,0 +1,261 @@
+/* Header: Compact. Steam's two header rows become one:
+   ← →  [logo] Steam · View ▾ Friends ▾ Games ▾ Help ▾   Store Library …   ……   🔔 account  _ □ ×
+   The title bar and the tab row are flattened with display: contents so
+   every piece becomes an item of one flex row and can be ordered freely. */
+
+.TopBar {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    height: 48px !important;
+    padding: 0 0 0 8px !important;
+    gap: 2px;
+}
+
+.TopBar > .TitleBar,
+.TopBar > .SuperNavBar,
+.TopBar > .SuperNavBar > .SuperNav {
+    display: contents !important;
+}
+
+/* Every item in the row is a 32px box: arrows, Steam logo and tabs. */
+.TopBar .SuperNav .Arrow {
+    order: 1;
+    align-self: center;
+    box-sizing: border-box;
+    width: 32px !important;
+    height: 32px !important;
+    padding: 8px !important;
+    margin: 0 !important;
+    border-radius: 6px;
+    transition: background var(--lumen-dur) ease;
+}
+
+.TopBar .SuperNav .Arrow.Enabled:hover { background: var(--lumen-card-hover); }
+.TopBar .RootMenuBar { order: 2; height: 48px; align-items: center; margin: 0 6px 0 4px; }
+.TopBar .SuperNavMenu { order: 3; align-self: center; height: auto !important; }
+
+.TopBar .SuperNavMenu .MenuButton {
+    height: 32px !important;
+    box-sizing: border-box;
+    display: flex !important;
+    align-items: center;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+.TopBar .DragArea { order: 4; flex: 1 1 auto; height: 48px !important; align-self: stretch; }
+.TopBar .TitleBarControls { order: 5; align-self: center; transform: translateY(-2px); }
+.TopBar .WindowControls { order: 6; align-self: stretch; display: flex; align-items: center; width: auto !important; margin-left: 8px; }
+.TopBar .WindowControls > .title-area { position: static !important; }
+
+/* Right side like Windows 11 apps: a plain bell, a round avatar with a
+   status dot, then the window buttons. News and the Big Picture button are hidden. */
+.TopBar .TitleBarControls { gap: 4px; }
+.TopBar .TitleBarControls > div:has(.AnnouncementsButton),
+.TopBar .TitleBarControls > div:has(.GamepadUIToggle) { display: none !important; }
+
+.TopBar .NotificationsButton {
+    width: 32px !important;
+    height: 32px !important;
+    padding: 0 !important;
+    justify-content: center;
+    align-items: center;
+    background: transparent !important;
+    border-radius: 6px !important;
+    color: var(--lumen-text-2) !important;
+}
+
+.TopBar .NotificationsButton:hover { background: var(--lumen-card-hover) !important; color: var(--lumen-text) !important; }
+.TopBar .NotificationsButton svg { width: 16px !important; height: 16px !important; }
+
+.TopBar .AccountMenu {
+    width: 32px !important;
+    height: 32px !important;
+    max-height: none !important;
+    padding: 0 !important;
+    justify-content: center;
+    align-items: center;
+    background: transparent !important;
+    border-radius: 50% !important;
+}
+
+.TopBar .AccountMenu:hover { background: var(--lumen-card-hover) !important; }
+.TopBar .AccountMenu > :not(.avatarHolder) { display: none !important; }
+
+.TopBar .AccountMenu .avatarHolder {
+    position: relative;
+    width: 26px !important;
+    height: 26px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+}
+
+.TopBar .AccountMenu .avatar {
+    width: 26px !important;
+    height: 26px !important;
+    border-radius: 50% !important;
+    border: 0 !important;
+}
+
+/* Steam's status bar beside the avatar becomes a dot on its corner. */
+.TopBar .AccountMenu .avatarStatus {
+    position: absolute !important;
+    right: -1px !important;
+    bottom: -1px !important;
+    top: auto !important;
+    left: auto !important;
+    width: 9px !important;
+    height: 9px !important;
+    border-radius: 50% !important;
+    border: 2px solid var(--lumen-bg-deep) !important;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+.TopBar .WindowControls .title-area,
+.TopBar .WindowControls .title-bar-actions,
+.TopBar .windowControlButton {
+    height: 48px !important;
+    max-height: none !important;
+}
+
+.TopBar .windowControlButton {
+    width: 46px !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.TopBar .windowControlButton:hover { background: var(--lumen-card-hover) !important; }
+.TopBar .windowControlButton.closeButton:hover { background: #c42b1c !important; }
+
+/* Read by js/header-search.js */
+:root { --lumen-header: compact; }
+
+.TopBar { position: relative; }
+
+/* The search in the middle of the header (built by js/header-search.js) */
+.lumen-search {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(480px, 32vw);
+    height: 34px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 6px 0 12px;
+    box-sizing: border-box;
+    background: var(--lumen-card);
+    border: 1px solid var(--lumen-stroke);
+    border-bottom-color: rgba(255, 255, 255, 0.14);
+    border-radius: var(--lumen-radius);
+    color: var(--lumen-text-3);
+    z-index: 3;
+    -webkit-app-region: no-drag;
+    transition: background var(--lumen-dur) ease, border-color var(--lumen-dur) ease;
+}
+
+.lumen-search:hover { background: var(--lumen-card-hover); }
+
+.lumen-search:focus-within {
+    background: var(--lumen-bg-deep);
+    border-bottom: 2px solid var(--lumen-accent);
+}
+
+.lumen-search__icon { width: 15px; height: 15px; flex: none; }
+
+.lumen-search__input {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    background: none !important;
+    border: 0 !important;
+    outline: none;
+    color: var(--lumen-text);
+    font: 14px var(--lumen-font);
+}
+
+.lumen-search__input::placeholder { color: var(--lumen-text-3); }
+
+.lumen-search__filter {
+    width: 28px;
+    height: 26px;
+    display: grid;
+    place-items: center;
+    background: none;
+    border: 0;
+    border-radius: var(--lumen-radius-sm);
+    color: var(--lumen-text-2);
+    cursor: pointer;
+}
+
+.lumen-search__filter:hover { background: var(--lumen-card-hover); color: var(--lumen-text); }
+.lumen-search__filter svg { width: 16px; height: 16px; }
+
+/* Steam's own search row in the library sidebar folds away; its filter
+   popup still opens from there when the header's filter icon is clicked. */
+.LeftListSizableContainer div:has(> .SearchInput) {
+    height: 0 !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    overflow: visible !important;
+    visibility: hidden;
+}
+
+.LeftListSizableContainer div:has(> .SearchInput) div:has(> .DialogHeader) { visibility: visible; }
+
+/* Only the Steam menu stays; View, Friends, Games and Help are hidden. */
+.TopBar .RootMenuButton:not(:first-child) { display: none !important; }
+
+/* Steam logo + menus */
+.TopBar .RootMenuButton {
+    height: 32px;
+    padding: 0 10px !important;
+    border-radius: 6px;
+    display: flex !important;
+    align-items: center;
+    color: var(--lumen-text-2) !important;
+    font: 400 13px var(--lumen-font) !important;
+    transition: background var(--lumen-dur) ease, color var(--lumen-dur) ease;
+}
+
+.TopBar .RootMenuButton:hover {
+    background: var(--lumen-card-hover);
+    color: var(--lumen-text) !important;
+}
+
+.TopBar .RootMenuButton:not(:first-child)::after {
+    content: "";
+    width: 6px;
+    height: 6px;
+    margin-left: 6px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: translateY(-2px) rotate(45deg) scale(0.8);
+    opacity: 0.7;
+}
+
+/* The Steam menu shows only the logo, in a 32px box like the arrows. */
+.TopBar .RootMenuButton:first-child {
+    width: 32px;
+    padding: 0 !important;
+    justify-content: center;
+}
+
+.TopBar .SteamButton {
+    font-size: 0 !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0 !important;
+    color: var(--lumen-text) !important;
+}
+
+.TopBar .SteamButton .Logo { width: 18px !important; height: 18px !important; margin: 0 !important; }

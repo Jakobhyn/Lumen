@@ -1,0 +1,327 @@
+/* Lumen: the Steam client windows (main window, popups, friends).
+   Steam's React UI keeps readable class names next to the hashed ones
+   (.TopBar, .BottomBar, .LibraryHome …), so this file only uses those. */
+
+/* ---- Steam's own palette, remapped to neutral greys and the Lumen accent ---- */
+:root {
+    --font-family: var(--lumen-font) !important;
+
+    --color-greyneutral-1: #0f0f0f;
+    --color-greyneutral-2: #161616;
+    --color-greyneutral-3: #1a1a1a;
+    --color-greyneutral-4: #1e1e1e;
+    --color-greyneutral-5: #222222;
+    --color-greyneutral-6: #272727;
+    --color-greyneutral-7: #2e2e2e;
+    --color-greyneutral-8: #3a3a3a;
+    --color-greyneutral-9: #474747;
+    --color-greyneutral-10: #6b6b6b;
+    --color-greyneutral-11: #8f8f8f;
+    --color-greyneutral-12: #bdbdbd;
+
+    --color-dull-1: #0f0f0f;
+    --color-dull-2: #161616;
+    --color-dull-3: #1a1a1a;
+    --color-dull-4: #1e1e1e;
+    --color-dull-5: #222222;
+    --color-dull-6: #272727;
+    --color-dull-7: #2e2e2e;
+    --color-dull-8: #3a3a3a;
+    --color-dull-9: #474747;
+    --color-dull-10: #6b6b6b;
+    --color-dull-11: #8f8f8f;
+    --color-dull-12: #bdbdbd;
+
+    --color-accent-3: color-mix(in srgb, var(--lumen-accent) 18%, #1a1a1a);
+    --color-accent-4: color-mix(in srgb, var(--lumen-accent) 28%, #1a1a1a);
+    --color-accent-5: color-mix(in srgb, var(--lumen-accent) 38%, #1a1a1a);
+    --color-accent-6: color-mix(in srgb, var(--lumen-accent) 50%, #1a1a1a);
+    --color-accent-7: color-mix(in srgb, var(--lumen-accent) 70%, #1a1a1a);
+    --color-accent-8: var(--lumen-accent);
+    --color-accent-9: var(--lumen-accent);
+    --color-accent-10: var(--lumen-accent-hover);
+    --color-accent-11: var(--lumen-accent-hover);
+    --color-accent-contrast: var(--lumen-on-accent);
+
+    --color-text-light-title: #ffffff;
+    --color-text-light-subtitle: #e4e4e4;
+    --color-text-light-body: #c8c8c8;
+    --color-text-light-description: #a8a8a8;
+    --color-text-light-note: #707070;
+    --color-text-body-title: #ffffff;
+    --color-text-body-subtitle: #e4e4e4;
+    --color-text-body-body: #c8c8c8;
+    --color-text-body-description: #a8a8a8;
+    --color-text-body-note: #707070;
+
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+
+    --virtualmenu-accent: var(--lumen-accent);
+    --virtualmenu-bg-hover: var(--lumen-accent-soft);
+}
+
+body {
+    font-family: var(--lumen-font);
+}
+
+::-webkit-scrollbar { width: 6px !important; height: 6px !important; background: transparent !important; }
+::-webkit-scrollbar-thumb { background: var(--lumen-stroke-strong) !important; border-radius: 3px !important; border: 0 !important; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.24) !important; }
+::-webkit-scrollbar-track, ::-webkit-scrollbar-corner { background: transparent !important; }
+
+/* ---- Window frame ---- */
+
+.ForceOpaqueBackground { background: var(--lumen-bg-deep) !important; }
+
+.TopBar {
+    background: var(--lumen-bg-deep) !important;
+    box-shadow: none !important;
+}
+
+.TitleBar { color: var(--lumen-text-2); }
+
+/* Store / Library / Community / profile tabs, Fluent navigation style:
+   sentence case, rounded hover, and the active tab tinted in the accent
+   with a short accent bar on its left edge. */
+.SuperNav { gap: 2px; }
+.SuperNavMenu { padding: 0 1px !important; }
+
+.SuperNavMenu .MenuButton {
+    position: relative;
+    padding: 5px 14px 5px 16px !important;
+    margin: 0 !important;
+    border-radius: 6px;
+    text-transform: none !important;
+    font: 600 14px/20px var(--lumen-font) !important;
+    letter-spacing: 0 !important;
+    color: var(--lumen-text-2) !important;
+    transition: background var(--lumen-dur) ease, color var(--lumen-dur) ease;
+}
+
+.SuperNavMenu .MenuButton:hover {
+    background: var(--lumen-card-hover);
+    color: var(--lumen-text) !important;
+}
+
+.SuperNavMenu .MenuButton::before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    width: 3px;
+    height: 0;
+    border-radius: 2px;
+    background: var(--lumen-accent);
+    transform: translateY(-50%);
+    transition: height 200ms var(--lumen-ease);
+}
+
+.SuperNavMenu.Selected .MenuButton,
+.SuperNavMenu .MenuButton.Selected {
+    background: var(--lumen-accent-soft);
+    color: var(--lumen-accent) !important;
+}
+
+.SuperNavMenu.Selected .MenuButton::before,
+.SuperNavMenu .MenuButton.Selected::before { height: 16px; }
+
+/* Steam's own underline under the active tab */
+.SuperNavMenu .MenuButton::after { display: none !important; }
+.SuperNavMenu .MenuButton { border-bottom: 0 !important; box-shadow: none !important; }
+
+.AccountMenu {
+    background: var(--lumen-card) !important;
+    border-radius: var(--lumen-radius-sm) !important;
+    color: var(--lumen-text) !important;
+}
+
+/* Address bar over store and community pages */
+.URLBar {
+    background: var(--lumen-bg-deep) !important;
+    border: 0 !important;
+}
+
+.URLBarText {
+    background: var(--lumen-card);
+    border: 1px solid var(--lumen-stroke);
+    border-radius: 999px;
+    padding: 0 12px;
+    margin: 0 8px;
+}
+
+.URLBar .URL { color: var(--lumen-text-3) !important; font-family: var(--lumen-font) !important; }
+
+.BottomBar {
+    background: var(--lumen-bg-deep) !important;
+    border-top: 1px solid var(--lumen-stroke) !important;
+    box-shadow: none !important;
+}
+
+.BottomBar .Text,
+.BottomBar .Queue { color: var(--lumen-text-3) !important; }
+
+/* ---- Library: left game list ---- */
+
+.LeftListSizableContainer > div {
+    background: var(--lumen-bg-deep) !important;
+    border-right: 1px solid var(--lumen-stroke);
+}
+
+.GameListHomeAndSearch { background: transparent !important; }
+
+.HomeBox .Bar {
+    background: var(--lumen-card) !important;
+    border-radius: var(--lumen-radius) !important;
+    color: var(--lumen-text-2) !important;
+}
+
+.HomeBox .Bar:hover { background: var(--lumen-card-hover) !important; }
+.HomeBox .Bar.Selected { background: var(--lumen-card-hover) !important; color: var(--lumen-text) !important; }
+
+.SearchBar .MenuHeader,
+.SearchInput,
+.SearchInput + *,
+.SearchBar [class*="Container"]:has(> .SearchInput) {
+    background: var(--lumen-card) !important;
+    border: 1px solid var(--lumen-stroke) !important;
+    border-radius: var(--lumen-radius-sm) !important;
+}
+
+.SearchInput { border: 0 !important; }
+
+.SectionHeaderContent {
+    color: var(--lumen-text-3) !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.04em;
+}
+
+.GameListEntryContainer {
+    border-radius: var(--lumen-radius-sm);
+    color: var(--lumen-text-2);
+}
+
+.GameListEntryContainer:hover { background: var(--lumen-card-hover) !important; }
+
+/* ---- Library: home and game pages ---- */
+
+.AppDetailsMain > .Container,
+.LibraryHome,
+.UpdatesContainer {
+    background: var(--lumen-bg) !important;
+    background-image: none !important;
+}
+
+.UpdatesContainer { border-bottom: 1px solid var(--lumen-stroke); }
+
+.ShowcaseHeader,
+.HeaderPageControls .Name { color: var(--lumen-text) !important; font-family: var(--lumen-font-display) !important; }
+
+.DialogDropDown_CurrentDisplay {
+    background: var(--lumen-card) !important;
+    border: 1px solid var(--lumen-stroke);
+    border-radius: var(--lumen-radius-sm) !important;
+}
+
+/* Page grounds that Steam paints with blue-grey gradients */
+.AppDetailsTransitionGroup,
+.DownloadsPage {
+    background: var(--lumen-bg) !important;
+    background-image: none !important;
+}
+
+.DownloadsPage .SectionItem.Active { background: var(--lumen-bg-deep) !important; border-bottom: 1px solid var(--lumen-stroke); }
+.DownloadsPage .SectionItem:not(.Active) { border-radius: var(--lumen-radius); }
+.DownloadsPage .SectionItem:not(.Active):hover { background: var(--lumen-card) !important; }
+.DownloadsPage .SectionTitle { font-family: var(--lumen-font-display) !important; }
+
+/* ---- Buttons (Steam's DialogButton everywhere) ---- */
+
+.DialogButton {
+    background: var(--lumen-card-hover) !important;
+    background-image: none !important;
+    border: 1px solid var(--lumen-stroke) !important;
+    border-radius: var(--lumen-radius-sm) !important;
+    color: var(--lumen-text) !important;
+    box-shadow: none !important;
+    font-family: var(--lumen-font) !important;
+    transition: background var(--lumen-dur) ease !important;
+}
+
+.DialogButton:hover:not(:disabled) { background: rgba(255, 255, 255, 0.11) !important; }
+
+.DialogButton.Primary,
+.DialogButton._DialogLayout.Primary {
+    background: var(--lumen-accent) !important;
+    border-color: transparent !important;
+    color: var(--lumen-on-accent) !important;
+}
+
+.DialogButton.Primary:hover:not(:disabled) { background: var(--lumen-accent-hover) !important; }
+
+/* ---- Menus (Steam / View / Friends … dropdowns, right-click menus, tab flyouts) ---- */
+
+.contextMenu,
+.contextMenuContents {
+    background: var(--lumen-layer) !important;
+    border: 1px solid var(--lumen-stroke-strong) !important;
+    border-radius: var(--lumen-radius) !important;
+    box-shadow: var(--lumen-shadow) !important;
+}
+
+.contextMenuContents { border: 0 !important; padding: 4px !important; }
+
+.contextMenuItem {
+    border-radius: var(--lumen-radius-sm) !important;
+    color: var(--lumen-text-2) !important;
+    font-family: var(--lumen-font) !important;
+    margin: 1px 0;
+}
+
+.contextMenuItem:hover,
+.contextMenuItem.active {
+    background: var(--lumen-card-hover) !important;
+    color: var(--lumen-text) !important;
+}
+
+.MenuItem.Separator { border-color: var(--lumen-stroke) !important; margin: 4px 8px !important; }
+
+/* ---- Friends list and chat ---- */
+
+.friendsui-container,
+.friendsListContainer,
+.friendlist,
+.chatEntry,
+.chatWindow,
+.ChatTabContent,
+.chatTabSetContainer {
+    background: var(--lumen-bg) !important;
+    background-image: none !important;
+    font-family: var(--lumen-font) !important;
+}
+
+.friendListHeaderContainer,
+.friendlistListContainer .groupHeader,
+.chatHeader {
+    background: var(--lumen-bg-deep) !important;
+    background-image: none !important;
+}
+
+.friend:hover,
+.friendlistListContainer .friend:hover { background: var(--lumen-card-hover) !important; }
+
+.chatEntry textarea,
+.chatentry_chatTextarea,
+.friendSearchInput {
+    background: var(--lumen-card) !important;
+    border: 1px solid var(--lumen-stroke) !important;
+    border-radius: var(--lumen-radius-sm) !important;
+}
+
+/* Covers: rounded corners everywhere */
+.LibraryItemBox,
+.ShowcaseGrid img,
+.PageableContainer img {
+    border-radius: var(--lumen-radius) !important;
+}

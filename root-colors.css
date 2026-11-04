@@ -1,0 +1,10 @@
+/* Colors that can be changed in Millennium's theme settings (RootColors in skin.json).
+   Opaque #hex only; Millennium injects the chosen values on top of the theme.
+   Only used while "Accent → Custom" is selected. */
+:root {
+    /*
+     * @name Accent
+     * @description Buttons, selection, links and the play button
+     */
+    --lumen-user-accent: #60CDFF;
+}

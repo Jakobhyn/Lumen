@@ -1,0 +1,97 @@
+/* Lumen: store and community pages inside Steam.
+   Swaps Steam's blue page tones for the neutral Lumen surfaces. */
+
+body.v6,
+body.v6 .page_content_ctn,
+body.v6 .game_page_background,
+.responsive_page_frame {
+    background: var(--lumen-bg) !important;
+    font-family: var(--lumen-font);
+}
+
+body.v6 .game_page_background.game { background-image: none !important; }
+
+/* Store navigation bar (React "store-menu-v7"; inner classes are hashed, so go by structure) */
+[data-featuretarget="store-menu-v7"] > div > div > div > .Panel {
+    background: var(--lumen-acrylic) !important;
+    backdrop-filter: blur(24px);
+    border-bottom: 1px solid var(--lumen-stroke);
+    font-family: var(--lumen-font);
+}
+
+[data-featuretarget="store-menu-v7"] form {
+    background: var(--lumen-card) !important;
+    border: 1px solid var(--lumen-stroke);
+    border-radius: var(--lumen-radius-sm);
+    overflow: hidden;
+}
+
+[data-featuretarget="store-menu-v7"] form button[type="submit"] {
+    background: transparent !important;
+    color: var(--lumen-text-2);
+}
+
+[data-featuretarget="store-menu-v7"] form button[type="submit"]:hover { color: var(--lumen-accent); }
+
+/* Older store navigation */
+#store_nav_area .store_nav_bg {
+    background: var(--lumen-acrylic) !important;
+    border: 1px solid var(--lumen-stroke);
+    border-radius: var(--lumen-radius);
+    backdrop-filter: blur(24px);
+    box-shadow: var(--lumen-shadow);
+}
+
+#store_nav_area .store_nav .tab > span,
+#store_nav_area .store_nav .tab { background: transparent !important; color: var(--lumen-text-2); }
+#store_nav_area .store_nav .tab:hover > span { color: var(--lumen-text); }
+
+#store_nav_search_term,
+.searchbox {
+    background: var(--lumen-card) !important;
+    border: 1px solid var(--lumen-stroke) !important;
+    border-radius: var(--lumen-radius-sm) !important;
+    color: var(--lumen-text) !important;
+}
+
+/* Purchase blocks, review and info panels */
+.game_area_purchase_game,
+.game_area_purchase_game_dropdown_subscription,
+.block.responsive_apppage_details_left,
+.rightcol .block,
+.user_reviews_summary_bar,
+.review_box {
+    background: var(--lumen-card) !important;
+    border: 1px solid var(--lumen-stroke);
+    border-radius: var(--lumen-radius) !important;
+    box-shadow: none !important;
+}
+
+.game_purchase_action_bg,
+.game_area_purchase_game .game_purchase_action .game_purchase_action_bg {
+    background: var(--lumen-layer) !important;
+    border-radius: var(--lumen-radius-sm);
+}
+
+.discount_block .discount_pct {
+    background: var(--lumen-accent) !important;
+    color: var(--lumen-on-accent) !important;
+}
+
+.btn_green_steamui,
+.btn_green_steamui > span {
+    background: var(--lumen-accent) !important;
+    color: var(--lumen-on-accent) !important;
+    border-radius: var(--lumen-radius-sm) !important;
+    text-shadow: none !important;
+}
+
+.btn_green_steamui:hover,
+.btn_green_steamui:hover > span { background: var(--lumen-accent-hover) !important; }
+
+a { color: inherit; }
+.game_page_autocollapse_ctn h2,
+.game_area_description h2 { color: var(--lumen-text-2) !important; border-color: var(--lumen-stroke) !important; letter-spacing: 0.02em; }
+
+::-webkit-scrollbar { width: 6px; background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--lumen-stroke-strong); border-radius: 3px; }

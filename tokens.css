@@ -1,0 +1,38 @@
+/* Lumen design tokens: a calm Fluent-style dark palette.
+   Shared by the client windows and the store/community pages. */
+:root {
+    --lumen-font: "Segoe UI Variable Text", "Segoe UI Variable", "Segoe UI", system-ui, sans-serif;
+    --lumen-font-display: "Segoe UI Variable Display", "Segoe UI Variable", "Segoe UI", system-ui, sans-serif;
+
+    /* Surfaces, darkest to lightest */
+    --lumen-bg-deep: #1a1a1a;
+    --lumen-bg: #202020;
+    --lumen-layer: #272727;
+    --lumen-layer-2: #2d2d2d;
+    --lumen-card: rgba(255, 255, 255, 0.04);
+    --lumen-card-hover: rgba(255, 255, 255, 0.07);
+    --lumen-card-press: rgba(255, 255, 255, 0.025);
+    --lumen-stroke: rgba(255, 255, 255, 0.07);
+    --lumen-stroke-strong: rgba(255, 255, 255, 0.12);
+    --lumen-acrylic: rgba(32, 32, 32, 0.82);
+
+    /* Text */
+    --lumen-text: #ffffff;
+    --lumen-text-2: rgba(255, 255, 255, 0.79);
+    --lumen-text-3: rgba(255, 255, 255, 0.54);
+
+    /* Accent: preset files set --lumen-accent-preset, custom colors win when chosen */
+    --lumen-accent: var(--lumen-accent-preset, #60CDFF);
+    --lumen-accent-hover: color-mix(in srgb, var(--lumen-accent) 88%, white);
+    --lumen-accent-soft: color-mix(in srgb, var(--lumen-accent) 18%, transparent);
+    --lumen-on-accent: #0b0b0b;
+
+    --lumen-positive: #6ccb5f;
+    --lumen-negative: #ff99a4;
+
+    --lumen-radius: 8px;
+    --lumen-radius-sm: 4px;
+    --lumen-shadow: 0 8px 32px rgba(0, 0, 0, 0.42);
+    --lumen-ease: cubic-bezier(0.1, 0.9, 0.2, 1);
+    --lumen-dur: 167ms;
+}

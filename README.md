@@ -1,0 +1,51 @@
+# Lumen
+
+A calm, dark Fluent-style theme for the Steam client, built for [Millennium](https://steambrew.app).
+
+- **Cinematic store page**: a game's trailer plays muted across the whole window, with the logo, short description, price and buttons on top.
+- **One-row header**: back/forward, the Steam menu as a logo, the Store/Library/Community/profile tabs, a game search in the middle, and a plain bell and avatar on the right.
+- **Neutral greys** instead of Steam's blue tones, Segoe UI Variable, rounded corners and Fluent-style buttons and menus.
+- **Accent color** that follows Windows, one of the presets, or any color you pick.
+
+## Install
+
+1. Install [Millennium](https://steambrew.app).
+2. Copy this folder to `Steam/millennium/themes/Lumen`.
+3. In Steam open Millennium → Themes and choose **Lumen**, then restart Steam.
+
+## Settings
+
+| Tab | Setting | Options |
+|---|---|---|
+| Colors | Accent | Windows (default), Sky, Violet, Mint, Amber, Rose, Custom |
+| Window | Header | Compact (default), Classic |
+| Store | Store trailer | Cinematic (default), Still, Classic |
+
+## Layout
+
+| Path | What it styles |
+|---|---|
+| `skin.json` | Millennium manifest: patches and settings |
+| `tokens.css` | Shared design tokens (colors, fonts, radii) |
+| `root-colors.css` | Colors editable in the Millennium settings |
+| `client.css` | Client windows: frame, library, downloads, menus, friends |
+| `webkit.css` | Store and community pages |
+| `store/` | Cinematic store hero (trailer player and layout) |
+| `js/header-search.js` | The search field in the compact header |
+| `options/` | Files switched on by the settings |
+| `tools/` | Dev helpers that talk to Steam over CEF remote debugging |
+
+## Development
+
+Create an empty file `Steam/.cef-enable-remote-debugging` and restart Steam; the client then
+listens on `http://127.0.0.1:8080`. Steam removes the file again on the next start.
+
+```sh
+node tools/cdp.js list                                # list Steam windows
+node tools/cdp.js shot "^Steam$" main.png             # screenshot a window
+sh tools/push.sh "^Steam$" client.css                 # live-inject CSS without restarting
+```
+
+## License
+
+[MIT](LICENSE)

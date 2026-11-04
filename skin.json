@@ -1,0 +1,76 @@
+{
+    "name": "Lumen",
+    "author": "Jakob",
+    "description": "A calm, dark Fluent-style theme with a cinematic store page: the trailer plays across the whole window behind the logo, price and buttons.",
+    "version": "0.1.0",
+    "tags": ["Dark", "Minimal", "Fluent", "Cinematic"],
+
+    "RootColors": "root-colors.css",
+
+    "Conditions": {
+        "Accent": {
+            "description": "The accent color for buttons, selection and links. Custom uses the color from the Colors page.",
+            "tab": "Colors",
+            "default": "Windows",
+            "values": {
+                "Windows": { "TargetCss": { "affects": [".*"], "src": "options/accent-windows.css" } },
+                "Sky": {},
+                "Violet": { "TargetCss": { "affects": [".*"], "src": "options/accent-violet.css" } },
+                "Mint": { "TargetCss": { "affects": [".*"], "src": "options/accent-mint.css" } },
+                "Amber": { "TargetCss": { "affects": [".*"], "src": "options/accent-amber.css" } },
+                "Rose": { "TargetCss": { "affects": [".*"], "src": "options/accent-rose.css" } },
+                "Custom": { "TargetCss": { "affects": [".*"], "src": "options/accent-custom.css" } }
+            }
+        },
+        "Header": {
+            "description": "Compact: one row with the Steam logo (opens the Steam menu), back/forward and the tabs. Classic: Steam's menu bar above the tabs.",
+            "tab": "Window",
+            "default": "Compact",
+            "values": {
+                "Compact": {
+                    "TargetCss": { "affects": ["^(Steam|Steam Games List)$"], "src": "options/header-compact.css" },
+                    "TargetJs": { "affects": ["^(Steam|Steam Games List)$"], "src": "js/header-search.js" }
+                },
+                "Classic": {}
+            }
+        },
+        "Store trailer": {
+            "description": "Cinematic: a game's store page plays its trailer muted across the window. Still: a screenshot instead of the video. Classic: Steam's own layout.",
+            "tab": "Store",
+            "default": "Cinematic",
+            "values": {
+                "Cinematic": {},
+                "Still": { "TargetCss": { "affects": [".*"], "src": "options/hero-still.css" } },
+                "Classic": { "TargetCss": { "affects": [".*"], "src": "options/hero-off.css" } }
+            }
+        }
+    },
+
+    "Patches": [
+        {
+            "MatchRegexString": ".*",
+            "TargetCss": "tokens.css"
+        },
+        {
+            "MatchRegexString": "^(Steam|Steam Games List|Friends List|.* Menu|Menu|.*Supernav)$",
+            "TargetCss": "client.css"
+        },
+        {
+            "MatchRegexString": ".friendsui-container",
+            "TargetCss": "client.css"
+        },
+        {
+            "MatchRegexString": ".ModalDialogPopup",
+            "TargetCss": "client.css"
+        },
+        {
+            "MatchRegexString": "^https://(store\\.steampowered|steamcommunity)\\.com/.*",
+            "TargetCss": "webkit.css"
+        },
+        {
+            "MatchRegexString": "^https://store\\.steampowered\\.com/app/.*",
+            "TargetCss": "store/hero.css",
+            "TargetJs": "store/hero.js"
+        }
+    ]
+}

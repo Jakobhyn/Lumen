@@ -1,0 +1,171 @@
+/* Lumen: cinematic store page (built by store/hero.js). */
+
+/* Hide Steam's own top block once the hero is there, and keep the page
+   hidden until then so the classic layout never flashes. */
+html.lumen-hero-on .page_title_area,
+html.lumen-hero-on .game_page_background_ctn,
+html.lumen-hero-on #game_highlights .rightcol,
+html.lumen-hero-on .responsive_page_header_img {
+    display: none !important;
+}
+
+@keyframes lumen-reveal { to { opacity: 1; } }
+
+html:not(.lumen-hero-on, .lumen-hero-off) .game_page_background.game {
+    opacity: 0;
+    animation: lumen-reveal 200ms ease 2.5s forwards;
+}
+
+.lumen-hero {
+    position: relative;
+    /* Break out of the centered 940px column to span the window. */
+    width: 100vw;
+    left: 50%;
+    margin-left: -50vw;
+    height: min(92vh, 900px);
+    min-height: 520px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    font-family: var(--lumen-font);
+    animation: lumen-reveal 400ms var(--lumen-ease) both;
+    opacity: 0;
+}
+
+.lumen-hero__backdrop {
+    position: absolute;
+    inset: 0;
+    background: var(--lumen-bg-deep) center / cover no-repeat;
+}
+
+.lumen-hero__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 900ms ease;
+}
+
+.lumen-hero.is-playing .lumen-hero__video { opacity: 1; }
+
+/* Darken toward the text at the bottom left and into the page below. */
+.lumen-hero__shade {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(to top, var(--lumen-bg) 0%, rgba(32, 32, 32, 0.85) 18%, rgba(32, 32, 32, 0) 55%),
+        linear-gradient(to right, rgba(20, 20, 20, 0.75) 0%, rgba(20, 20, 20, 0) 55%),
+        rgba(0, 0, 0, 0.12);
+}
+
+.lumen-hero__body {
+    position: absolute;
+    left: max(32px, calc(50vw - 470px));
+    bottom: 56px;
+    width: min(660px, calc(100vw - 64px));
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.lumen-hero__badges { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.lumen-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--lumen-stroke);
+    background: var(--lumen-acrylic);
+    backdrop-filter: blur(20px);
+    color: var(--lumen-text-2);
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.lumen-chip--deal b,
+.lumen-hero__price .lumen-chip--deal {
+    color: var(--lumen-on-accent);
+    background: var(--lumen-accent);
+    border-radius: 999px;
+    padding: 0 6px;
+    font-weight: 600;
+}
+
+.lumen-hero__price .lumen-chip--deal { padding: 2px 8px; border: 0; }
+.lumen-chip--review::before { content: "●"; font-size: 8px; color: var(--lumen-text-3); }
+.lumen-chip--review.is-positive { color: var(--lumen-positive); }
+.lumen-chip--review.is-positive::before { color: var(--lumen-positive); }
+.lumen-chip--review.is-negative { color: var(--lumen-negative); }
+.lumen-chip--review.is-negative::before { color: var(--lumen-negative); }
+
+.lumen-hero__logo {
+    width: min(640px, 100%);
+    max-height: 280px;
+    object-fit: contain;
+    object-position: left bottom;
+    filter: drop-shadow(0 6px 24px rgba(0, 0, 0, 0.55));
+}
+
+.lumen-hero__title {
+    margin: 0;
+    font: 600 52px/1.05 var(--lumen-font-display);
+    color: var(--lumen-text);
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+}
+
+.lumen-hero__desc {
+    margin: 0;
+    color: var(--lumen-text-2);
+    font-size: 15px;
+    line-height: 1.55;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.7);
+}
+
+.lumen-hero__price { display: flex; align-items: baseline; gap: 10px; }
+.lumen-hero__price:empty { display: none; }
+.lumen-hero__final { font: 600 30px/1 var(--lumen-font-display); color: var(--lumen-text); }
+.lumen-hero__price s { color: var(--lumen-text-3); font-size: 14px; }
+
+.lumen-hero__actions { display: flex; gap: 8px; }
+
+.lumen-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 40px;
+    min-width: 40px;
+    padding: 0 20px;
+    border: 1px solid var(--lumen-stroke-strong);
+    border-radius: var(--lumen-radius);
+    background: var(--lumen-acrylic);
+    backdrop-filter: blur(20px);
+    color: var(--lumen-text);
+    font: 600 14px var(--lumen-font);
+    cursor: pointer;
+    transition: background var(--lumen-dur) ease, transform var(--lumen-dur) var(--lumen-ease);
+}
+
+.lumen-btn:hover { background: rgba(60, 60, 60, 0.9); }
+.lumen-btn:active { transform: scale(0.97); }
+.lumen-btn--icon { padding: 0; width: 40px; }
+.lumen-btn--icon.is-on { color: var(--lumen-accent); }
+
+.lumen-btn--accent {
+    background: var(--lumen-accent);
+    border-color: transparent;
+    color: var(--lumen-on-accent);
+}
+
+.lumen-btn--accent:hover { background: var(--lumen-accent-hover); }
+
+/* The media gallery moves below the hero and takes the full column. */
+html.lumen-hero-on #game_highlights .lumen-media {
+    float: none;
+    width: 100%;
+    scroll-margin-top: 80px;
+}

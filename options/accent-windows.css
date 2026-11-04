@@ -1,0 +1,2 @@
+/* Accent: follow the Windows accent color (Millennium provides --SystemAccentColor*). */
+:root { --lumen-accent-preset: var(--SystemAccentColorLight2, #60CDFF); }
