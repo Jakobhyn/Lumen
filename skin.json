@@ -90,7 +90,7 @@
             }
         },
         "Library page": {
-            "description": "Cinematic: a game's art fills most of the window and slowly drifts, with a large logo and the play bar on top, like the store page. Classic: Steam's header.",
+            "description": "Cinematic: the game fills the first screen (trailer or art), with a large logo, a bigger play bar and links, and a More button that glides down to activity and achievements. Classic: Steam's header.",
             "tab": "Library",
             "default": "Cinematic",
             "values": {
@@ -100,6 +100,12 @@
                             "^(Steam|Steam Games List)$"
                         ],
                         "src": "options/library-cinematic.css"
+                    },
+                    "TargetJs": {
+                        "affects": [
+                            "^(Steam|Steam Games List)$"
+                        ],
+                        "src": "js/library-more.js"
                     }
                 },
                 "Classic": {}
