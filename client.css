@@ -500,16 +500,17 @@ body {
 
 /* Comment and like counts: one row 20px from the right edge. News posts
    have the row directly in the card, other entries inside the comment
-   thread, which nests a second rating bar that must not get the padding. */
+   thread (its class changes once shown, so go by structure), which nests a
+   second rating bar that must not get the padding. */
 .AppDetailsMain .AppActivityDay [data-lumen-date] > .RatingBar,
-.AppDetailsMain .AppActivityDay [data-lumen-date] .ActivityCommentThreadMinimized {
+.AppDetailsMain .AppActivityDay [data-lumen-date] .CommentThread > div {
     box-sizing: border-box !important;
     width: 100% !important;
-    padding: 0 14px 10px !important;
+    padding: 0 20px 4px !important;
     justify-content: flex-end !important;
 }
 
-/* News posts: line the counts up with the other cards (their thread adds 6px). */
+/* News posts: same right edge as the comment thread row. */
 .AppDetailsMain .AppActivityDay [data-lumen-date] > .RatingBar { padding-right: 20px !important; }
 
 .AppDetailsMain .AppActivityDay [data-lumen-date] .RatingContainer {
