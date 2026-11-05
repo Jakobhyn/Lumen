@@ -68,6 +68,27 @@ test("a script with a syntax error fails", () => {
     assert.match(r.stderr, /x\.js: syntax error/);
 });
 
+test("an option rule that the base CSS silently overrides fails", () => {
+    const r = run(fixture({
+        "skin.json": skin(),
+        "root.css": ":root { --a: #112233; }",
+        "client.css": ".Bar { background: red; border-top: 1px solid red; }",
+        "options/floating.css": ".Bar { background: none; border: 0; } .Bar.Bar { color: red; }",
+    }));
+    assert.strictEqual(r.status, 1);
+    assert.match(r.stderr, /options\/floating\.css: "\.Bar" is overridden .* for background, border/);
+});
+
+test("a more specific option rule passes", () => {
+    const r = run(fixture({
+        "skin.json": skin(),
+        "root.css": ":root { --a: #112233; }",
+        "client.css": ".Bar { background: red; }",
+        "options/floating.css": ".Bar.Bar { background: none; }",
+    }));
+    assert.strictEqual(r.status, 0, r.stderr);
+});
+
 test("--tag must match the skin.json version", () => {
     const root = fixture({ "skin.json": skin(), "root.css": ":root { --a: #112233; }" });
     assert.strictEqual(run(root, "--tag", "v1.0.0").status, 0);

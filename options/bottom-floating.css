@@ -4,8 +4,9 @@
    something downloads, the downloads button widens into a pill with
    Steam's own progress and pushes Add a Game to the left. */
 
-/* The bar's slot collapses so pages run to the bottom edge. */
-.BottomBar {
+/* The bar's slot collapses so pages run to the bottom edge. Option files load
+   before client.css, so the doubled class is needed to beat its .BottomBar. */
+.BottomBar.BottomBar {
     position: absolute !important;
     left: 0;
     right: 0;
@@ -77,8 +78,12 @@ div:has(> .BottomBar) {
     clip-path: inset(50%);
 }
 
-.BottomBar .Icon,
-.BottomBar .Icon svg {
+.BottomBar .AddGameButton .Icon,
+.BottomBar .AddGameButton .Icon svg,
+.BottomBar .FriendsButton .Icon,
+.BottomBar .FriendsButton .Icon svg,
+.BottomBar .DownloadStatus > div:has(.Queue) .Icon,
+.BottomBar .DownloadStatus > div:has(.Queue) .Icon svg {
     width: 18px !important;
     height: 18px !important;
     margin: 0 !important;
@@ -107,12 +112,25 @@ div:has(> .BottomBar) {
     justify-content: flex-start;
 }
 
+/* The game's picture: a 30px circle at the pill's left end. */
+.BottomBar .DownloadStatus > div:not(:has(.Queue)) .Icon,
+.BottomBar .DownloadStatus > div:not(:has(.Queue)) .Icon > div,
 .BottomBar .DownloadStatus > div:not(:has(.Queue)) img {
     width: 30px !important;
     height: 30px !important;
+    flex: none;
+    margin: 0 !important;
     border-radius: 50%;
+    overflow: hidden;
     object-fit: cover;
 }
+
+.BottomBar .DownloadStatus > div:not(:has(.Queue)) .IconBevel { display: none !important; }
+.BottomBar .DownloadStatus > div:not(:has(.Queue)) .tool-tip-source { display: flex; align-items: center; }
+.BottomBar .DownloadStatus > div:not(:has(.Queue)) > div { display: flex !important; align-items: center; gap: 10px; width: 100%; }
+
+/* Steam's black progress track becomes a faint line. */
+.BottomBar .DownloadStatus .ProgressBar { background: var(--lumen-stroke-strong) !important; border-radius: 2px; }
 
 .BottomBar .DownloadStatus > div:not(:has(.Queue)) > * { font: 12px var(--lumen-font) !important; }
 
