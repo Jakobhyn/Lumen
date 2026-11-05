@@ -939,6 +939,9 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
 .UpdatesContainer .PageLeft svg,
 .UpdatesContainer .PageRight svg { width: 14px; height: 14px; }
 
+/* The row behind the cards stays clear, so the gaps show the page. */
+.EventRowCarousel.BoxCarousel { background: none !important; }
+
 /* All cards as tall as the tallest, so one- and two-line titles line up. */
 .EventRowCarousel .BoxCarouselContents { align-items: stretch !important; }
 
