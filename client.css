@@ -1239,3 +1239,14 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
 
 .AppPartnerEventsPage .ControlSectionRightSide .CloseButton:active,
 .AppPartnerEventsPage .ControlSectionRightSide .ScrollButton:active { transform: scale(0.95); }
+
+/* Achievements in activity: Steam shows an achievement's details only when
+   the pointer is on its icon. The icon's hover area is stretched over the
+   whole entry, so the name and description open them too. */
+.AppDetailsMain .PrimaryAchievement { position: relative; cursor: default; }
+
+.AppDetailsMain .PrimaryAchievement .AchievementHoverContainer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+}
