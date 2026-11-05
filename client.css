@@ -910,3 +910,179 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
 @media (prefers-reduced-motion: reduce) {
     .ScrollToTopButton > div::before { animation: none; transform: translateY(1px) rotate(45deg); }
 }
+
+/* ---- Library home: What's New as Fluent cards ---- */
+
+.UpdatesContainer .HeaderPageControls .Name {
+    color: var(--lumen-text);
+    font: 600 16px/21px var(--lumen-font-display);
+}
+
+.UpdatesContainer .PageClickContainer { display: flex; gap: 6px; height: 28px; }
+
+.UpdatesContainer .PageLeft,
+.UpdatesContainer .PageRight {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--lumen-stroke);
+    border-radius: 50%;
+    background: var(--lumen-card);
+    transition: background var(--lumen-dur) ease;
+}
+
+.UpdatesContainer .PageLeft:hover,
+.UpdatesContainer .PageRight:hover { background: var(--lumen-card-hover); }
+.UpdatesContainer .PageLeft.Disabled,
+.UpdatesContainer .PageRight.Disabled { opacity: 0.35; }
+.UpdatesContainer .PageLeft svg,
+.UpdatesContainer .PageRight svg { width: 14px; height: 14px; }
+
+.PartnerEventRowCapsule.PartnerEventRowCapsule {
+    position: relative;
+    padding-bottom: 10px;
+    border: 1px solid var(--lumen-stroke);
+    border-radius: var(--lumen-radius);
+    background: var(--lumen-card);
+    overflow: hidden;
+    transition: background var(--lumen-dur) ease, transform var(--lumen-dur) var(--lumen-ease), box-shadow var(--lumen-dur) ease;
+}
+
+.PartnerEventRowCapsule.PartnerEventRowCapsule:hover {
+    background: var(--lumen-card-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* "Today" / "Yesterday" as a chip on the picture */
+.PartnerEventRowCapsule .EventTime {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 2;
+    width: auto !important;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--lumen-acrylic);
+    backdrop-filter: blur(12px);
+    color: var(--lumen-text) !important;
+    font: 600 11px/14px var(--lumen-font);
+}
+
+.PartnerEventRowCapsule .PartnerEventRowCapsule_Container,
+.PartnerEventRowCapsule .PartnerEventRowCapsule_MainImageContainer { border-radius: 0; }
+
+.PartnerEventRowCapsule .PartnerEventRowCapsule_TextCtn { padding: 10px 12px 2px; }
+
+.PartnerEventRowCapsule .PartnerEventRowCapsule_TextTitle {
+    color: var(--lumen-text) !important;
+    font: 600 13px/18px var(--lumen-font) !important;
+}
+
+.PartnerEventRowCapsule .PartnerEventRowCapsule_TextCtn ~ * { padding-left: 12px; padding-right: 12px; }
+
+/* ---- Library home: "Continue playing" banner (js/library-home.js) ---- */
+
+.lumen-continue {
+    position: relative;
+    height: clamp(260px, 34vh, 380px);
+    margin: 4px 0 28px;
+    border: 1px solid var(--lumen-stroke);
+    border-radius: var(--lumen-radius);
+    overflow: hidden;
+    background: var(--lumen-layer);
+    font-family: var(--lumen-font);
+}
+
+.lumen-continue__art {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    animation: lumen-continue-drift 30s ease-in-out infinite alternate;
+}
+
+@keyframes lumen-continue-drift { to { transform: scale(1.06); } }
+
+.lumen-continue__shade {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(to right, rgba(20, 20, 20, 0.9) 0%, rgba(20, 20, 20, 0.55) 40%, rgba(20, 20, 20, 0) 70%),
+        linear-gradient(to top, rgba(20, 20, 20, 0.6) 0%, rgba(20, 20, 20, 0) 50%);
+}
+
+.lumen-continue__body {
+    position: absolute;
+    left: 32px;
+    bottom: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    max-width: min(520px, 60%);
+}
+
+.lumen-continue__label {
+    padding: 2px 10px;
+    border-radius: 999px;
+    background: var(--lumen-acrylic);
+    backdrop-filter: blur(12px);
+    color: var(--lumen-text-2);
+    font: 600 11px/16px var(--lumen-font);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.lumen-continue__logo {
+    max-width: 100%;
+    max-height: 120px;
+    object-fit: contain;
+    object-position: left bottom;
+    filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.6));
+}
+
+.lumen-continue__name {
+    margin: 0;
+    color: var(--lumen-text);
+    font: 600 34px/1.1 var(--lumen-font-display);
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
+}
+
+.lumen-continue__meta {
+    margin: 0;
+    color: var(--lumen-text-2);
+    font-size: 13px;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
+}
+
+.lumen-continue__actions { display: flex; gap: 8px; margin-top: 4px; }
+
+.lumen-continue__play,
+.lumen-continue__page {
+    height: 40px;
+    padding: 0 22px;
+    border: 1px solid var(--lumen-stroke-strong);
+    border-radius: var(--lumen-radius-sm);
+    background: var(--lumen-acrylic);
+    backdrop-filter: blur(16px);
+    color: var(--lumen-text);
+    font: 600 14px var(--lumen-font);
+    cursor: pointer;
+    transition: background var(--lumen-dur) ease, transform var(--lumen-dur) var(--lumen-ease);
+}
+
+.lumen-continue__play {
+    min-width: 120px;
+    border-color: transparent;
+    background: var(--lumen-accent);
+    color: var(--lumen-on-accent);
+}
+
+.lumen-continue__play:hover { background: var(--lumen-accent-hover); }
+.lumen-continue__page:hover { background: rgba(60, 60, 60, 0.9); }
+.lumen-continue__play:active,
+.lumen-continue__page:active { transform: scale(0.97); }

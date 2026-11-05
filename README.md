@@ -4,6 +4,7 @@ A calm, dark Fluent-style theme for the Steam client, built for [Millennium](htt
 
 - **Cinematic store page**: a game's trailer plays muted across the whole window, with the logo, short description, price and buttons on top. Below it sit a row with release date, developer, publisher, tags and the community hub, and a media strip whose trailers and screenshots open in a full-window viewer (trailers with sound).
 - **Cinematic library page**: the game fills the first screen with its store trailer (art as poster), a large logo and a bigger play bar; a "More" button glides down to activity and achievements, shown as Fluent-style cards.
+- **Library home**: a large "Continue playing" banner with the game you played last (art, logo, playtime, Play), and What's New as Fluent cards.
 - **Floating bottom buttons**: Steam's bottom bar becomes three round buttons side by side in the bottom right corner: Add a Game, Downloads (a progress pill while downloading) and Friends & Chat.
 - **Store browsing**: the front page carousel in Lumen colors, and a wider game hover box with the game's header art and all its tags.
 - **One-row header**: back/forward, the Steam menu as a logo, the Store/Library/Community/profile tabs, a game search in the middle, and a plain bell and avatar on the right.
@@ -25,6 +26,7 @@ A calm, dark Fluent-style theme for the Steam client, built for [Millennium](htt
 | Window | Bottom bar | Floating (default), Classic |
 | Library | Library page | Cinematic (default), Classic |
 | Library | Library trailer | On (default), Off |
+| Library | Continue banner | On (default), Off |
 | Store | Store trailer | Cinematic (default), Still, Classic |
 
 ## Layout
@@ -40,6 +42,7 @@ A calm, dark Fluent-style theme for the Steam client, built for [Millennium](htt
 | `store/` | Cinematic store page (hero, facts row, media strip, viewer) and store browsing (front page carousel, game hover box) |
 | `js/library-trailer.js` | Store trailer behind the library game page |
 | `js/library-activity.js` | Puts each activity entry's date on its card |
+| `js/library-home.js` | "Continue playing" banner on the library home |
 | `js/library-more.js` | "More" (down to the content) and "Top" (back up) on the game page |
 | `js/header-search.js` | The search field in the compact header |
 | `options/` | Files switched on by the settings |
