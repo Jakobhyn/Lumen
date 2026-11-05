@@ -1172,3 +1172,70 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
     font-size: 12px !important;
     letter-spacing: 0.04em;
 }
+
+/* ---- News reader (the overlay that opens an event) ----
+   Steam lays the article over a blurred page with a see-through card and a
+   blurred copy of the cover behind the text; Lumen makes it a solid panel. */
+
+.AppPartnerEventsPage .PartnerEvent.InLibraryView {
+    margin-bottom: 24px;
+    background: var(--lumen-layer) !important;
+    border: 1px solid var(--lumen-stroke-strong) !important;
+    border-radius: var(--lumen-radius) !important;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.AppPartnerEventsPage .EventBackgroundBlur { display: none !important; }
+.AppPartnerEventsPage .EventCoverImageBackground { border-radius: 0 !important; }
+
+.AppPartnerEventsPage .EventDetailTitleContainer {
+    background: none !important;
+    border-bottom: 1px solid var(--lumen-stroke);
+    font-family: var(--lumen-font);
+}
+
+.AppPartnerEventsPage .EventDetailsBody {
+    color: var(--lumen-text-2) !important;
+    font-family: var(--lumen-font) !important;
+    line-height: 1.6;
+}
+
+.AppPartnerEventsPage .EventDetailsBody b,
+.AppPartnerEventsPage .EventDetailsBody h1,
+.AppPartnerEventsPage .EventDetailsBody h2,
+.AppPartnerEventsPage .EventDetailsBody h3 { color: var(--lumen-text) !important; }
+
+.AppPartnerEventsPage .EventDetailsBody a { color: var(--lumen-accent) !important; }
+
+/* Footer with rating and share */
+.AppPartnerEventsPage .PartnerEvent .Container.Panel {
+    background: var(--lumen-layer-2) !important;
+    background-image: none !important;
+    border-top: 1px solid var(--lumen-stroke);
+}
+
+.AppPartnerEventsPage .ShareContainer {
+    background: var(--lumen-card) !important;
+    border: 1px solid var(--lumen-stroke);
+    border-radius: var(--lumen-radius-sm) !important;
+}
+
+/* Close, previous, next and the game button beside the article */
+.AppPartnerEventsPage .ControlSectionRightSide .CloseButton,
+.AppPartnerEventsPage .ControlSectionRightSide .ScrollButton {
+    background: var(--lumen-acrylic) !important;
+    border: 1px solid var(--lumen-stroke-strong) !important;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    color: var(--lumen-text) !important;
+    transition: background var(--lumen-dur) ease, transform var(--lumen-dur) var(--lumen-ease);
+}
+
+.AppPartnerEventsPage .ControlSectionRightSide .ScrollButton { border-radius: var(--lumen-radius-sm) !important; }
+
+.AppPartnerEventsPage .ControlSectionRightSide .CloseButton:hover,
+.AppPartnerEventsPage .ControlSectionRightSide .ScrollButton:hover { background: rgba(60, 60, 60, 0.95) !important; }
+
+.AppPartnerEventsPage .ControlSectionRightSide .CloseButton:active,
+.AppPartnerEventsPage .ControlSectionRightSide .ScrollButton:active { transform: scale(0.95); }
