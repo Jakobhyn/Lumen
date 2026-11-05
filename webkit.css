@@ -85,8 +85,7 @@ body.v6 .game_page_background.game { background-image: none !important; }
 .btn_blue_steamui,
 .btnv6_blue_hoverfade,
 .btnv6_grey_black,
-.queue_menu_arrow,
-.queue_control_button > div {
+.queue_menu_arrow {
     background: rgba(255, 255, 255, 0.06) !important;
     border: 1px solid var(--lumen-stroke) !important;
     border-radius: var(--lumen-radius-sm) !important;
@@ -110,8 +109,7 @@ body.v6 .game_page_background.game { background-image: none !important; }
 .btn_blue_steamui:hover,
 .btnv6_blue_hoverfade:hover,
 .btnv6_grey_black:hover,
-.queue_menu_arrow:hover,
-.queue_control_button > div:hover { background: rgba(255, 255, 255, 0.1) !important; }
+.queue_menu_arrow:hover { background: rgba(255, 255, 255, 0.1) !important; }
 
 /* The main purchase button keeps a little more weight. */
 .game_area_purchase_game:not(.demo_above_purchase) .btn_addtocart:not(.btn_packageinfo) .btn_green_steamui {
@@ -132,6 +130,21 @@ body.v6 .game_page_background.game { background-image: none !important; }
 }
 
 .queue_btn_active { color: var(--lumen-accent) !important; }
+
+/* The menus behind the little arrows (wishlist, ignore) */
+.queue_menu_flyout {
+    background: var(--lumen-layer-2) !important;
+    border: 1px solid var(--lumen-stroke-strong) !important;
+    border-radius: var(--lumen-radius) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important;
+    overflow: hidden;
+}
+
+.queue_menu_flyout_content { background: transparent !important; }
+.queue_menu_option { border-radius: var(--lumen-radius-sm); }
+.queue_menu_option:hover { background: rgba(255, 255, 255, 0.06) !important; }
+.queue_menu_option_label, .queue_menu_option_label .option_title { color: var(--lumen-text) !important; }
+.queue_menu_option_label .option_subtitle { color: var(--lumen-text-3) !important; }
 
 a { color: inherit; }
 .game_page_autocollapse_ctn h2,
