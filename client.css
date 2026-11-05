@@ -939,8 +939,16 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
 .UpdatesContainer .PageLeft svg,
 .UpdatesContainer .PageRight svg { width: 14px; height: 14px; }
 
+/* All cards as tall as the tallest, so one- and two-line titles line up. */
+.EventRowCarousel .BoxCarouselContents { align-items: stretch !important; }
+
 .PartnerEventRowCapsule.PartnerEventRowCapsule {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-self: stretch !important;
+    height: auto !important;
+    box-sizing: border-box;
     padding-bottom: 10px;
     border: 1px solid var(--lumen-stroke);
     border-radius: var(--lumen-radius);
@@ -955,10 +963,11 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
-/* "Today" / "Yesterday" as a chip on the picture */
+/* "Today" / "Yesterday" as a chip at the bottom left of the picture (the
+   top left holds some events' own icon). */
 .PartnerEventRowCapsule .EventTime {
     position: absolute;
-    top: 8px;
+    top: 148px;
     left: 8px;
     z-index: 2;
     width: auto !important;
@@ -970,8 +979,18 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
     font: 600 11px/14px var(--lumen-font);
 }
 
+/* Steam rings the picture of a hovered or focused item (orange); the whole
+   card shows that instead, in the accent. */
 .PartnerEventRowCapsule .PartnerEventRowCapsule_Container,
-.PartnerEventRowCapsule .PartnerEventRowCapsule_MainImageContainer { border-radius: 0; }
+.PartnerEventRowCapsule .PartnerEventRowCapsule_MainImageContainer {
+    border: 0 !important;
+    border-radius: 0;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.PartnerEventRowCapsule.PartnerEventRowCapsule:focus-within,
+.PartnerEventRowCapsule.PartnerEventRowCapsule:has(.gpfocus) { border-color: var(--lumen-accent); }
 
 .PartnerEventRowCapsule .PartnerEventRowCapsule_TextCtn { padding: 10px 12px 2px; }
 
@@ -980,7 +999,14 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
     font: 600 13px/18px var(--lumen-font) !important;
 }
 
-.PartnerEventRowCapsule .PartnerEventRowCapsule_TextCtn ~ * { padding-left: 12px; padding-right: 12px; }
+/* The game line (icon and name) sits at the bottom of the card, without
+   Steam's grey box. */
+.PartnerEventRowCapsule .PartnerEventRowCapsule_TextCtn ~ * {
+    margin: auto 12px 0 !important;
+    padding: 0 !important;
+    background: none !important;
+    color: var(--lumen-text-3) !important;
+}
 
 /* ---- Library home: "Continue playing" banner (js/library-home.js) ---- */
 
