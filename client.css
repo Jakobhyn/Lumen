@@ -1129,3 +1129,46 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
 .lumen-continue__page:hover { background: rgba(60, 60, 60, 0.9); }
 .lumen-continue__play:active,
 .lumen-continue__page:active { transform: scale(0.97); box-shadow: none; }
+
+/* ---- Library home: shelf headers ("My games", Sort by) ---- */
+
+/* The shelf name is a title, not a boxed field. */
+.ShowcaseHeader .CollectionDropDown .DialogDropDown_CurrentDisplay {
+    background: none !important;
+    border: 0 !important;
+    color: var(--lumen-text);
+    font: 600 16px/21px var(--lumen-font-display);
+}
+
+.ShowcaseHeader .CollectionDropDown .DialogDropDown:hover .DialogDropDown_CurrentDisplay { color: var(--lumen-accent); }
+
+/* Sort by: field and arrow as one pill */
+.ShowcaseHeader .SortingDropDown .DialogDropDown {
+    display: inline-flex;
+    align-items: center;
+    height: 26px;
+    padding: 0 6px 0 10px;
+    border: 1px solid var(--lumen-stroke) !important;
+    border-radius: var(--lumen-radius-sm);
+    background: var(--lumen-card) !important;
+    transition: background var(--lumen-dur) ease;
+}
+
+.ShowcaseHeader .SortingDropDown .DialogDropDown:hover { background: var(--lumen-card-hover) !important; }
+
+.ShowcaseHeader .SortingDropDown .DialogDropDown_CurrentDisplay,
+.ShowcaseHeader .SortingDropDown .DialogDropDown_Arrow {
+    height: auto !important;
+    padding: 0 !important;
+    background: none !important;
+    border: 0 !important;
+    color: var(--lumen-text) !important;
+}
+
+.ShowcaseHeader .SortingDropDown .DialogDropDown_Arrow { margin-left: 4px; }
+
+.ShowcaseHeader .SortingDropDownLabel {
+    color: var(--lumen-text-3) !important;
+    font-size: 12px !important;
+    letter-spacing: 0.04em;
+}
