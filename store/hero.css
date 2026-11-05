@@ -75,7 +75,8 @@ html.lumen-hero-on { --lumen-col: min(1200px, calc(100vw - 64px)); }
     gap: 16px;
 }
 
-.lumen-hero__badges { display: flex; flex-wrap: wrap; gap: 8px; }
+/* Above the logo, so the review summary can open over it. */
+.lumen-hero__badges { position: relative; z-index: 2; display: flex; flex-wrap: wrap; gap: 8px; }
 
 .lumen-chip {
     display: inline-flex;
@@ -103,6 +104,45 @@ html.lumen-hero-on { --lumen-col: min(1200px, calc(100vw - 64px)); }
 .lumen-hero__price .lumen-chip--deal { padding: 2px 8px; border: 0; }
 button.lumen-chip { cursor: pointer; font-family: var(--lumen-font); }
 button.lumen-chip:hover { background: rgba(60, 60, 60, 0.9); }
+/* Review summary on hover */
+.lumen-chip--review { position: relative; }
+
+.lumen-tip {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: max-content;
+    max-width: 340px;
+    padding: 10px 12px;
+    border: 1px solid var(--lumen-stroke-strong);
+    border-radius: var(--lumen-radius);
+    background: var(--lumen-layer-2);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+    color: var(--lumen-text-2);
+    font-size: 12px;
+    line-height: 16px;
+    text-align: left;
+    white-space: normal;
+    opacity: 0;
+    transform: translateY(-4px);
+    pointer-events: none;
+    transition: opacity var(--lumen-dur) ease, transform var(--lumen-dur) var(--lumen-ease);
+}
+
+.lumen-chip--review:hover .lumen-tip,
+.lumen-chip--review:focus-visible .lumen-tip { opacity: 1; transform: none; }
+
+.lumen-tip__row { display: flex; flex-direction: column; gap: 2px; }
+.lumen-tip__head { display: flex; justify-content: space-between; gap: 16px; }
+.lumen-tip__head b { color: var(--lumen-text); font-weight: 600; }
+.lumen-chip--review.is-positive .lumen-tip__head span { color: var(--lumen-positive); }
+.lumen-chip--review.is-negative .lumen-tip__head span { color: var(--lumen-negative); }
+.lumen-tip__detail { color: var(--lumen-text-3); }
+
 .lumen-chip--review::before { content: "●"; font-size: 8px; color: var(--lumen-text-3); }
 .lumen-chip--review.is-positive { color: var(--lumen-positive); }
 .lumen-chip--review.is-positive::before { color: var(--lumen-positive); }

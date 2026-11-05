@@ -31,7 +31,10 @@ const store = `
   </div>
   <div class="game_page_background game">
     <div class="game_description_snippet">A top-down arena shooter roguelite.</div>
-    <div id="userReviews"><div class="user_reviews_summary_row"><span class="game_review_summary positive">Very Positive</span></div></div>
+    <div id="userReviews">
+      <a class="user_reviews_summary_row" data-tooltip-html="78% of the 1,204 user reviews in the last 30 days are positive."><div class="subtitle column">Recent Reviews:</div><div class="summary column"><span class="game_review_summary mixed">Mixed</span><span class="responsive_hidden"> (1,204) </span></div></a>
+      <a class="user_reviews_summary_row" data-tooltip-html="94% of the 98,765 user reviews for this game are &lt;b&gt;positive&lt;/b&gt;."><div class="subtitle column all">All Reviews:</div><div class="summary column"><span class="game_review_summary positive">Very Positive</span><span class="responsive_hidden"> (98,765) </span></div></a>
+    </div>
     <div class="game_area_purchase_game_wrapper dynamic_bundle_description">
       <div class="game_area_purchase_game">
         <div class="discount_pct">-67%</div><div class="discount_final_price">9,88€</div>
@@ -170,6 +173,20 @@ test("the heart runs Steam's wishlist actions and follows the wishlist state", a
     heart.click();
     assert.strictEqual(calls[1][0], "remove");
     assert.strictEqual(calls[1][2], "add_to_wishlist_area_success");
+});
+
+test("the review chip shows the all-time rating and sums up both rows on hover", async () => {
+    const w = page(store);
+    load(w, "store/hero.js");
+    await tick();
+    const chip = w.document.querySelector(".lumen-chip--review");
+    assert.strictEqual(chip.firstChild.textContent, "Very Positive");
+    assert.ok(chip.classList.contains("is-positive"));
+    const rows = [...chip.querySelectorAll(".lumen-tip__row")].map(r => [r.querySelector("b").textContent, r.querySelector(".lumen-tip__head span").textContent, r.querySelector(".lumen-tip__detail").textContent]);
+    assert.deepStrictEqual(rows, [
+        ["All Reviews", "Very Positive · 98,765", "94% of the 98,765 user reviews for this game are positive."],
+        ["Recent Reviews", "Mixed · 1,204", "78% of the 1,204 user reviews in the last 30 days are positive."],
+    ]);
 });
 
 test("the review chip jumps to the reviews", async () => {

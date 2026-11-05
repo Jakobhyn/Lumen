@@ -51,15 +51,8 @@
         const pct = inBuy(".discount_pct");
         const countdown = inBuy(".game_purchase_discount_countdown");
         if (pct) badges.append(el("span", "lumen-chip lumen-chip--deal", `<b>${pct}</b>${countdown ? " " + countdown.replace(/^[^!]*!\s*/, "") : ""}`));
-        const review = document.querySelector("#userReviews .user_reviews_summary_row:last-of-type .game_review_summary, #userReviews .game_review_summary");
-        if (review) {
-            // Jumps down to the reviews section.
-            const chip = el("button", `lumen-chip lumen-chip--review ${review.classList.contains("positive") ? "is-positive" : review.classList.contains("negative") ? "is-negative" : ""}`);
-            chip.type = "button";
-            chip.textContent = review.textContent.trim();
-            chip.onclick = () => document.querySelector("#app_reviews_hash, #reviews_filter_options, .user_reviews_header")?.scrollIntoView({ behavior: "smooth", block: "start" });
-            badges.append(chip);
-        }
+        const chip = buildReviews();
+        if (chip) badges.append(chip);
 
         // Logo: the library logo if the game has one, else the name in big type.
         const title = el("h1", "lumen-hero__title", name);
@@ -106,6 +99,46 @@
             // Pause when scrolled away, resume when back.
             new IntersectionObserver(([e]) => e.isIntersecting ? video.play().catch(() => {}) : video.pause()).observe(hero);
         }
+    }
+
+    // ---- review chip ----
+    // Shows the all-time rating (Steam's row marked "all", which may be the
+    // reviews in your language), not the last 30 days. Hovering it shows both
+    // rows with their counts; a click jumps down to the reviews.
+
+    function buildReviews() {
+        const rows = [...document.querySelectorAll("#userReviews .user_reviews_summary_row")].filter(r => r.querySelector(".game_review_summary"));
+        if (!rows.length) return null;
+        const all = rows.find(r => r.querySelector(".subtitle.all")) || rows[rows.length - 1];
+        const summary = all.querySelector(".game_review_summary");
+        const tone = summary.classList.contains("positive") ? "is-positive" : summary.classList.contains("negative") ? "is-negative" : "";
+
+        const chip = el("button", `lumen-chip lumen-chip--review ${tone}`);
+        chip.type = "button";
+        chip.append(summary.textContent.trim());
+        chip.onclick = () => document.querySelector("#app_reviews_hash, #reviews_filter_options, .user_reviews_header")?.scrollIntoView({ behavior: "smooth", block: "start" });
+
+        const tip = el("span", "lumen-tip");
+        tip.setAttribute("role", "tooltip");
+        for (const row of [all, ...rows.filter(r => r !== all)]) {
+            const line = el("span", "lumen-tip__row");
+            const head = el("span", "lumen-tip__head");
+            const label = el("b");
+            label.textContent = row.querySelector(".subtitle")?.textContent.trim().replace(/:$/, "") || "";
+            const value = el("span");
+            const count = row.querySelector(".responsive_hidden")?.textContent.trim().replace(/[()]/g, "");
+            value.textContent = row.querySelector(".game_review_summary").textContent.trim() + (count ? ` · ${count}` : "");
+            head.append(label, value);
+            const detail = el("span", "lumen-tip__detail");
+            // Steam's tooltip may carry markup; keep only its text.
+            const tooltip = new DOMParser().parseFromString(row.dataset.tooltipHtml || "", "text/html").body.textContent;
+            detail.textContent = (tooltip || row.querySelector(".responsive_reviewdesc")?.textContent.replace(/^\s*-\s*/, "") || "").trim();
+            line.append(head);
+            if (detail.textContent) line.append(detail);
+            tip.append(line);
+        }
+        chip.append(tip);
+        return chip;
     }
 
     // ---- wishlist heart ----
