@@ -373,3 +373,80 @@ a { color: inherit; }
 
 .package_in_library_flag { padding: 2px 10px !important; color: var(--lumen-on-accent) !important; }
 .package_in_library_flag span { color: inherit !important; font: 600 11px/16px var(--lumen-font) !important; letter-spacing: 0.04em; }
+
+/* ---- Price boxes: Steam's black price tag becomes a quiet layer ---- */
+
+.game_purchase_action .game_purchase_price,
+.discount_block .discount_prices,
+.game_purchase_action .discount_block {
+    background: var(--lumen-layer-2) !important;
+    color: var(--lumen-text) !important;
+}
+
+.game_purchase_action .game_purchase_price,
+.game_purchase_action .discount_block { border-radius: var(--lumen-radius-sm) !important; overflow: hidden; }
+
+/* ---- DLC list ("Content For This Game") ---- */
+
+.game_area_dlc_section h2.gradientbg {
+    background: none !important;
+    border-bottom: 1px solid var(--lumen-stroke);
+    padding-bottom: 8px !important;
+    color: var(--lumen-text) !important;
+    font: 600 18px/1.3 var(--lumen-font-display) !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+}
+
+.game_area_dlc_section h2.gradientbg .note a {
+    display: inline-flex;
+    align-items: center;
+    height: 26px;
+    padding: 0 10px;
+    border: 1px solid var(--lumen-stroke);
+    border-radius: var(--lumen-radius-sm);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--lumen-text-2) !important;
+    font: 12px var(--lumen-font);
+    text-decoration: none;
+    transition: background var(--lumen-dur) ease;
+}
+
+.game_area_dlc_section h2.gradientbg .note a:hover { background: rgba(255, 255, 255, 0.1); color: var(--lumen-text) !important; }
+.game_area_dlc_section h2.gradientbg .note {
+    padding: 0 !important;
+    border: 0 !important;
+    background: none !important;
+}
+
+.game_area_dlc_section h2.gradientbg .note em { margin-left: 4px; font-style: normal; }
+
+.game_area_dlc_section .gameDlcBlocks {
+    margin-top: 12px;
+    border: 1px solid var(--lumen-stroke);
+    border-radius: var(--lumen-radius);
+    overflow: hidden;
+}
+
+.game_area_dlc_section .game_area_dlc_row {
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 16px !important;
+    background: var(--lumen-card) !important;
+    background-image: none !important;
+    border-bottom: 1px solid var(--lumen-stroke);
+    color: var(--lumen-text-2) !important;
+    font: 13px var(--lumen-font);
+    transition: background var(--lumen-dur) ease, color var(--lumen-dur) ease;
+}
+
+.game_area_dlc_section .game_area_dlc_row:hover { background: var(--lumen-card-hover) !important; color: var(--lumen-text) !important; }
+.game_area_dlc_section .game_area_dlc_row .game_area_dlc_name { flex: 1; color: inherit !important; }
+.game_area_dlc_section .game_area_dlc_row .game_area_dlc_price { color: var(--lumen-text) !important; }
+
+/* The "add all" row under the list */
+.game_area_dlc_section #dlc_purchase_action {
+    background: transparent !important;
+    padding: 10px 16px !important;
+}
