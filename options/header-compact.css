@@ -9,6 +9,9 @@
     align-items: center !important;
     height: 48px !important;
     padding: 0 0 0 8px !important;
+    /* Padding inside the window width; otherwise the bar runs 8px past the
+       right edge and the close button gets cut off. */
+    box-sizing: border-box !important;
     gap: 2px;
 }
 
