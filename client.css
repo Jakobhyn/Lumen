@@ -1115,7 +1115,17 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
     color: var(--lumen-on-accent);
 }
 
-.lumen-continue__play:hover { background: var(--lumen-accent-hover); }
+/* A clear hover: brighter, slightly lifted and glowing in the accent. */
+.lumen-continue__play {
+    transition: background var(--lumen-dur) ease, filter var(--lumen-dur) ease, transform var(--lumen-dur) var(--lumen-ease), box-shadow var(--lumen-dur) ease;
+}
+
+.lumen-continue__play:hover {
+    background: var(--lumen-accent);
+    filter: brightness(1.15);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px color-mix(in srgb, var(--lumen-accent) 45%, transparent);
+}
 .lumen-continue__page:hover { background: rgba(60, 60, 60, 0.9); }
 .lumen-continue__play:active,
-.lumen-continue__page:active { transform: scale(0.97); }
+.lumen-continue__page:active { transform: scale(0.97); box-shadow: none; }
