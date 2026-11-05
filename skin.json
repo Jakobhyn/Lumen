@@ -198,6 +198,11 @@
             "TargetCss": "webkit.css"
         },
         {
+            "MatchRegexString": "^https://store.steampowered.com/.*",
+            "TargetCss": "store/browse.css",
+            "TargetJs": "store/hover.js"
+        },
+        {
             "MatchRegexString": "^https://store.steampowered.com/app/.*",
             "TargetJs": "shared/dash.js"
         },
