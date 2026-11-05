@@ -231,8 +231,10 @@ a { color: inherit; }
 }
 
 /* Banner and stats form one card. */
+/* Steam fixes the banner at 40px; with padding its content would spill out. */
 .game_area_already_owned {
-    margin-top: 16px;
+    height: auto !important;
+    line-height: normal !important;
     padding: 14px 20px !important;
     background: var(--lumen-card) !important;
     background-image: none !important;
