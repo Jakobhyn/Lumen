@@ -162,47 +162,214 @@ body {
 .BottomBar .Text,
 .BottomBar .Queue { color: var(--lumen-text-3) !important; }
 
-/* ---- Library: left game list ---- */
+/* ---- Library: left game list ----
+   Fluent navigation pane: one icon row on top (Home, Collections, the list
+   view picker, then Steam's two filters), sentence-case section titles with
+   a chevron on the right, and slightly larger entries. */
 
-.LeftListSizableContainer > div {
+.LeftListSizableContainer > div:first-child {
     background: var(--lumen-bg-deep) !important;
+    background-image: none !important;
     border-right: 1px solid var(--lumen-stroke);
 }
 
-.GameListHomeAndSearch { background: transparent !important; }
-
-.HomeBox .Bar {
-    background: var(--lumen-card) !important;
-    border-radius: var(--lumen-radius) !important;
-    color: var(--lumen-text-2) !important;
+/* Home + Collections and the view/filters bar share one row. */
+.LeftListSizableContainer > div:first-child {
+    display: grid !important;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto minmax(0, 1fr);
+    align-items: center;
+    padding: 6px 6px 0 !important;
+    box-sizing: border-box;
 }
 
-.HomeBox .Bar:hover { background: var(--lumen-card-hover) !important; }
-.HomeBox .Bar.Selected { background: var(--lumen-card-hover) !important; color: var(--lumen-text) !important; }
+.LeftListSizableContainer > div:first-child > .GameListHomeAndSearch { grid-area: 1 / 1; }
+.LeftListSizableContainer > div:first-child > .Bar { grid-area: 1 / 2; min-width: 0; }
+.LeftListSizableContainer > div:first-child > :nth-child(3) { grid-area: 2 / 1 / 3 / -1; }
+.LeftListSizableContainer > div:first-child > :nth-child(4) { grid-area: 3 / 1 / 4 / -1; align-self: stretch; min-height: 0; }
 
-.SearchBar .MenuHeader,
-.SearchInput,
-.SearchInput + *,
-.SearchBar [class*="Container"]:has(> .SearchInput) {
-    background: var(--lumen-card) !important;
-    border: 1px solid var(--lumen-stroke) !important;
-    border-radius: var(--lumen-radius-sm) !important;
+.GameListHomeAndSearch,
+.LeftListSizableContainer .Bar {
+    background: transparent !important;
+    height: 40px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 2px;
 }
 
-.SearchInput { border: 0 !important; }
+.LeftListSizableContainer .Bar { justify-content: space-between !important; }
 
+/* The resize handle between list and page: invisible, still draggable. */
+.LibraryWindowDivider { background: transparent !important; }
+
+/* Steam's blue-grey placeholder for the address bar above library pages */
+.URLBarReplacement { display: none !important; }
+
+/* Steam draws a shadow line beside Home + Collections, which made them look boxed in. */
+.GameListHomeAndSearch,
+.GameListHomeAndSearch > div { box-shadow: none !important; border: 0 !important; background: transparent !important; }
+
+/* Square icon buttons: Home, Collections and the view picker */
+.HomeBox,
+.HomeBox .Bar,
+.CollectionsButton .CollectionButton,
+.SearchBar .MenuHeader {
+    width: 34px !important;
+    min-width: 34px !important;
+    height: 34px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 6px !important;
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+}
+
+.HomeBox .Bar:hover,
+.CollectionsButton .CollectionButton:hover,
+.SearchBar .MenuHeader:hover { background: var(--lumen-card-hover) !important; }
+
+.HomeBox .Bar.Selected { background: var(--lumen-accent-soft) !important; }
+
+.HomeBox .Bar .Icon svg,
+.HomeBox .Bar .Label,
+.SearchBar .MenuHeader > * { display: none !important; }
+
+.HomeBox .Bar .Icon,
+.SearchBar .MenuHeader::before {
+    content: "";
+    display: block !important;
+    width: 18px !important;
+    height: 18px !important;
+    margin: 8px !important;
+    background: var(--lumen-text-2);
+}
+
+.HomeBox .Bar .Icon { -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 7L8 2.5 13.5 7v6a.5.5 0 0 1-.5.5h-3v-4h-4v4H3a.5.5 0 0 1-.5-.5z'/%3E%3C/svg%3E") center / contain no-repeat; }
+.HomeBox .Bar.Selected .Icon { background: var(--lumen-accent); }
+/* Collections: an outline grid like the other icons instead of four filled squares */
+.CollectionsButton .CollectionIcon { display: none !important; }
+.CollectionsButton .CollectionButton::before {
+    content: "";
+    display: block;
+    width: 18px;
+    height: 18px;
+    margin: 8px;
+    background: var(--lumen-text-2);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2.5' y='2.5' width='4.5' height='4.5' rx='1'/%3E%3Crect x='9' y='2.5' width='4.5' height='4.5' rx='1'/%3E%3Crect x='2.5' y='9' width='4.5' height='4.5' rx='1'/%3E%3Crect x='9' y='9' width='4.5' height='4.5' rx='1'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.CollectionsButton .CollectionButton.Selected::before { background: var(--lumen-accent); }
+
+.SearchBar .MenuHeader::before { -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.5 4h8M5.5 8h8M5.5 12h8M2.5 4h.01M2.5 8h.01M2.5 12h.01'/%3E%3C/svg%3E") center / contain no-repeat; }
+
+.SearchBar { flex: none !important; }
+.SearchBar .ScrollToTop { display: none !important; }
+
+.ViewFiltersBar { margin-right: 4px; }
+.ViewFiltersBar .CheckboxWithImage { border-radius: 6px; }
+.ViewFiltersBar .CheckboxWithImage:hover { background: var(--lumen-card-hover); }
+
+/* Section titles: "Favorites (19)" in sentence case, chevron on the right */
+.LeftListSizableContainer .CollapseIconParent {
+    display: flex !important;
+    align-items: center;
+    background: transparent !important;
+    background-image: none !important;
+    padding: 0 10px 0 8px !important;
+    border-radius: 6px;
+}
+
+.LeftListSizableContainer .CollapseIconParent:hover { background: var(--lumen-card) !important; }
+
+/* Steam gives the title a 16px box that cuts off Segoe's descenders; centre
+   title, count and chevron on the row instead. */
 .SectionHeaderContent {
+    flex: 1;
+    gap: 6px;
+    height: 100% !important;
+    padding: 3px 0 0 !important;
+    box-sizing: border-box;
+    align-items: baseline !important;   /* name and count share a baseline */
+}
+
+.SectionHeaderContent .SectionName {
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    font: 600 14px/20px var(--lumen-font) !important;
+    height: auto !important;
+    overflow: visible !important;
+    color: var(--lumen-text) !important;
+}
+
+.SectionHeaderContent .SectionCount {
+    margin: 0 !important;
+    height: auto !important;
+    font: 12px/20px var(--lumen-font) !important;
     color: var(--lumen-text-3) !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.04em;
+    position: relative;
+    top: -1px;   /* optical centre: the small digits read low on the shared baseline */
+}
+/* A thin line from the title to the chevron */
+.SectionHeaderContent .SectionRule {
+    display: block !important;
+    flex: 1;
+    align-self: center;
+    height: 1px !important;
+    min-width: 12px;
+    margin: 0 8px 0 4px !important;
+    transform: translateY(-1px);
+    opacity: 1 !important;   /* Steam fades its rule to 20% */
+    background: var(--lumen-stroke-strong) !important;
+    background-image: none !important;
+    border: 0 !important;
 }
 
+.LeftListSizableContainer .CollapseIconParent > :first-child {
+    order: 2;
+    width: 14px !important;
+    height: 100% !important;
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.LeftListSizableContainer .CollapseIconParent > :first-child svg { display: none !important; }
+
+.LeftListSizableContainer .CollapseIconParent > :first-child::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-left: 1.5px solid var(--lumen-text-2);
+    border-top: 1.5px solid var(--lumen-text-2);
+    transform: translateY(2px) rotate(45deg);
+    transition: transform 200ms var(--lumen-ease);
+}
+
+.LeftListSizableContainer .CollapseIconParent > .Collapsed::before { transform: translateY(-2px) rotate(225deg); }
+
+/* Entries */
 .GameListEntryContainer {
-    border-radius: var(--lumen-radius-sm);
+    margin: 0 4px;
+    padding-left: 6px;
+    border-radius: 6px;
     color: var(--lumen-text-2);
+    font: 14px var(--lumen-font) !important;
 }
 
-.GameListEntryContainer:hover { background: var(--lumen-card-hover) !important; }
+.GameListEntryContainer .GameIcon,
+.GameListEntryContainer .GameIcon img { width: 20px !important; height: 20px !important; border-radius: 4px; }
+
+.GameListEntryContainer:hover { background: var(--lumen-card) !important; }
+/* Steam marks the row wrapper around the entry as Selected. */
+.LeftListSizableContainer .Focusable.Selected:has(> .GameListEntryContainer) {
+    box-shadow: none !important;
+    border-radius: 6px;
+}
+
+.LeftListSizableContainer .Focusable.Selected:has(> .GameListEntryContainer),
+.Selected > .GameListEntryContainer { background: var(--lumen-card-hover) !important; color: var(--lumen-text) !important; }
 
 /* ---- Library: home and game pages ---- */
 
@@ -691,4 +858,55 @@ body {
 .ShowcaseGrid img,
 .PageableContainer img {
     border-radius: var(--lumen-radius) !important;
+}
+
+/* "Scroll to top" on long pages: the counterpart of "More", a floating
+   acrylic pill with a gently bobbing up arrow instead of Steam's blue bar. */
+.ScrollToTopButton,
+div:has(> .ScrollToTopButton) { overflow: visible !important; }
+
+.ScrollToTopButton > div {
+    position: relative;
+    top: -33px;   /* Steam's row is 34px high; line up with the floating buttons */
+    height: 42px !important;
+    padding: 0 18px 0 14px !important;
+    display: inline-flex !important;
+    align-items: center;
+    gap: 8px;
+    background: rgba(32, 32, 32, 0.72) !important;
+    background-image: none !important;
+    backdrop-filter: blur(24px) saturate(1.4);
+    border: 1px solid var(--lumen-stroke-strong) !important;
+    border-radius: 21px !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4) !important;
+    color: var(--lumen-text-2) !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    font: 600 13px var(--lumen-font) !important;
+    text-shadow: none !important;
+    cursor: pointer;
+    transition: background var(--lumen-dur) ease, color var(--lumen-dur) ease;
+}
+
+.ScrollToTopButton > div:hover {
+    background: rgba(58, 58, 58, 0.85) !important;
+    color: var(--lumen-text) !important;
+}
+
+@keyframes lumen-bob-up {
+    0%, 100% { transform: translateY(1px) rotate(45deg); }
+    50% { transform: translateY(-3px) rotate(45deg); }
+}
+
+.ScrollToTopButton > div::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-left: 1.6px solid currentColor;
+    border-top: 1.6px solid currentColor;
+    animation: lumen-bob-up 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ScrollToTopButton > div::before { animation: none; transform: translateY(1px) rotate(45deg); }
 }
