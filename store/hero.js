@@ -52,7 +52,14 @@
         const countdown = inBuy(".game_purchase_discount_countdown");
         if (pct) badges.append(el("span", "lumen-chip lumen-chip--deal", `<b>${pct}</b>${countdown ? " " + countdown.replace(/^[^!]*!\s*/, "") : ""}`));
         const review = document.querySelector("#userReviews .user_reviews_summary_row:last-of-type .game_review_summary, #userReviews .game_review_summary");
-        if (review) badges.append(el("span", `lumen-chip lumen-chip--review ${review.classList.contains("positive") ? "is-positive" : review.classList.contains("negative") ? "is-negative" : ""}`, review.textContent.trim()));
+        if (review) {
+            // Jumps down to the reviews section.
+            const chip = el("button", `lumen-chip lumen-chip--review ${review.classList.contains("positive") ? "is-positive" : review.classList.contains("negative") ? "is-negative" : ""}`);
+            chip.type = "button";
+            chip.textContent = review.textContent.trim();
+            chip.onclick = () => document.querySelector("#app_reviews_hash, #reviews_filter_options, .user_reviews_header")?.scrollIntoView({ behavior: "smooth", block: "start" });
+            badges.append(chip);
+        }
 
         // Logo: the library logo if the game has one, else the name in big type.
         const title = el("h1", "lumen-hero__title", name);
@@ -81,13 +88,8 @@
         const mediaBtn = el("button", "lumen-btn", "<span>▶ Media</span>");
         mediaBtn.onclick = () => document.querySelector(".lumen-media")?.scrollIntoView({ behavior: "smooth", block: "start" });
         actions.append(mediaBtn);
-        const wish = document.querySelector("#add_to_wishlist_area a, #add_wishlist_button");
-        if (wish && document.querySelector("#add_to_wishlist_area")?.offsetParent !== null) {
-            const w = el("button", "lumen-btn lumen-btn--icon", "<span>♥</span>");
-            w.title = wish.textContent.trim();
-            w.onclick = () => { wish.click(); w.classList.add("is-on"); };
-            actions.append(w);
-        }
+        const heart = buildWishlist();
+        if (heart) actions.append(heart);
 
         body.append(badges, title, desc, price, actions);
         hero.append(backdrop, body);
@@ -104,6 +106,47 @@
             // Pause when scrolled away, resume when back.
             new IntersectionObserver(([e]) => e.isIntersecting ? video.play().catch(() => {}) : video.pause()).observe(hero);
         }
+    }
+
+    // ---- wishlist heart ----
+    // Steam fills in the wishlist state after the page has loaded and swaps
+    // between two areas: "Add to your wishlist" and "On Wishlist". The heart
+    // follows whichever is shown and runs that area's own action.
+
+    // Steam's links carry their action as `javascript:AddToWishlist( 123, 'a', ... )`,
+    // which a scripted click does not run; call the store's function instead.
+    const WISHLIST_CALLS = new Set(["AddToWishlist", "RemoveFromWishlist"]);
+    function runWishlistLink(link) {
+        const call = /^javascript:\s*(\w+)\s*\((.*)\)\s*;?\s*$/s.exec(link?.getAttribute("href") || "");
+        if (!call || !WISHLIST_CALLS.has(call[1]) || typeof window[call[1]] !== "function") return false;
+        const args = [...call[2].matchAll(/'([^']*)'|"([^"]*)"|(-?\d+)/g)].map(m => m[3] != null ? +m[3] : m[1] ?? m[2]);
+        window[call[1]](...args);
+        return true;
+    }
+
+    function buildWishlist() {
+        const add = document.getElementById("add_to_wishlist_area");
+        const on = document.getElementById("add_to_wishlist_area_success");
+        if (!add && !on) return null;
+        const heart = el("button", "lumen-btn lumen-btn--icon lumen-wish", '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13.6S1.8 9.9 1.8 5.6A3.2 3.2 0 0 1 8 4.3a3.2 3.2 0 0 1 6.2 1.3c0 4.3-6.2 8-6.2 8z"/></svg>');
+        heart.type = "button";
+        const shown = e => !!e && e.style.display !== "none" && getComputedStyle(e).display !== "none";
+        const sync = () => {
+            const isOn = shown(on) && !shown(add);
+            heart.classList.toggle("is-on", isOn);
+            heart.setAttribute("aria-pressed", String(isOn));
+            heart.title = ((isOn ? on : add)?.querySelector("a")?.textContent || "").trim();
+        };
+        heart.onclick = () => {
+            const link = heart.classList.contains("is-on")
+                ? on.querySelector("a[href*='RemoveFromWishlist']")
+                : add?.querySelector("a[href*='AddToWishlist']");
+            if (!runWishlistLink(link)) link?.click();
+        };
+        const watch = new MutationObserver(sync);
+        for (const area of [add, on]) if (area) watch.observe(area, { attributes: true, attributeFilter: ["style", "class"] });
+        sync();
+        return heart;
     }
 
     // ---- facts: release date, developer, publisher, tags, community hub ----

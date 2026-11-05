@@ -46,7 +46,9 @@ const store = `
         <div class="btn_addtocart"><a class="btn_green_steamui" id="cart">Add to Cart</a></div>
       </div>
     </div>
-    <div id="add_to_wishlist_area"><a>Add to your wishlist</a></div>
+    <div id="add_to_wishlist_area"><a href="javascript:AddToWishlist( 1942280, 'add_to_wishlist_area', 'add_to_wishlist_area_success', 'add_to_wishlist_area_fail', &quot;1_client-navigation__&quot;, 'add_to_wishlist_area2' );">Add to your wishlist</a></div>
+    <div id="add_to_wishlist_area_success" style="display: none;"><a href="javascript:RemoveFromWishlist( 1942280, 'add_to_wishlist_area_success', 'add_to_wishlist_area', 'add_to_wishlist_area_fail', &quot;1_client-navigation__&quot;, 'add_to_wishlist_area2' );">On Wishlist</a></div>
+    <div id="app_reviews_hash"></div>
   </div>
 </div>`;
 
@@ -143,6 +145,41 @@ test("the viewer asks the player for the trailer with sound", async () => {
     assert.strictEqual(calls.length, 1);
     assert.strictEqual(calls[0].url, "https://example.test/dash_h264.mpd");
     assert.strictEqual(calls[0].opts.audio, true);
+});
+
+test("the heart runs Steam's wishlist actions and follows the wishlist state", async () => {
+    const w = page(store);
+    const calls = [];
+    // Like Steam: adding swaps the two areas.
+    w.AddToWishlist = (...args) => {
+        calls.push(["add", ...args]);
+        w.document.getElementById("add_to_wishlist_area").style.display = "none";
+        w.document.getElementById("add_to_wishlist_area_success").style.display = "";
+    };
+    w.RemoveFromWishlist = (...args) => calls.push(["remove", ...args]);
+    load(w, "store/hero.js");
+    await tick();
+    const heart = w.document.querySelector(".lumen-wish");
+    assert.ok(!heart.classList.contains("is-on"));
+    assert.strictEqual(heart.title, "Add to your wishlist");
+    heart.click();
+    assert.deepStrictEqual(calls[0], ["add", 1942280, "add_to_wishlist_area", "add_to_wishlist_area_success", "add_to_wishlist_area_fail", "1_client-navigation__", "add_to_wishlist_area2"]);
+    await tick();
+    assert.ok(heart.classList.contains("is-on"));
+    assert.strictEqual(heart.title, "On Wishlist");
+    heart.click();
+    assert.strictEqual(calls[1][0], "remove");
+    assert.strictEqual(calls[1][2], "add_to_wishlist_area_success");
+});
+
+test("the review chip jumps to the reviews", async () => {
+    const w = page(store);
+    load(w, "store/hero.js");
+    await tick();
+    let jumped = false;
+    w.document.getElementById("app_reviews_hash").scrollIntoView = () => { jumped = true; };
+    w.document.querySelector(".lumen-chip--review").click();
+    assert.ok(jumped);
 });
 
 test("Store trailer: Classic leaves Steam's page alone", async () => {

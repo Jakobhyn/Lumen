@@ -101,6 +101,8 @@ html.lumen-hero-on { --lumen-col: min(1200px, calc(100vw - 64px)); }
 }
 
 .lumen-hero__price .lumen-chip--deal { padding: 2px 8px; border: 0; }
+button.lumen-chip { cursor: pointer; font-family: var(--lumen-font); }
+button.lumen-chip:hover { background: rgba(60, 60, 60, 0.9); }
 .lumen-chip--review::before { content: "●"; font-size: 8px; color: var(--lumen-text-3); }
 .lumen-chip--review.is-positive { color: var(--lumen-positive); }
 .lumen-chip--review.is-positive::before { color: var(--lumen-positive); }
@@ -159,6 +161,19 @@ html.lumen-hero-on { --lumen-col: min(1200px, calc(100vw - 64px)); }
 .lumen-btn:active { transform: scale(0.97); }
 .lumen-btn--icon { padding: 0; width: 40px; }
 .lumen-btn--icon.is-on { color: var(--lumen-accent); }
+
+.lumen-wish svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.4;
+    stroke-linejoin: round;
+    transition: fill var(--lumen-dur) ease, transform var(--lumen-dur) var(--lumen-ease);
+}
+
+.lumen-wish.is-on svg { fill: currentColor; }
+.lumen-wish:active svg { transform: scale(0.85); }
 
 .lumen-btn--accent {
     background: var(--lumen-accent);
