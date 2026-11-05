@@ -33,6 +33,71 @@ body.v6 .game_page_background.game { background-image: none !important; }
 
 [data-featuretarget="store-menu-v7"] form button[type="submit"]:hover { color: var(--lumen-accent); }
 
+[data-featuretarget="store-menu-v7"] form:focus-within { border-color: var(--lumen-accent); }
+
+[data-featuretarget="store-menu-v7"] form * {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+}
+
+/* Search suggestions under the field (hashed classes, so by structure:
+   the popup is the form's sibling, its panel two levels in). */
+[data-featuretarget="store-menu-v7"] form ~ div > div > div {
+    padding: 12px !important;
+    background: var(--lumen-layer-2) !important;
+    background-image: none !important;
+    border: 1px solid var(--lumen-stroke-strong);
+    border-radius: var(--lumen-radius) !important;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5) !important;
+    font-family: var(--lumen-font);
+}
+
+/* Section titles ("Popular searches", "Recently viewed", ...) */
+[data-featuretarget="store-menu-v7"] form ~ div > div > div > div > div:first-child {
+    color: var(--lumen-text-3) !important;
+    font: 600 12px/16px var(--lumen-font) !important;
+    letter-spacing: 0.02em;
+    text-transform: none !important;
+}
+
+/* Game rows and genre tiles */
+[data-featuretarget="store-menu-v7"] form ~ div > div > div a:has(img) {
+    background: var(--lumen-card) !important;
+    background-image: none !important;
+    border-radius: var(--lumen-radius-sm) !important;
+    overflow: hidden;
+    transition: background var(--lumen-dur) ease;
+}
+
+[data-featuretarget="store-menu-v7"] form ~ div > div > div a:has(img):hover { background: var(--lumen-card-hover) !important; }
+[data-featuretarget="store-menu-v7"] form ~ div > div > div a:has(img) img { border-radius: var(--lumen-radius-sm); }
+
+/* Genre tile label: Steam's white bar becomes an acrylic chip. */
+[data-featuretarget="store-menu-v7"] form ~ div > div > div a > div:last-child:has(> div:only-child) {
+    background: var(--lumen-acrylic) !important;
+    backdrop-filter: blur(12px);
+    border-radius: 999px !important;
+    color: var(--lumen-text) !important;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+/* Plain links ("Recently viewed") */
+[data-featuretarget="store-menu-v7"] form ~ div > div > div > div a:not(:has(img)) { color: var(--lumen-accent) !important; }
+
+/* "Advanced Search" at the bottom */
+[data-featuretarget="store-menu-v7"] form ~ div > div > div > a:last-child {
+    background: rgba(255, 255, 255, 0.06) !important;
+    background-image: none !important;
+    border: 1px solid var(--lumen-stroke);
+    border-radius: var(--lumen-radius-sm) !important;
+    color: var(--lumen-text) !important;
+    transition: background var(--lumen-dur) ease;
+}
+
+[data-featuretarget="store-menu-v7"] form ~ div > div > div > a:last-child:hover { background: rgba(255, 255, 255, 0.1) !important; }
+
 /* Older store navigation */
 #store_nav_area .store_nav_bg {
     background: var(--lumen-acrylic) !important;
