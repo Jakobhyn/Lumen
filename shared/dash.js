@@ -1,8 +1,9 @@
 // Lumen: a tiny DASH player for Steam's trailers, shared by the store page
 // (store/hero.js) and the library game page (js/library-trailer.js).
 // Steam ships trailers only as DASH/HLS streams; this reads a static,
-// number-based SegmentTemplate manifest and feeds the video track to Media
-// Source, one chunk ahead of playback. Audio is skipped: trailers play muted.
+// number-based SegmentTemplate manifest and feeds it to Media Source, one
+// chunk ahead of playback. Background trailers play muted and skip the audio;
+// the store's media viewer asks for it.
 (() => {
     if (window.LumenDash) return;
 
@@ -11,10 +12,9 @@
         return m ? (+m[1] || 0) * 3600 + (+m[2] || 0) * 60 + (+m[3] || 0) : 0;
     }
 
-    // `width` is the on-screen width in device pixels the video should fill.
-    function parseManifest(text, url, width) {
-        const xml = new DOMParser().parseFromString(text, "application/xml");
-        const set = [...xml.querySelectorAll("AdaptationSet")].find(a => a.getAttribute("contentType") === "video");
+    // One track of the manifest; `width` picks the video stream (audio has one).
+    function parseTrack(xml, type, url, width) {
+        const set = [...xml.querySelectorAll("AdaptationSet")].find(a => a.getAttribute("contentType") === type);
         if (!set) return null;
 
         // The smallest stream at least as wide as needed, else the biggest.
@@ -39,36 +39,55 @@
         };
     }
 
+    // `width` is the on-screen width in device pixels the video should fill.
+    // Gives the video track, with the audio track (or null) as `audio`.
+    function parseManifest(text, url, width) {
+        const xml = new DOMParser().parseFromString(text, "application/xml");
+        const video = parseTrack(xml, "video", url, width);
+        return video && { ...video, audio: parseTrack(xml, "audio", url, width) };
+    }
+
     // Resolves true once the whole trailer is buffered (the video then loops
     // on its own), false if this browser can't play it. Stops early when the
     // video leaves the page or gets another trailer.
-    async function play(video, manifestUrl) {
+    // `width` (CSS pixels) overrides the video's own width, which is still
+    // the 300px default while it has no source.
+    async function play(video, manifestUrl, { audio = false, width: cssWidth } = {}) {
         video.__lumenTrailer = manifestUrl;
         const current = () => video.isConnected && video.__lumenTrailer === manifestUrl;
-        const width = (video.clientWidth || window.innerWidth) * (window.devicePixelRatio || 1);
+        const width = (cssWidth || video.clientWidth || window.innerWidth) * (window.devicePixelRatio || 1);
         const stream = parseManifest(await (await fetch(manifestUrl)).text(), manifestUrl, width);
-        if (!stream || !window.MediaSource || !MediaSource.isTypeSupported(stream.mime) || !current()) return false;
+        if (!stream || !window.MediaSource || !current()) return false;
+        const tracks = [stream, audio && stream.audio].filter(t => t && MediaSource.isTypeSupported(t.mime));
+        if (tracks[0] !== stream) return false;
 
         const source = new MediaSource();
         video.src = URL.createObjectURL(source);
         await new Promise(r => source.addEventListener("sourceopen", r, { once: true }));
-        const buffer = source.addSourceBuffer(stream.mime);
-        const append = data => new Promise((resolve, reject) => {
-            buffer.addEventListener("updateend", resolve, { once: true });
-            buffer.addEventListener("error", reject, { once: true });
-            buffer.appendBuffer(data);
-        });
         const get = async url => new Uint8Array(await (await fetch(url)).arrayBuffer());
 
-        await append(await get(stream.init));
-        let next = get(stream.chunks[0]);
-        for (let i = 0; i < stream.chunks.length; i++) {
-            const data = await next;
-            if (!current()) return false;
-            if (i + 1 < stream.chunks.length) next = get(stream.chunks[i + 1]);
-            await append(data);
-            if (i === 0) video.play().catch(() => {});
-        }
+        // Both tracks fill their own buffer side by side; playback starts with
+        // the first video chunk.
+        const pump = async (track, buffer) => {
+            const append = data => new Promise((resolve, reject) => {
+                buffer.addEventListener("updateend", resolve, { once: true });
+                buffer.addEventListener("error", reject, { once: true });
+                buffer.appendBuffer(data);
+            });
+            await append(await get(track.init));
+            let next = get(track.chunks[0]);
+            for (let i = 0; i < track.chunks.length; i++) {
+                const data = await next;
+                if (!current()) return false;
+                if (i + 1 < track.chunks.length) next = get(track.chunks[i + 1]);
+                await append(data);
+                if (i === 0 && track === stream) video.play().catch(() => {});
+            }
+            return true;
+        };
+        const buffers = tracks.map(t => source.addSourceBuffer(t.mime));
+        const done = await Promise.all(tracks.map((t, i) => pump(t, buffers[i])));
+        if (done.includes(false)) return false;
         source.endOfStream();
         return true;
     }
