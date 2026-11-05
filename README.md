@@ -64,7 +64,9 @@ npm run ci      # everything CI runs: check, lint, test
 
 - `npm run check` (`tools/check.js`): `skin.json` parses, every file it references exists,
   CSS `url()`s resolve, scripts pass `node --check`, and `root-colors.css` holds only opaque
-  `#rrggbb` values.
+  `#rrggbb` values. It also flags option rules that the base CSS silently overrides:
+  Millennium injects the settings' `options/*.css` before `client.css`, so an option rule
+  with the same selector as a base rule needs to be more specific to take effect.
 - `npm run lint`: ESLint for the scripts, Stylelint for the CSS.
 - `npm test`: Node's test runner with jsdom: the store hero on a trimmed store page
   (bundles vs. the game's own price, Classic mode, fallbacks), the header search, and the checks.

@@ -77,6 +77,34 @@ if (skin.RootColors && exists(skin.RootColors)) {
     }
 }
 
+// Millennium injects the settings' option files before the theme's own CSS,
+// so an option rule with the very same selector as a base rule loses on any
+// property they share; it has to be more specific to take effect.
+function cssRules(rel) {
+    const css = fs.readFileSync(path.join(root, rel), "utf8")
+        .replace(/\/\*[\s\S]*?\*\//g, "")
+        .replace(/@keyframes[^{]+\{(?:[^{}]*\{[^{}]*\})*[^{}]*\}/g, "");
+    const rules = [];
+    for (const [, selectors, body] of css.matchAll(/([^{}@]+)\{([^{}]*)\}/g)) {
+        const props = [...body.matchAll(/([\w-]+)\s*:/g)].map(m => m[1]);
+        for (const sel of selectors.split(",").map(s => s.trim()).filter(Boolean)) rules.push({ sel, props });
+    }
+    return rules;
+}
+
+// "border" covers "border-top"; custom properties only match by exact name.
+const sameProperty = (a, b) => a === b || (!a.startsWith("--") && !b.startsWith("--") && (a.startsWith(b + "-") || b.startsWith(a + "-")));
+const baseCss = files.filter(f => f.endsWith(".css") && !f.startsWith("options/") && !f.startsWith("store/"));
+const base = baseCss.flatMap(rel => cssRules(rel).map(r => ({ ...r, rel })));
+for (const rel of files.filter(f => f.startsWith("options/") && f.endsWith(".css"))) {
+    for (const opt of cssRules(rel)) {
+        for (const b of base.filter(b => b.sel === opt.sel)) {
+            const shared = opt.props.filter(p => b.props.some(q => sameProperty(p, q)));
+            if (shared.length) fail(`${rel}: "${opt.sel}" is overridden by the same selector in ${b.rel} (loads later) for ${shared.join(", ")}; make it more specific`);
+        }
+    }
+}
+
 const tagArg = process.argv.indexOf("--tag");
 if (tagArg !== -1) {
     const tag = process.argv[tagArg + 1] || "";
