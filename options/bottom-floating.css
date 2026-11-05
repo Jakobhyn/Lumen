@@ -8,8 +8,13 @@
    before client.css, so the doubled class is needed to beat its .BottomBar. */
 .BottomBar.BottomBar {
     position: absolute !important;
-    left: 0;
+    left: auto;   /* only as wide as the three buttons, not the whole window */
     right: 0;
+    width: auto !important;
+    /* Steam makes its bar a window drag region; Windows swallows clicks there
+       before the page sees them, so an invisible full-width bar blocked
+       anything above it (More, Top). */
+    -webkit-app-region: no-drag;
     bottom: 14px;
     height: 42px !important;
     min-height: 0 !important;
