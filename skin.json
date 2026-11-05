@@ -143,6 +143,22 @@
                 "Off": {}
             }
         },
+        "Continue banner": {
+            "description": "On: the library home starts with a large banner of the game you played last, with its art, logo, playtime and a Play button. Off: Steam's home as it is.",
+            "tab": "Library",
+            "default": "On",
+            "values": {
+                "On": {
+                    "TargetJs": {
+                        "affects": [
+                            "^(Steam|Steam Games List)$"
+                        ],
+                        "src": "js/library-home.js"
+                    }
+                },
+                "Off": {}
+            }
+        },
         "Store trailer": {
             "description": "Cinematic: a game's store page plays its trailer muted across the window. Still: a screenshot instead of the video. Classic: Steam's own layout.",
             "tab": "Store",
