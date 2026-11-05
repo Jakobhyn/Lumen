@@ -119,6 +119,8 @@ body.v6 .game_page_background.game { background-image: none !important; }
     border-color: var(--lumen-stroke-strong) !important;
 }
 
+.game_area_purchase_game:not(.demo_above_purchase) .btn_addtocart:not(.btn_packageinfo) .btn_green_steamui:hover { background: rgba(255, 255, 255, 0.18) !important; }
+
 /* Wishlist / follow / ignore bar */
 .queue_overflow_ctn { background: transparent !important; }
 
