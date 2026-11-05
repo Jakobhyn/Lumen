@@ -93,8 +93,7 @@
         hero.append(backdrop, body);
 
         const top = document.querySelector(".page_top_area");
-        top.parentElement.insertBefore(hero, top);
-        document.querySelector("#game_highlights .leftcol")?.classList.add("lumen-media");
+        top.before(hero, buildFacts(), buildMedia(media, video));
         root.classList.add("lumen-hero-on");
 
         // Only spend bandwidth on the video when the trailer is actually wanted.
@@ -105,6 +104,164 @@
             // Pause when scrolled away, resume when back.
             new IntersectionObserver(([e]) => e.isIntersecting ? video.play().catch(() => {}) : video.pause()).observe(hero);
         }
+    }
+
+    // ---- facts: release date, developer, publisher, tags, community hub ----
+    // Steam's own glance block sits in the hidden right column; its labels
+    // already come in the store's language.
+
+    function buildFacts() {
+        const facts = el("section", "lumen-facts");
+        const list = el("dl", "lumen-facts__list");
+        for (const row of document.querySelectorAll(".glance_ctn_responsive_left > .release_date, .glance_ctn_responsive_left > .dev_row")) {
+            const label = row.querySelector(".subtitle")?.textContent.trim().replace(/:$/, "");
+            const value = row.querySelector(".date, .summary");
+            if (!label || !value?.textContent.trim()) continue;
+            const item = el("div", "lumen-facts__item");
+            const dd = el("dd");
+            dd.append(...[...value.childNodes].map(n => n.cloneNode(true)));
+            item.append(el("dt", null, ""), dd);
+            item.firstChild.textContent = label;
+            list.append(item);
+        }
+
+        const tags = el("div", "lumen-facts__tags");
+        for (const tag of [...document.querySelectorAll(".glance_tags.popular_tags a.app_tag")].slice(0, 8)) {
+            const a = el("a", "lumen-tag");
+            a.href = tag.href;
+            a.textContent = tag.textContent.trim();
+            tags.append(a);
+        }
+        const addTag = document.querySelector(".glance_tags.popular_tags .app_tag.add_button");
+        if (addTag && tags.childElementCount) {
+            const b = el("button", "lumen-tag lumen-tag--add", "+");
+            b.type = "button";
+            b.onclick = () => addTag.click();
+            tags.append(b);
+        }
+
+        facts.append(list, tags);
+        const hub = document.querySelector(".apphub_OtherSiteInfo a");
+        if (hub) {
+            const a = el("a", "lumen-btn lumen-btn--subtle");
+            a.href = hub.href;
+            a.textContent = hub.textContent.trim();
+            facts.append(a);
+        }
+        return facts;
+    }
+
+    // ---- media: a strip of trailers and screenshots, opened in a viewer ----
+
+    const language = new URLSearchParams(location.search).get("l") || document.documentElement.lang;
+    const mediaLabel = { german: "Medien", de: "Medien", french: "Médias", fr: "Médias", spanish: "Multimedia", es: "Multimedia" }[language] || "Media";
+    const icon = d => `<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="${d}"/></svg>`;
+    const PREV = "M10 3.5L5.5 8l4.5 4.5", NEXT = "M6 3.5L10.5 8 6 12.5", CLOSE = "M4 4l8 8M12 4l-8 8";
+
+    function buildMedia(media, heroVideo) {
+        const items = [
+            ...(media.trailers || []).map(t => ({ trailer: t, thumb: t.poster || t.thumbnail })),
+            ...(media.screenshots || []).map(s => ({ still: s.full || s.standard, thumb: s.standard || s.thumbnail })),
+        ].filter(i => i.thumb);
+
+        const section = el("section", "lumen-media");
+        if (!items.length) return section;
+        const head = el("h2", "lumen-media__title", `<span></span><small>${items.length}</small>`);
+        head.firstChild.textContent = mediaLabel;
+
+        const rail = el("div", "lumen-media__rail");
+        const track = el("div", "lumen-media__track");
+        items.forEach((item, i) => {
+            const tile = el("button", `lumen-media__item${item.trailer ? " is-trailer" : ""}`);
+            tile.type = "button";
+            const img = new Image();
+            img.loading = "lazy";
+            img.alt = "";
+            img.src = item.thumb;
+            tile.append(img);
+            if (item.trailer) tile.append(el("span", "lumen-media__play"));
+            tile.onclick = () => openViewer(items, i, heroVideo);
+            track.append(tile);
+        });
+
+        const nav = (cls, d, dir) => {
+            const b = el("button", `lumen-media__nav ${cls}`, icon(d));
+            b.type = "button";
+            b.onclick = () => track.scrollBy({ left: dir * track.clientWidth, behavior: "smooth" });
+            return b;
+        };
+        const prev = nav("is-prev", PREV, -1), next = nav("is-next", NEXT, 1);
+        const sync = () => {
+            prev.hidden = track.scrollLeft <= 1;
+            next.hidden = track.scrollLeft + track.clientWidth >= track.scrollWidth - 1;
+        };
+        track.addEventListener("scroll", sync, { passive: true });
+        window.addEventListener("resize", sync);
+        requestAnimationFrame(sync);
+
+        rail.append(prev, track, next);
+        section.append(head, rail);
+        return section;
+    }
+
+    function openViewer(items, start, heroVideo) {
+        document.querySelector(".lumen-viewer")?.remove();
+        heroVideo?.pause();
+        const viewer = el("div", "lumen-viewer");
+        viewer.setAttribute("role", "dialog");
+        viewer.setAttribute("aria-modal", "true");
+        const stage = el("div", "lumen-viewer__stage");
+        const count = el("div", "lumen-viewer__count");
+        const button = (cls, d, onClick) => {
+            const b = el("button", `lumen-viewer__btn ${cls}`, icon(d));
+            b.type = "button";
+            b.onclick = e => { e.stopPropagation(); onClick(); };
+            return b;
+        };
+
+        let index = start;
+        const show = i => {
+            index = (i + items.length) % items.length;
+            const item = items[index];
+            // A fresh element per item: the old trailer stops loading once detached.
+            stage.replaceChildren();
+            if (item.trailer) {
+                const v = el("video", "lumen-viewer__media");
+                Object.assign(v, { controls: true, playsInline: true, autoplay: true });
+                v.poster = item.trailer.poster || "";
+                stage.append(v);
+                const manifest = item.trailer.dashManifests?.find(u => u.includes("h264"));
+                if (manifest) window.LumenDash?.play(v, manifest, { audio: true, width: stage.clientWidth })?.catch(e => console.warn("[Lumen] viewer:", e));
+            } else {
+                const img = el("img", "lumen-viewer__media");
+                img.alt = "";
+                img.src = item.still;
+                stage.append(img);
+            }
+            count.textContent = `${index + 1} / ${items.length}`;
+        };
+
+        const close = () => {
+            viewer.remove();
+            document.removeEventListener("keydown", onKey, true);
+            const hero = document.querySelector(".lumen-hero");
+            if (heroVideo && hero && hero.getBoundingClientRect().bottom > 0) heroVideo.play().catch(() => {});
+        };
+        const onKey = e => {
+            if (e.key === "Escape") close();
+            else if (e.key === "ArrowLeft") show(index - 1);
+            else if (e.key === "ArrowRight") show(index + 1);
+            else return;
+            e.preventDefault();
+            e.stopPropagation();
+        };
+        document.addEventListener("keydown", onKey, true);
+        viewer.onclick = e => { if (e.target === viewer || e.target === stage) close(); };
+
+        viewer.append(stage, count, button("is-close", CLOSE, close));
+        if (items.length > 1) viewer.append(button("is-prev", PREV, () => show(index - 1)), button("is-next", NEXT, () => show(index + 1)));
+        document.body.append(viewer);
+        show(start);
     }
 
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build, { once: true });

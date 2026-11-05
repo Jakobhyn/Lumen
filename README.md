@@ -2,7 +2,7 @@
 
 A calm, dark Fluent-style theme for the Steam client, built for [Millennium](https://steambrew.app).
 
-- **Cinematic store page**: a game's trailer plays muted across the whole window, with the logo, short description, price and buttons on top.
+- **Cinematic store page**: a game's trailer plays muted across the whole window, with the logo, short description, price and buttons on top. Below it sit a row with release date, developer, publisher, tags and the community hub, and a media strip whose trailers and screenshots open in a full-window viewer (trailers with sound).
 - **Cinematic library page**: the game fills the first screen with its store trailer (art as poster), a large logo and a bigger play bar; a "More" button glides down to activity and achievements, shown as Fluent-style cards.
 - **Floating bottom buttons**: Steam's bottom bar becomes three round buttons side by side in the bottom right corner: Add a Game, Downloads (a progress pill while downloading) and Friends & Chat.
 - **One-row header**: back/forward, the Steam menu as a logo, the Store/Library/Community/profile tabs, a game search in the middle, and a plain bell and avatar on the right.
@@ -36,7 +36,7 @@ A calm, dark Fluent-style theme for the Steam client, built for [Millennium](htt
 | `client.css` | Client windows: frame, library, downloads, menus, friends |
 | `webkit.css` | Store and community pages |
 | `shared/dash.js` | Tiny DASH player for Steam's trailers, used by store and library |
-| `store/` | Cinematic store hero |
+| `store/` | Cinematic store page: hero, facts row, media strip and viewer |
 | `js/library-trailer.js` | Store trailer behind the library game page |
 | `js/library-activity.js` | Puts each activity entry's date on its card |
 | `js/library-more.js` | "More" (down to the content) and "Top" (back up) on the game page |
@@ -69,7 +69,7 @@ npm run ci      # everything CI runs: check, lint, test
   with the same selector as a base rule needs to be more specific to take effect.
 - `npm run lint`: ESLint for the scripts, Stylelint for the CSS.
 - `npm test`: Node's test runner with jsdom: the store hero on a trimmed store page
-  (bundles vs. the game's own price, Classic mode, fallbacks), the header search, and the checks.
+  (bundles vs. the game's own price, facts row, media strip and viewer, Classic mode, fallbacks), the header search, and the checks.
 
 Every pull request must pass **Validate**, **Lint**, **Test** and **CodeQL** before it can be
 merged into `main`; dependency review, secret scanning and Dependabot run alongside.

@@ -78,16 +78,58 @@ body.v6 .game_page_background.game { background-image: none !important; }
     color: var(--lumen-on-accent) !important;
 }
 
+/* Steam's buttons (blue, green, grey) become one calm Fluent button: a
+   light layer with a hairline border; the span inside carries Steam's own
+   background, so it goes transparent. */
 .btn_green_steamui,
-.btn_green_steamui > span {
-    background: var(--lumen-accent) !important;
-    color: var(--lumen-on-accent) !important;
+.btn_blue_steamui,
+.btnv6_blue_hoverfade,
+.btnv6_grey_black,
+.queue_menu_arrow,
+.queue_control_button > div {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid var(--lumen-stroke) !important;
     border-radius: var(--lumen-radius-sm) !important;
+    color: var(--lumen-text) !important;
     text-shadow: none !important;
+    box-shadow: none !important;
+    transition: background var(--lumen-dur) ease;
+}
+
+.btn_green_steamui > span,
+.btn_blue_steamui > span,
+.btnv6_blue_hoverfade > span,
+.btnv6_grey_black > span,
+.queue_menu_arrow > span {
+    background: transparent !important;
+    color: inherit !important;
+    border-radius: 0 !important;
 }
 
 .btn_green_steamui:hover,
-.btn_green_steamui:hover > span { background: var(--lumen-accent-hover) !important; }
+.btn_blue_steamui:hover,
+.btnv6_blue_hoverfade:hover,
+.btnv6_grey_black:hover,
+.queue_menu_arrow:hover,
+.queue_control_button > div:hover { background: rgba(255, 255, 255, 0.1) !important; }
+
+/* The main purchase button keeps a little more weight. */
+.game_area_purchase_game:not(.demo_above_purchase) .btn_addtocart:not(.btn_packageinfo) .btn_green_steamui {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border-color: var(--lumen-stroke-strong) !important;
+}
+
+/* Wishlist / follow / ignore bar */
+.queue_overflow_ctn { background: transparent !important; }
+
+.queue_ctn {
+    background: var(--lumen-card) !important;
+    border: 1px solid var(--lumen-stroke);
+    border-radius: var(--lumen-radius);
+    box-shadow: none !important;
+}
+
+.queue_btn_active { color: var(--lumen-accent) !important; }
 
 a { color: inherit; }
 .game_page_autocollapse_ctn h2,

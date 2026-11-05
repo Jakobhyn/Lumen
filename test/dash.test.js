@@ -20,7 +20,9 @@ const mpd = `<?xml version="1.0" encoding="utf-8"?>
       </Representation>
     </AdaptationSet>
     <AdaptationSet id="1" contentType="audio">
-      <Representation id="4" mimeType="audio/mp4" codecs="mp4a.40.2"/>
+      <Representation id="4" mimeType="audio/mp4" codecs="mp4a.40.2">
+        <SegmentTemplate timescale="1000000" duration="3000000" initialization="dash_h264/init-stream$RepresentationID$.m4s" media="dash_h264/chunk-stream$RepresentationID$-$Number%05d$.m4s" startNumber="1"/>
+      </Representation>
     </AdaptationSet>
   </Period>
 </MPD>`;
@@ -54,6 +56,16 @@ test("builds init and chunk URLs next to the manifest", () => {
     assert.strictEqual(s.chunks.length, 20);
     assert.strictEqual(s.chunks[0], base + "chunk-stream1-00001.m4s");
     assert.strictEqual(s.chunks[19], base + "chunk-stream1-00020.m4s");
+});
+
+test("reads the audio track alongside the video", () => {
+    const { audio } = dash().parseManifest(mpd, url, 1000);
+    const base = "https://video.fastly.steamstatic.com/store_trailers/1942280/776977/abc/1750742089/dash_h264/";
+    assert.strictEqual(audio.mime, 'audio/mp4; codecs="mp4a.40.2"');
+    assert.strictEqual(audio.init, base + "init-stream4.m4s");
+    assert.strictEqual(audio.chunks[0], base + "chunk-stream4-00001.m4s");
+    const silent = mpd.replace(/<AdaptationSet id="1"[\s\S]*?<\/AdaptationSet>/, "");
+    assert.strictEqual(dash().parseManifest(silent, url, 1000).audio, null);
 });
 
 test("manifests without video give nothing", () => {
