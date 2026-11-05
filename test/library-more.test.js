@@ -65,3 +65,45 @@ test("a re-rendered page gets its button back, never two", async () => {
     await tick(30);
     assert.strictEqual(w.document.querySelectorAll(".lumen-more").length, 1);
 });
+
+test("Top docks at the end of the scroll area, hidden until scrolled", async () => {
+    const w = client();
+    load(w, "js/library-more.js");
+    await tick(30);
+    const scroller = w.document.getElementById("scroller");
+    const dock = scroller.lastElementChild;
+    assert.ok(dock.classList.contains("lumen-top-dock"));
+    const top = dock.querySelector(".lumen-top");
+    assert.strictEqual(top.textContent.trim(), "Top");
+    assert.ok(!top.classList.contains("is-shown"));
+    scroller.scrollTop = 900;
+    scroller.dispatchEvent(new w.Event("scroll"));
+    assert.ok(top.classList.contains("is-shown"));
+    scroller.scrollTop = 100;
+    scroller.dispatchEvent(new w.Event("scroll"));
+    assert.ok(!top.classList.contains("is-shown"));
+});
+
+test("Top glides back to the top of the page", async () => {
+    const w = client("german");
+    load(w, "js/library-more.js");
+    await tick(30);
+    const scroller = w.document.getElementById("scroller");
+    const calls = [];
+    scroller.scrollTo = opts => calls.push(opts);
+    const top = w.document.querySelector(".lumen-top");
+    assert.strictEqual(top.textContent.trim(), "Nach oben");
+    top.click();
+    assert.strictEqual(calls.length, 1);
+    assert.strictEqual(calls[0].top, 0);
+    assert.strictEqual(calls[0].behavior, "smooth");
+});
+
+test("one Top button even after re-renders", async () => {
+    const w = client();
+    load(w, "js/library-more.js");
+    await tick(30);
+    w.document.querySelector(".ColumnContainer").append(w.document.createElement("div"));
+    await tick(30);
+    assert.strictEqual(w.document.querySelectorAll(".lumen-top").length, 1);
+});

@@ -3,6 +3,7 @@
 //   node cdp.js eval <target> <file.js | -e "expr">
 //   node cdp.js shot <target> <out.png>
 //   node cdp.js nav <target> <url>
+//   node cdp.js click <target> <x> <y>   (a real mouse click at CSS pixels)
 // <target> matches a window title, else its URL: "^Steam$" is an exact
 // match, anything else matches as a substring ("store.steampowered.com/app").
 const fs = require("fs");
@@ -44,6 +45,12 @@ function session(wsUrl) {
   } else if (cmd === "nav") {
     await s.send("Page.navigate", { url: arg });
     console.log("navigated");
+  } else if (cmd === "click") {
+    const at = { x: +arg, y: +arg2, button: "left", clickCount: 1 };
+    await s.send("Input.dispatchMouseEvent", { type: "mouseMoved", ...at });
+    await s.send("Input.dispatchMouseEvent", { type: "mousePressed", ...at });
+    await s.send("Input.dispatchMouseEvent", { type: "mouseReleased", ...at });
+    console.log("clicked", at.x, at.y);
   }
   s.close();
 })().catch(e => { console.error(String(e)); process.exit(1); });
