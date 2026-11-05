@@ -220,9 +220,11 @@
 
 .AppDetailsMain .PlayBar .InnerContainer { padding-left: 40px !important; padding-right: 40px !important; }
 
-/* The play button in the accent color, like "Add to Cart" in the store */
-.AppDetailsMain .Green .PlayButton,
-.PlayBar .Green .PlayButton {
+/* The play button in the accent color, like "Add to Cart" in the store, in
+   every state: Play, Launching, Stop, Install, Update (Steam only marks Play
+   as .Green and gives the others its own blue gradient). */
+.AppDetailsMain .PlayBar .PlayButton.PlayButton,
+.PlayBar .PlayButton.PlayButton {
     background: var(--lumen-accent) !important;
     background-image: none !important;
     color: var(--lumen-on-accent) !important;
@@ -231,9 +233,9 @@
     transition: background var(--lumen-dur) ease, transform var(--lumen-dur) var(--lumen-ease) !important;
 }
 
-.AppDetailsMain .Green .PlayButton:hover { background: var(--lumen-accent-hover) !important; }
-.AppDetailsMain .Green .PlayButton:active { transform: scale(0.97); }
-.AppDetailsMain .Green .PlayButton svg { color: var(--lumen-on-accent) !important; fill: currentColor; }
+.AppDetailsMain .PlayBar .PlayButton.PlayButton:hover { background: var(--lumen-accent-hover) !important; }
+.AppDetailsMain .PlayBar .PlayButton.PlayButton:active { transform: scale(0.97); }
+.AppDetailsMain .PlayBar .PlayButton.PlayButton svg { color: var(--lumen-on-accent) !important; fill: currentColor; }
 
 @media (prefers-reduced-motion: reduce) {
     .AppDetailsMain .ImgContainer img { animation: none; }
