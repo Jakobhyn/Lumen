@@ -105,6 +105,22 @@
                 "Classic": {}
             }
         },
+        "Startup screen": {
+            "description": "On: while Steam starts, the window shows a calm Lumen loading screen (accent glow, progress ring) that fades away once the library is ready, instead of half-drawn steps. Off: Steam's own start.",
+            "tab": "Window",
+            "default": "On",
+            "values": {
+                "On": {
+                    "TargetJs": {
+                        "affects": [
+                            "^(Steam|Steam Games List)$"
+                        ],
+                        "src": "js/startup.js"
+                    }
+                },
+                "Off": {}
+            }
+        },
         "Library page": {
             "description": "Cinematic: the game fills the first screen (trailer or art), with a large logo, a bigger play bar and links, and a More button that glides down to activity and achievements. Classic: Steam's header.",
             "tab": "Library",
@@ -216,6 +232,10 @@
         {
             "MatchRegexString": ".ModalDialogPopup",
             "TargetCss": "client.css"
+        },
+        {
+            "MatchRegexString": "^Sign in to Steam$",
+            "TargetCss": "signin.css"
         },
         {
             "MatchRegexString": "^https://(store\\.steampowered|steamcommunity)\\.com/.*",

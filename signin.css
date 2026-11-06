@@ -1,0 +1,110 @@
+/* Lumen: the "Sign in to Steam" window (account chooser and sign-in form).
+   Steam lays a blurred collage of game art behind a blue-grey gradient;
+   Lumen uses its dark surface with a soft accent glow, round avatars that
+   light up in the accent on hover, and Lumen type and controls. */
+
+.Login.DesktopUI,
+.Login.DesktopUI * { font-family: var(--lumen-font); }
+
+/* Background: no game-art collage, just Lumen's dark surface (on the
+   layer behind the window's content). */
+.Login.DesktopUI { background: transparent !important; }
+
+div:has(> .Show.FadeIn) {
+    background: var(--lumen-bg) !important;
+    background-image: none !important;
+}
+
+.Show.FadeIn { opacity: 0 !important; }
+
+.Login.DesktopUI .title-area-highlight { display: none !important; }
+
+/* Steam logo and question */
+.Login .LogoContainer svg { color: var(--lumen-text); opacity: 0.9; }
+
+.Login .WhosPlaying {
+    color: var(--lumen-text) !important;
+    font: 600 28px/1.2 var(--lumen-font-display) !important;
+    letter-spacing: 0 !important;
+}
+
+/* Accounts: round avatars that lift and get an accent ring on hover. The
+   list's box would clip the ring and the "Add Account" tile. */
+.Login .CachedUsers { overflow: visible !important; }
+
+.Login .UserList .User .Icon {
+    border: 0 !important;
+    border-radius: 50% !important;
+    background: var(--lumen-layer) !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45) !important;
+    overflow: hidden;
+    outline: 2px solid transparent;
+    outline-offset: 3px;
+    transition: transform 200ms var(--lumen-ease), outline-color var(--lumen-dur) ease, box-shadow 200ms ease;
+}
+
+.Login .UserList .User .Icon img { border-radius: 50%; }
+
+.Login .UserList .User:hover .Icon,
+.Login .UserList .User:focus-visible .Icon,
+.Login .UserList .User.gpfocus .Icon {
+    transform: translateY(-3px);
+    outline-color: var(--lumen-accent);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* The "…" button on an avatar, and "Add Account" as a round tile */
+.Login .UserList .User .MoreMenuButton {
+    border-radius: 50% !important;
+    background: var(--lumen-acrylic) !important;
+    backdrop-filter: blur(12px);
+}
+
+.Login .UserList .User.New .Icon {
+    width: 48px !important;
+    height: 48px !important;
+    margin-top: 13px;
+    box-sizing: border-box;
+    display: grid;
+    place-items: center;
+    background: var(--lumen-card) !important;
+    border: 1px dashed var(--lumen-stroke-strong) !important;
+    box-shadow: none !important;
+}
+
+.Login .UserList .User.New .Icon svg { width: 22px; height: 22px; color: var(--lumen-text-2); }
+.Login .UserList .User.New:hover .Icon svg { color: var(--lumen-accent); }
+
+/* Names (shown by Steam on hover) */
+.Login .UserList .User .Name.Persona { color: var(--lumen-text) !important; font-weight: 600 !important; }
+.Login .UserList .User .Name.Account { color: var(--lumen-text-3) !important; }
+
+/* "Ask which account to use each time" toggle */
+.Login .Toggle .FieldLabel { color: var(--lumen-text-2) !important; }
+.Login .Toggle.On .ToggleRail { background: var(--lumen-accent) !important; }
+.Login .ToggleSwitch { box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4) !important; }
+
+/* Sign-in form */
+.Login input[type="text"],
+.Login input[type="password"] {
+    border: 1px solid var(--lumen-stroke-strong) !important;
+    border-radius: var(--lumen-radius-sm) !important;
+    background: var(--lumen-card) !important;
+    color: var(--lumen-text) !important;
+    outline: none !important;
+    transition: border-color var(--lumen-dur) ease;
+}
+
+.Login input[type="text"]:focus,
+.Login input[type="password"]:focus { border-color: var(--lumen-accent) !important; }
+
+.Login button[type="submit"] {
+    border: 0 !important;
+    border-radius: var(--lumen-radius-sm) !important;
+    background: var(--lumen-accent) !important;
+    background-image: none !important;
+    color: var(--lumen-on-accent) !important;
+    font-weight: 600 !important;
+}
+
+.Login button[type="submit"]:hover { background: var(--lumen-accent-hover) !important; }
