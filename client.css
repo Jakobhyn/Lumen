@@ -1409,9 +1409,11 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
 .DownloadsPage .TopSection > .SettingsButton .DialogButton {
     display: grid !important;
     place-items: center;
+    box-sizing: border-box !important;
     width: 36px !important;
     min-width: 0 !important;
     height: 36px !important;
+    min-height: 0 !important;
     padding: 0 !important;
     border: 1px solid var(--lumen-stroke) !important;
     border-radius: 50% !important;
@@ -1507,3 +1509,26 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
     border-radius: var(--lumen-radius);
     color: var(--lumen-text-3) !important;
 }
+
+/* "Smallest first" in the Up Next header (js/downloads-sort.js) */
+.lumen-sort-queue {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex: none;
+    height: 28px;
+    margin: 0 12px;
+    padding: 0 12px;
+    border: 1px solid var(--lumen-stroke-strong);
+    border-radius: 999px;
+    background: var(--lumen-card);
+    color: var(--lumen-text);
+    font: 600 12px var(--lumen-font);
+    cursor: pointer;
+    transition: background var(--lumen-dur) ease, transform var(--lumen-dur) var(--lumen-ease);
+}
+
+.lumen-sort-queue:hover { background: var(--lumen-card-hover); }
+.lumen-sort-queue:active { transform: scale(0.97); }
+.lumen-sort-queue:disabled { opacity: 0.5; cursor: default; }
+.lumen-sort-queue svg { width: 14px; height: 14px; color: var(--lumen-accent); }
