@@ -1562,10 +1562,50 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
 }
 .friendlist .titleBarContainer .online { border-bottom: 1px solid var(--lumen-stroke) !important; }
 
-.friendlist .avatarHolder img.avatar,
-.friendlist .avatarHolder .avatar {
-    border-radius: var(--lumen-radius-sm) !important;
-    border-color: transparent !important;
+/* Round avatars with the status as a ring (friends) or a dot (you),
+   instead of Steam's thin bar beside the picture. Steam's own status
+   colours: in game green, online blue, offline grey; away is dimmed. */
+.friendlist .avatarHolder {
+    --lumen-status: #6b7079;
+    position: relative;
+    overflow: visible !important;
+}
+
+.friendlist .avatarHolder.online { --lumen-status: #57cbde; }
+.friendlist .avatarHolder.ingame { --lumen-status: #90ba3c; }
+.friendlist .avatarHolder.awayOrSnooze { --lumen-status-opacity: 0.45; }
+
+.friendlist .avatarHolder .avatarStatus { display: none !important; }
+
+/* Points-shop avatar frames are square pictures laid over the avatar;
+   they do not fit round avatars. */
+.friendlist .avatarHolder .avatarFrame { display: none !important; }
+
+.friendlist .avatarHolder img.avatar {
+    border: 0 !important;
+    border-radius: 50% !important;
+    box-shadow: none !important;
+}
+
+.friendlist .friend .avatarHolder img.avatar {
+    outline: 2px solid color-mix(in srgb, var(--lumen-status) calc(var(--lumen-status-opacity, 1) * 100%), transparent);
+    outline-offset: 2px;
+}
+
+.friendlist .friend .avatarHolder:not(.online, .ingame) img.avatar { outline-color: transparent; opacity: 0.6; }
+
+/* Your own avatar in the header: a status dot at the bottom right */
+.friendlist .titleBarContainer .avatarHolder::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--lumen-bg-deep);
+    border-radius: 50%;
+    background: var(--lumen-status);
+    opacity: var(--lumen-status-opacity, 1);
 }
 
 /* "Friends" tab row with search and add buttons */
