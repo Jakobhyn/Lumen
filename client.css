@@ -1439,6 +1439,14 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
 
 .DownloadsPage .TopSection > .SettingsButton { top: 12px !important; right: 12px !important; }
 
+/* While downloading, the row under the bars is only 33px high and clips:
+   the round button would lose its top and bottom. */
+.DownloadsPage .TopSection .Bottom {
+    min-height: 38px;
+    overflow: visible !important;
+    align-items: center;
+}
+
 /* Section headers: "Up Next (0)", "Scheduled (16)" */
 .DownloadsPage .SectionTitle .Title {
     color: var(--lumen-text) !important;
