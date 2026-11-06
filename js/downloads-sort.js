@@ -36,18 +36,23 @@
         return order;
     }
 
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+
     async function run(button) {
         const s = shared();
         const downloads = s.SteamClient?.Downloads;
         const store = s.downloadsStore;
         if (!downloads || !store) return;
+        // Steam's calls name the machine whose downloads are shown ("0" is
+        // this one); without it they do nothing.
+        const client = store.CurrentViewingRemoteClientID ?? "0";
         button.disabled = true;
         try {
             const order = plan(store);
-            for (const item of order) if (item.scheduled) downloads.QueueAppUpdate(item.appid);
-            // Give Steam a moment to put the scheduled ones into the queue.
-            await new Promise(r => setTimeout(r, 400));
-            order.forEach((item, index) => downloads.SetQueueIndex(item.appid, index));
+            for (const item of order) if (item.scheduled) downloads.QueueAppUpdate(item.appid, client);
+            // Sort only once Steam has moved them into the queue (at most ~3 s).
+            for (let i = 0; i < 30 && (store.ScheduledTransfers?.length || 0) > 0; i++) await wait(100);
+            order.forEach((item, index) => downloads.SetQueueIndex(item.appid, index, client));
         } finally {
             setTimeout(() => { button.disabled = false; }, 600);
         }

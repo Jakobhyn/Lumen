@@ -22,14 +22,19 @@ const transfer = (appid, total, done = 0, queue_index = -1) => ({
 
 function client({ queued = [], scheduled = [], language = "english" } = {}) {
     const calls = [];
+    const store = { QueuedTransfers: queued, ScheduledTransfers: scheduled, CurrentViewingRemoteClientID: "0" };
     const w = page(downloadsPage, { url: `https://steamloopback.host/index.html?LANGUAGE=${language}` });
     Object.defineProperty(w, "opener", {
         configurable: true,
         value: {
-            downloadsStore: { QueuedTransfers: queued, ScheduledTransfers: scheduled },
+            downloadsStore: store,
             SteamClient: { Downloads: {
-                QueueAppUpdate: appid => calls.push(["queue", appid]),
-                SetQueueIndex: (appid, index) => calls.push(["index", appid, index]),
+                // Like Steam: queueing moves the update out of Scheduled.
+                QueueAppUpdate: (appid, clientId) => {
+                    calls.push(["queue", appid, clientId]);
+                    store.ScheduledTransfers = store.ScheduledTransfers.filter(tr => tr.appid !== appid);
+                },
+                SetQueueIndex: (appid, index, clientId) => calls.push(["index", appid, index, clientId]),
             } },
         },
     });
@@ -58,9 +63,12 @@ test("queues every scheduled update, then orders all by what is left, smallest f
     w.document.querySelector(".lumen-sort-queue").click();
     await tick(500);
     assert.deepStrictEqual(calls.filter(c => c[0] === "queue").map(c => c[1]).sort(), [20, 21, 22]);
+    assert.ok(calls.filter(c => c[0] === "queue").every(c => c[2] === "0"), "names this machine");
     assert.deepStrictEqual(calls.filter(c => c[0] === "index"), [
-        ["index", 21, 0], ["index", 20, 1], ["index", 10, 2], ["index", 11, 3], ["index", 22, 4],
+        ["index", 21, 0, "0"], ["index", 20, 1, "0"], ["index", 10, 2, "0"], ["index", 11, 3, "0"], ["index", 22, 4, "0"],
     ]);
+    // Sorting starts only after the queueing.
+    assert.ok(calls.findIndex(c => c[0] === "index") > calls.findLastIndex(c => c[0] === "queue"));
 });
 
 test("German label, and no button with fewer than two downloads", async () => {
