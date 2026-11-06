@@ -75,7 +75,14 @@ div:has(> .Show.FadeIn) {
 .Login .UserList .User.New .Icon svg { width: 22px; height: 22px; color: var(--lumen-text-2); }
 .Login .UserList .User.New:hover .Icon svg { color: var(--lumen-accent); }
 
-/* Names (shown by Steam on hover) */
+/* Names (shown by Steam on hover), centred under the avatar; a name wider
+   than the avatar spreads evenly to both sides. */
+.Login .UserList .User .Name {
+    align-self: center !important;
+    text-align: center;
+    white-space: nowrap;
+}
+
 .Login .UserList .User .Name.Persona { color: var(--lumen-text) !important; font-weight: 600 !important; }
 .Login .UserList .User .Name.Account { color: var(--lumen-text-3) !important; }
 
