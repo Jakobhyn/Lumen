@@ -1560,7 +1560,7 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
     background: var(--lumen-bg-deep) !important;
     box-shadow: none !important;
 }
-.friendlist .titleBarContainer .online { border-bottom: 1px solid var(--lumen-stroke) !important; }
+.friendlist .titleBarContainer .online { border-bottom: 0 !important; }
 
 /* Round avatars with the status as a ring (friends) or a dot (you),
    instead of Steam's thin bar beside the picture. Steam's own status
@@ -1692,3 +1692,52 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
     background: var(--lumen-layer) !important;
     background-image: none !important;
 }
+
+/* Friends list, rounder: the tab row and the Group Chats bar float as
+   rounded bars with a little margin, rows and group titles get rounded
+   hovers, game icons rounded corners. */
+.friendlist .socialTabSearchContainer { padding: 8px 8px 4px; box-sizing: border-box; }
+.friendlist .socialTabContainer,
+.friendlist .socialTabContainer .friendTab { box-sizing: border-box !important; max-width: 100%; }
+
+.friendlist .socialTabContainer .friendTab {
+    border: 1px solid var(--lumen-stroke) !important;
+    border-radius: var(--lumen-radius) !important;
+    background: var(--lumen-layer) !important;
+}
+
+.friendlist .friendsTabButtonsContainer > div,
+.friendlist .friendsTabButtonsContainer .searchIconButton { border-radius: 50% !important; }
+
+.friendlist .groupHeaderContainer {
+    margin: 2px 6px;
+    border-radius: var(--lumen-radius-sm);
+    transition: background var(--lumen-dur) ease;
+}
+
+.friendlist .groupHeaderContainer:hover { background: var(--lumen-card-hover); }
+
+.friendlist .friendGroup {
+    margin: 6px 0 0;
+    padding-top: 4px;
+}
+
+.friendlist .friend {
+    margin: 1px 6px !important;
+    border-radius: var(--lumen-radius) !important;
+}
+
+.friendlist .friend img.gameIcon { border-radius: 6px; }
+
+.friendlist .FriendsListChatSection { padding: 4px 8px 8px; background: var(--lumen-bg) !important; }
+
+.friendlist .chatSectionTitle {
+    border: 1px solid var(--lumen-stroke) !important;
+    border-radius: var(--lumen-radius) !important;
+    background: var(--lumen-layer) !important;
+}
+
+.friendlist .ChatRoomListContainerParent:not(.Collapsed) .chatSectionTitle { border-radius: var(--lumen-radius) var(--lumen-radius) 0 0 !important; }
+.friendlist .friendListFooter { background: transparent !important; }
+/* "In Game" has no header wrapper; line it up with the other group titles. */
+.friendlist .friendGroup > .groupName { margin-left: 6px; }
