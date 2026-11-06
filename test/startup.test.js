@@ -31,3 +31,13 @@ test("loading the script twice adds one loading screen", async () => {
     load(w, "js/startup.js");
     assert.strictEqual(w.document.querySelectorAll(".lumen-startup").length, 1);
 });
+
+test("a start on another page clears once the header has stood for a moment", async () => {
+    const w = client(`<div class="ContentFrame"></div>`);
+    load(w, "js/startup.js");
+    w.document.querySelector(".ContentFrame").innerHTML = `<div class="TopBar"></div>`;
+    await tick(30);
+    assert.ok(!w.document.querySelector(".lumen-startup").classList.contains("is-done"), "not right away");
+    await tick(2600);
+    assert.ok(w.document.querySelector(".lumen-startup")?.classList.contains("is-done") ?? true);
+});
