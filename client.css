@@ -1320,3 +1320,23 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
     position: absolute;
     inset: 0;
 }
+
+/* Achievements card at 100%: Steam pins its medal at the box's left edge
+   and expects the text to make room for it. The medal gets its own column,
+   centred on the left, with the text and bar beside it. */
+.AppDetailsMain .HighlightDiv.AllAchieved {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 64px;
+    padding-left: 76px !important;
+    box-sizing: border-box;
+}
+
+.AppDetailsMain .HighlightDiv.AllAchieved > svg {
+    left: 8px !important;
+    top: 50% !important;
+    width: 60px !important;
+    height: 60px !important;
+    transform: translateY(-50%);
+}
