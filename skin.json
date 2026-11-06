@@ -1,12 +1,11 @@
 {
     "name": "Lumen",
     "author": "Jakob",
-    "description": "A calm, dark Fluent-style theme with a cinematic store page: the trailer plays across the whole window behind the logo, price and buttons.",
+    "description": "A calm, dark theme with its own design and a cinematic store page: the trailer plays across the whole window behind the logo, price and buttons.",
     "version": "0.1.0",
     "tags": [
         "Dark",
         "Minimal",
-        "Fluent",
         "Cinematic"
     ],
     "RootColors": "root-colors.css",
