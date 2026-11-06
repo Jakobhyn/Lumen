@@ -26,7 +26,7 @@ jobs:
           mkdir -p build/Lumen
           git archive HEAD | tar -x -C build/Lumen
           cd build/Lumen
-          rm -rf tools test .github .gitignore .gitattributes .stylelintrc.json eslint.config.js package.json package-lock.json
+          rm -rf tools test .github .gitignore .gitattributes .stylelintrc.json eslint.config.js package.json package-lock.json CLAUDE.md
           cd ../..
           (cd build && zip -qr ../Lumen.zip Lumen)
           unzip -l Lumen.zip
