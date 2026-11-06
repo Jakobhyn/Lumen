@@ -1745,3 +1745,32 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
 .friendlist .friendListFooter { background: transparent !important; }
 /* "In Game" has no header wrapper; line it up with the other group titles. */
 .friendlist .friendGroup > .groupName { margin-left: 6px; }
+
+/* Friends search: Steam opens it in a grey-blue box inside the tab row.
+   The box goes away; the field is a rounded pill in the bar, accent on
+   focus. */
+.friendlist .tabSearchTransitionGroup > div {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    background: transparent !important;
+    background-image: none !important;
+}
+
+.friendlist .friendTab .friendSearchInput {
+    box-sizing: border-box;
+    height: 24px !important;
+    margin-top: 0 !important;
+    padding: 0 30px 0 12px !important;
+    border: 1px solid var(--lumen-stroke-strong) !important;
+    border-radius: 999px !important;
+    background: var(--lumen-bg) !important;
+    color: var(--lumen-text) !important;
+    font: 13px var(--lumen-font) !important;
+    outline: none !important;
+    box-shadow: none !important;
+    transition: border-color var(--lumen-dur) ease;
+}
+
+.friendlist .friendTab .friendSearchInput:focus { border-color: var(--lumen-accent) !important; }
+.friendlist .friendTab .friendSearchInput::placeholder { color: var(--lumen-text-3); }
