@@ -42,6 +42,7 @@ A calm, dark Fluent-style theme for the Steam client, built for [Millennium](htt
 | `store/` | Cinematic store page (hero, facts row, media strip, viewer) and store browsing (front page carousel, game hover box) |
 | `js/library-trailer.js` | Store trailer behind the library game page |
 | `js/library-activity.js` | Puts each activity entry's date on its card |
+| `js/achievement-hover.js` | Achievement details beside the pointer instead of over it |
 | `js/library-home.js` | "Continue playing" banner on the library home |
 | `js/library-more.js` | "More" (down to the content) and "Top" (back up) on the game page |
 | `js/header-search.js` | The search field in the compact header |

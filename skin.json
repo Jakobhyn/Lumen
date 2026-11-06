@@ -198,6 +198,10 @@
             "TargetJs": "js/library-activity.js"
         },
         {
+            "MatchRegexString": "^(Steam|Steam Games List)$",
+            "TargetJs": "js/achievement-hover.js"
+        },
+        {
             "MatchRegexString": "^(Steam|Steam Games List|Friends List|.* Menu|Menu|.*Supernav)$",
             "TargetCss": "client.css"
         },
