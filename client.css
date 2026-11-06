@@ -1774,3 +1774,59 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
 
 .friendlist .friendTab .friendSearchInput:focus { border-color: var(--lumen-accent) !important; }
 .friendlist .friendTab .friendSearchInput::placeholder { color: var(--lumen-text-3); }
+
+/* ---- Startup loading screen (js/startup.js) ---- */
+
+@keyframes lumen-startup-spin { to { transform: rotate(360deg); } }
+
+@keyframes lumen-startup-bar {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(250%); }
+}
+
+.lumen-startup {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    background: var(--lumen-bg);
+    transition: opacity 400ms ease;
+}
+
+.lumen-startup.is-done { opacity: 0; pointer-events: none; }
+
+/* A Fluent progress ring: an accent arc turning on a faint track */
+.lumen-startup__ring {
+    width: 44px;
+    height: 44px;
+    border: 3px solid var(--lumen-stroke-strong);
+    border-top-color: var(--lumen-accent);
+    border-radius: 50%;
+    animation: lumen-startup-spin 900ms linear infinite;
+}
+
+.lumen-startup__bar {
+    width: 160px;
+    height: 3px;
+    border-radius: 999px;
+    background: var(--lumen-stroke);
+    overflow: hidden;
+}
+
+.lumen-startup__bar span {
+    display: block;
+    width: 40%;
+    height: 100%;
+    border-radius: 999px;
+    background: var(--lumen-accent);
+    animation: lumen-startup-bar 1.4s var(--lumen-ease) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lumen-startup__ring,
+    .lumen-startup__bar span { animation-duration: 3s; }
+}

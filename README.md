@@ -7,6 +7,7 @@ A calm, dark Fluent-style theme for the Steam client, built for [Millennium](htt
 - **Library home**: a large "Continue playing" banner with the game you played last (art, logo, playtime, Play), and What's New as Fluent cards.
 - **Downloads page**: the current download as a hero card, the queue as cards, and a "Smallest first" button that queues every scheduled update and sorts the queue by download size.
 - **Friends list**: a dark header, a quiet Friends tab row, plain group titles with hairlines and rounded hover rows instead of Steam's blue-grey bars.
+- **Sign-in and startup**: a calm account chooser with round avatars, and a Lumen loading screen while Steam starts.
 - **Floating bottom buttons**: Steam's bottom bar becomes three round buttons side by side in the bottom right corner: Add a Game, Downloads (a progress pill while downloading) and Friends & Chat.
 - **Store browsing**: the front page carousel in Lumen colors, and a wider game hover box with the game's header art and all its tags.
 - **One-row header**: back/forward, the Steam menu as a logo, the Store/Library/Community/profile tabs, a game search in the middle, and a plain bell and avatar on the right.
@@ -26,6 +27,7 @@ A calm, dark Fluent-style theme for the Steam client, built for [Millennium](htt
 | Colors | Accent | Windows (default), Sky, Violet, Mint, Amber, Rose, Custom |
 | Window | Header | Compact (default), Classic |
 | Window | Bottom bar | Floating (default), Classic |
+| Window | Startup screen | On (default), Off |
 | Library | Library page | Cinematic (default), Classic |
 | Library | Library trailer | On (default), Off |
 | Library | Continue banner | On (default), Off |
@@ -38,6 +40,7 @@ A calm, dark Fluent-style theme for the Steam client, built for [Millennium](htt
 | `skin.json` | Millennium manifest: patches and settings |
 | `tokens.css` | Shared design tokens (colors, fonts, radii) |
 | `root-colors.css` | Colors editable in the Millennium settings |
+| `signin.css` | The "Sign in to Steam" window: account chooser and sign-in form |
 | `client.css` | Client windows: frame, library, downloads, menus, friends |
 | `webkit.css` | Store and community pages |
 | `shared/dash.js` | Tiny DASH player for Steam's trailers, used by store and library |
@@ -46,6 +49,7 @@ A calm, dark Fluent-style theme for the Steam client, built for [Millennium](htt
 | `js/library-activity.js` | Puts each activity entry's date on its card |
 | `js/achievement-hover.js` | Achievement details beside the pointer instead of over it |
 | `js/downloads-sort.js` | "Smallest first" on the downloads page: queue every scheduled update, smallest download first |
+| `js/startup.js` | Calm loading screen while the Steam window starts |
 | `js/library-home.js` | "Continue playing" banner on the library home |
 | `js/library-more.js` | "More" (down to the content) and "Top" (back up) on the game page |
 | `js/header-search.js` | The search field in the compact header |
