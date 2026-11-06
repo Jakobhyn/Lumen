@@ -6,6 +6,7 @@ A calm, dark Fluent-style theme for the Steam client, built for [Millennium](htt
 - **Cinematic library page**: the game fills the first screen with its store trailer (art as poster), a large logo and a bigger play bar; a "More" button glides down to activity and achievements, shown as Fluent-style cards.
 - **Library home**: a large "Continue playing" banner with the game you played last (art, logo, playtime, Play), and What's New as Fluent cards.
 - **Downloads page**: the current download as a hero card, the queue as cards, and a "Smallest first" button that queues every scheduled update and sorts the queue by download size.
+- **Friends list**: a dark header, a quiet Friends tab row, plain group titles with hairlines and rounded hover rows instead of Steam's blue-grey bars.
 - **Floating bottom buttons**: Steam's bottom bar becomes three round buttons side by side in the bottom right corner: Add a Game, Downloads (a progress pill while downloading) and Friends & Chat.
 - **Store browsing**: the front page carousel in Lumen colors, and a wider game hover box with the game's header art and all its tags.
 - **One-row header**: back/forward, the Steam menu as a logo, the Store/Library/Community/profile tabs, a game search in the middle, and a plain bell and avatar on the right.
