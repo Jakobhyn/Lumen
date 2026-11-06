@@ -74,9 +74,8 @@
         button.innerHTML = `${icon}<span></span>`;
         button.querySelector("span").textContent = t.label;
         button.addEventListener("click", () => run(button));
-        const rule = header.querySelector(".Rule");
-        if (rule) rule.after(button);
-        else header.append(button);
+        // At the end of the header, right of Steam's "Auto-updates enabled".
+        header.append(button);
     }
 
     let queued = false;

@@ -1445,6 +1445,9 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
     font: 600 18px/27px var(--lumen-font-display) !important;
 }
 
+/* Title and count chip on one centre line */
+.DownloadsPage .SectionTitle .TitleAndCount { display: flex !important; align-items: center; }
+
 .DownloadsPage .SectionTitle .Count {
     margin-left: 6px;
     padding: 0 8px;
@@ -1510,25 +1513,30 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
     color: var(--lumen-text-3) !important;
 }
 
-/* "Smallest first" in the Up Next header (js/downloads-sort.js) */
+/* "Smallest first" in the Up Next header (js/downloads-sort.js): a small
+   accent-tinted pill at the far right of the header. */
 .lumen-sort-queue {
     display: inline-flex;
     align-items: center;
     gap: 6px;
     flex: none;
-    height: 28px;
-    margin: 0 12px;
-    padding: 0 12px;
-    border: 1px solid var(--lumen-stroke-strong);
+    height: 30px;
+    margin-left: 14px;
+    padding: 0 14px 0 12px;
+    border: 1px solid color-mix(in srgb, var(--lumen-accent) 40%, transparent);
     border-radius: 999px;
-    background: var(--lumen-card);
+    background: color-mix(in srgb, var(--lumen-accent) 12%, transparent);
     color: var(--lumen-text);
     font: 600 12px var(--lumen-font);
     cursor: pointer;
-    transition: background var(--lumen-dur) ease, transform var(--lumen-dur) var(--lumen-ease);
+    transition: background var(--lumen-dur) ease, border-color var(--lumen-dur) ease, transform var(--lumen-dur) var(--lumen-ease);
 }
 
-.lumen-sort-queue:hover { background: var(--lumen-card-hover); }
+.lumen-sort-queue:hover {
+    border-color: var(--lumen-accent);
+    background: color-mix(in srgb, var(--lumen-accent) 22%, transparent);
+}
+
 .lumen-sort-queue:active { transform: scale(0.97); }
 .lumen-sort-queue:disabled { opacity: 0.5; cursor: default; }
 .lumen-sort-queue svg { width: 14px; height: 14px; color: var(--lumen-accent); }

@@ -41,13 +41,14 @@ function client({ queued = [], scheduled = [], language = "english" } = {}) {
     return { w, calls };
 }
 
-test("adds the button to the Up Next header, after the rule", async () => {
+test("adds the button at the end of the Up Next header, right of Auto-updates", async () => {
     const { w } = client({ queued: [transfer(1, 5e9, 0, 0)], scheduled: [transfer(2, 1e6)] });
     load(w, "js/downloads-sort.js");
     await tick(30);
     const buttons = w.document.querySelectorAll(".lumen-sort-queue");
     assert.strictEqual(buttons.length, 1);
-    assert.ok(buttons[0].previousElementSibling.classList.contains("Rule"));
+    assert.ok(buttons[0].previousElementSibling.classList.contains("AutoUpdates"));
+    assert.strictEqual(buttons[0].nextElementSibling, null);
     assert.strictEqual(buttons[0].closest(".Section"), w.document.querySelector(".Section"));
     assert.strictEqual(buttons[0].textContent, "Smallest first");
 });
