@@ -1340,3 +1340,170 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
     height: 60px !important;
     transform: translateY(-50%);
 }
+
+/* ---- Downloads page ----
+   The current download is a rounded hero card with an accent graph and
+   progress bar; the queues below are quiet cards with Lumen type. */
+
+.DownloadsPage { background: var(--lumen-bg) !important; }
+.DownloadsPage > .TopBar { background: transparent !important; }
+
+.DownloadsPage .TopSection {
+    position: relative;
+    margin: 16px 24px 0;
+}
+
+.DownloadsPage .TopSection .SectionItem.Active {
+    border: 1px solid var(--lumen-stroke);
+    border-radius: var(--lumen-radius);
+    background: var(--lumen-layer) !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+}
+
+.DownloadsPage .TopSection .HoverRing { display: none; }
+
+/* Steam's blue network bars and legend in the accent */
+.DownloadsPage .DownloadGraph .GraphBarDownload { fill: color-mix(in srgb, var(--lumen-accent) 55%, transparent) !important; }
+.DownloadsPage .LegendBox.Network svg { color: var(--lumen-accent) !important; }
+
+.DownloadsPage .DownloadGraphStats .LegendText,
+.DownloadsPage .Throttle {
+    color: var(--lumen-text-3) !important;
+    font: 600 11px/16px var(--lumen-font) !important;
+    letter-spacing: 0.02em !important;
+    text-transform: none !important;
+}
+
+.DownloadsPage .DownloadGraphStats .Figure { color: var(--lumen-text) !important; font: 600 15px/20px var(--lumen-font-display) !important; }
+.DownloadsPage .Throttle .ThrottleValue { color: var(--lumen-text-2) !important; }
+
+/* Progress: a thicker rounded bar, accent while it runs, dimmed when paused */
+.DownloadsPage .ProgressPercentageAndBar .LabelRow,
+.DownloadsPage .ProgressPercentageAndBar .LabelRow * {
+    font-family: var(--lumen-font) !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+}
+
+.DownloadsPage .ProgressPercentageAndBar .InProgress { color: var(--lumen-text-2) !important; font-size: 13px !important; }
+.DownloadsPage .ProgressPercentageAndBar .Progress { color: var(--lumen-text) !important; font: 600 15px var(--lumen-font-display) !important; }
+
+.DownloadsPage .DetailsProgressContainer.ProgressBar {
+    height: 6px !important;
+    border-radius: 999px;
+    background: var(--lumen-stroke-strong) !important;
+    overflow: hidden;
+}
+
+.DownloadsPage .DetailsProgressBar {
+    border-radius: 999px;
+    background: var(--lumen-accent) !important;
+    background-image: none !important;
+}
+
+.DownloadsPage .DetailsProgressContainer.NotActive .DetailsProgressBar { opacity: 0.5; }
+
+/* Round buttons; the current download's play / pause is the accent one */
+.DownloadsPage .SectionItemButtons .DialogButton,
+.DownloadsPage .TopSection > .SettingsButton .DialogButton {
+    display: grid !important;
+    place-items: center;
+    width: 36px !important;
+    min-width: 0 !important;
+    height: 36px !important;
+    padding: 0 !important;
+    border: 1px solid var(--lumen-stroke) !important;
+    border-radius: 50% !important;
+    background: var(--lumen-card) !important;
+    transition: background var(--lumen-dur) ease, transform var(--lumen-dur) var(--lumen-ease);
+}
+
+.DownloadsPage .SectionItemButtons .DialogButton:hover,
+.DownloadsPage .TopSection > .SettingsButton .DialogButton:hover { background: var(--lumen-card-hover) !important; }
+
+.DownloadsPage .SectionItemButtons .DialogButton:active { transform: scale(0.94); }
+.DownloadsPage .SectionItemButtons .DialogButton svg,
+.DownloadsPage .TopSection > .SettingsButton .DialogButton svg { width: 16px !important; height: 16px !important; }
+
+.DownloadsPage .TopSection .SectionItemButtons .DialogButton:not(.RemoveFromQueue) {
+    border-color: transparent !important;
+    background: var(--lumen-accent) !important;
+    color: var(--lumen-on-accent) !important;
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--lumen-accent) 35%, transparent);
+}
+
+.DownloadsPage .TopSection .SectionItemButtons .DialogButton:not(.RemoveFromQueue):hover { filter: brightness(1.12); }
+
+.DownloadsPage .TopSection > .SettingsButton { top: 12px !important; right: 12px !important; }
+
+/* Section headers: "Up Next (0)", "Scheduled (16)" */
+.DownloadsPage .SectionTitle .Title {
+    color: var(--lumen-text) !important;
+    font: 600 18px/27px var(--lumen-font-display) !important;
+}
+
+.DownloadsPage .SectionTitle .Count {
+    margin-left: 6px;
+    padding: 0 8px;
+    border-radius: 999px;
+    background: var(--lumen-card);
+    color: var(--lumen-text-3) !important;
+    font: 600 12px/20px var(--lumen-font) !important;
+}
+
+.DownloadsPage .SectionTitle .Rule { background: var(--lumen-stroke) !important; height: 1px !important; }
+
+/* Queue rows as quiet cards */
+.DownloadsPage .SectionItemWrapper .SectionItem {
+    margin: 4px 0;
+    border: 1px solid transparent;
+    border-radius: var(--lumen-radius);
+    background: var(--lumen-card) !important;
+    transition: background var(--lumen-dur) ease, border-color var(--lumen-dur) ease;
+}
+
+.DownloadsPage .SectionItemWrapper .SectionItem:hover {
+    border-color: var(--lumen-stroke);
+    background: var(--lumen-card-hover) !important;
+}
+
+.DownloadsPage .SectionItemWrapper .AppPortrait .LibraryItemBox {
+    border-radius: var(--lumen-radius-sm);
+    overflow: hidden;
+}
+
+.DownloadsPage .SectionItemWrapper .DownloadItemName .Name {
+    color: var(--lumen-text) !important;
+    font: 600 15px var(--lumen-font) !important;
+}
+
+.DownloadsPage .DetailsAndType .ProgressDetails,
+.DownloadsPage .DetailsAndType .PatchNotes {
+    font: 12px var(--lumen-font) !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+}
+
+.DownloadsPage .DetailsAndType .ProgressDetails { color: var(--lumen-text-3) !important; }
+.DownloadsPage .DetailsAndType .PatchNotes { color: var(--lumen-accent) !important; }
+
+/* Scheduled time as a quiet pill */
+.DownloadsPage .ItemListWrapper .SectionItemStatus.Right > div:not(.State) {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--lumen-card);
+    color: var(--lumen-text-2) !important;
+    font: 600 11px/16px var(--lumen-font) !important;
+    letter-spacing: 0.02em !important;
+    text-transform: none !important;
+}
+
+/* Empty queue */
+.DownloadsPage .EmptyTransfers {
+    padding: 18px 20px;
+    border: 1px dashed var(--lumen-stroke-strong);
+    border-radius: var(--lumen-radius);
+    color: var(--lumen-text-3) !important;
+}
