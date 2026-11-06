@@ -1548,3 +1548,107 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
 .lumen-sort-queue:active { transform: scale(0.97); }
 .lumen-sort-queue:disabled { opacity: 0.5; cursor: default; }
 .lumen-sort-queue svg { width: 14px; height: 14px; color: var(--lumen-accent); }
+
+/* ---- Friends list window ----
+   Steam's blue-grey bars and gradients become Lumen surfaces: a dark
+   header, a quiet "Friends" tab row, plain group titles with a hairline,
+   rounded hover rows and a matching Group Chats bar. Status colours (in
+   game green, online blue) stay, since they carry meaning. */
+
+.friendlist .title-area-highlight { display: none !important; }
+.friendlist .titleBarContainer {
+    background: var(--lumen-bg-deep) !important;
+    box-shadow: none !important;
+}
+.friendlist .titleBarContainer .online { border-bottom: 1px solid var(--lumen-stroke) !important; }
+
+.friendlist .avatarHolder img.avatar,
+.friendlist .avatarHolder .avatar {
+    border-radius: var(--lumen-radius-sm) !important;
+    border-color: transparent !important;
+}
+
+/* "Friends" tab row with search and add buttons */
+.friendlist .socialTabContainer .friendTab {
+    background: var(--lumen-bg-deep) !important;
+    background-image: none !important;
+    border-bottom: 1px solid var(--lumen-stroke);
+}
+
+.friendlist .friendTab .tabLabel {
+    color: var(--lumen-text) !important;
+    font: 600 13px var(--lumen-font) !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+}
+
+.friendlist .friendsTabButtonsContainer > div,
+.friendlist .friendsTabButtonsContainer .searchIconButton {
+    border-radius: var(--lumen-radius-sm);
+    transition: background var(--lumen-dur) ease;
+}
+
+.friendlist .friendsTabButtonsContainer > div:hover { background: var(--lumen-card-hover) !important; }
+.friendlist .friendsTabButtonsContainer svg { color: var(--lumen-text-2) !important; fill: currentColor; }
+
+/* The list itself: plain background, no inset shadows */
+.friendlist .friendlistListContainer {
+    background: var(--lumen-bg) !important;
+    background-image: none !important;
+}
+
+.friendlist .FriendListInsetShadowTop,
+.friendlist .FriendListInsetShadowBottom { display: none !important; }
+
+/* Groups: "In Game", "Online Friends", "Offline" with a hairline above */
+.friendlist .friendGroup {
+    background: none !important;
+    background-image: none !important;
+    border-top: 1px solid var(--lumen-stroke) !important;
+}
+
+.friendlist .friendGroup:first-child { border-top: 0 !important; }
+
+.friendlist .friendGroup .groupName {
+    color: var(--lumen-text-2) !important;
+    font: 600 13px var(--lumen-font) !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+}
+
+.friendlist .friendGroup .groupName .groupCount,
+.friendlist .friendGroup .groupName [class*="Count"] { color: var(--lumen-text-3) !important; }
+
+/* Friend rows */
+.friendlist .friend {
+    margin: 0 6px;
+    border-radius: var(--lumen-radius-sm);
+    transition: background var(--lumen-dur) ease;
+}
+
+/* Group Chats bar and footer */
+.friendlist .chatSectionTitle {
+    background: var(--lumen-bg-deep) !important;
+    background-image: none !important;
+    border-top: 1px solid var(--lumen-stroke);
+    color: var(--lumen-text) !important;
+    font: 600 13px var(--lumen-font) !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+}
+
+.friendlist .chatSectionTitle .groupChatSectionTitle {
+    font: inherit !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+}
+
+.friendlist .chatRoomListContainer { background: var(--lumen-bg) !important; background-image: none !important; }
+.friendlist .friendListFooter { background: var(--lumen-bg-deep) !important; }
+
+.friendlist .ChatRoomGroupAvatar {
+    border-color: transparent !important;
+    border-radius: var(--lumen-radius-sm) !important;
+    background: var(--lumen-layer) !important;
+    background-image: none !important;
+}
