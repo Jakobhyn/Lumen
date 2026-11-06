@@ -11,6 +11,7 @@ A calm, dark Fluent-style theme for the Steam client, built for [Millennium](htt
 - **Store browsing**: the front page carousel in Lumen colors, and a wider game hover box with the game's header art and all its tags.
 - **One-row header**: back/forward, the Steam menu as a logo, the Store/Library/Community/profile tabs, a game search in the middle, and a plain bell and avatar on the right.
 - **Neutral greys** instead of Steam's blue tones, Segoe UI Variable, rounded corners and Fluent-style buttons and menus.
+- **Smooth motion**: pages glide in, menus and dialogs open with a small scale, hovers ease; off with the Motion setting or your system's reduced-motion preference.
 - **Accent color** that follows Windows, one of the presets, or any color you pick.
 
 ## Install
@@ -26,6 +27,7 @@ A calm, dark Fluent-style theme for the Steam client, built for [Millennium](htt
 | Colors | Accent | Windows (default), Sky, Violet, Mint, Amber, Rose, Custom |
 | Window | Header | Compact (default), Classic |
 | Window | Bottom bar | Floating (default), Classic |
+| Window | Motion | Smooth (default), Off |
 | Library | Library page | Cinematic (default), Classic |
 | Library | Library trailer | On (default), Off |
 | Library | Continue banner | On (default), Off |
@@ -46,6 +48,7 @@ A calm, dark Fluent-style theme for the Steam client, built for [Millennium](htt
 | `js/library-activity.js` | Puts each activity entry's date on its card |
 | `js/achievement-hover.js` | Achievement details beside the pointer instead of over it |
 | `js/downloads-sort.js` | "Smallest first" on the downloads page: queue every scheduled update, smallest download first |
+| `js/motion.js` | Restarts the page glide when the game page switches games |
 | `js/library-home.js` | "Continue playing" banner on the library home |
 | `js/library-more.js` | "More" (down to the content) and "Top" (back up) on the game page |
 | `js/header-search.js` | The search field in the compact header |
