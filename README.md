@@ -1,17 +1,17 @@
 # Lumen
 
-A calm, dark Fluent-style theme for the Steam client, built for [Millennium](https://steambrew.app).
+Lumen is a calm, dark theme for the Steam client with its own design: quiet surfaces, soft rounded shapes, one accent color and cinematic game pages. Built for [Millennium](https://steambrew.app).
 
 - **Cinematic store page**: a game's trailer plays muted across the whole window, with the logo, short description, price and buttons on top. Below it sit a row with release date, developer, publisher, tags and the community hub, and a media strip whose trailers and screenshots open in a full-window viewer (trailers with sound).
-- **Cinematic library page**: the game fills the first screen with its store trailer (art as poster), a large logo and a bigger play bar; a "More" button glides down to activity and achievements, shown as Fluent-style cards.
-- **Library home**: a large "Continue playing" banner with the game you played last (art, logo, playtime, Play), and What's New as Fluent cards.
+- **Cinematic library page**: the game fills the first screen with its store trailer (art as poster), a large logo and a bigger play bar; a "More" button glides down to activity and achievements, shown as rounded cards.
+- **Library home**: a large "Continue playing" banner with the game you played last (art, logo, playtime, Play), and What's New as rounded cards.
 - **Downloads page**: the current download as a hero card, the queue as cards, and a "Smallest first" button that queues every scheduled update and sorts the queue by download size.
 - **Friends list**: a dark header, a quiet Friends tab row, plain group titles with hairlines and rounded hover rows instead of Steam's blue-grey bars.
 - **Sign-in and startup**: a calm account chooser with round avatars, and a Lumen loading screen while Steam starts.
 - **Floating bottom buttons**: Steam's bottom bar becomes three round buttons side by side in the bottom right corner: Add a Game, Downloads (a progress pill while downloading) and Friends & Chat.
 - **Store browsing**: the front page carousel in Lumen colors, and a wider game hover box with the game's header art and all its tags.
 - **One-row header**: back/forward, the Steam menu as a logo, the Store/Library/Community/profile tabs, a game search in the middle, and a plain bell and avatar on the right.
-- **Neutral greys** instead of Steam's blue tones, Segoe UI Variable, rounded corners and Fluent-style buttons and menus.
+- **Neutral greys** instead of Steam's blue tones, Segoe UI Variable, rounded corners and Lumen's own buttons and menus.
 - **Accent color** that follows Windows, one of the presets, or any color you pick.
 
 ## Install
