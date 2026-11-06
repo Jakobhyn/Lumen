@@ -1250,3 +1250,73 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
     position: absolute;
     inset: 0;
 }
+
+/* ---- Game page: Post-Game Summary ----
+   Steam shows it as a grey uppercase caption over a separate box. Lumen
+   makes it one card like the sections below, with the caption inside. */
+
+/* Steam indents the summary's column by 10px; line it up with the cards below. */
+.AppDetailsMain .Spotlights.SpotlightLeftColumn { padding-left: 0 !important; }
+
+.AppDetailsMain .GamePlaySummaryContainer {
+    padding: 14px 20px 16px;
+    border: 1px solid var(--lumen-stroke);
+    border-radius: var(--lumen-radius);
+    background: var(--lumen-card);
+    box-sizing: border-box;
+}
+
+.AppDetailsMain .GamePlaySummaryHeader {
+    color: var(--lumen-text) !important;
+    font: 600 16px/28px var(--lumen-font-display) !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+}
+
+.AppDetailsMain .GamePlaySummaryContainer .PageableCloseButton {
+    display: grid;
+    place-items: center;
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 50%;
+    color: var(--lumen-text-3);
+    transition: background var(--lumen-dur) ease, color var(--lumen-dur) ease;
+}
+
+.AppDetailsMain .GamePlaySummaryContainer .PageableCloseButton:hover { background: var(--lumen-card-hover); color: var(--lumen-text); }
+.AppDetailsMain .GamePlaySummaryContainer .PageableCloseButton svg { width: 12px; height: 12px; }
+
+/* The box inside the card goes away; the items sit on the card itself. */
+.AppDetailsMain .SummaryCarouselContainer.BoxCarousel {
+    margin-top: 6px;
+    background: none !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Steam's inset shadow drawn over the box */
+.AppDetailsMain .SummaryCarouselContainer.BoxCarousel::after { display: none !important; }
+
+.AppDetailsMain .GamePlaySummaryContainer .EventHeaderBlock {
+    color: var(--lumen-text-3) !important;
+    font: 600 12px/20px var(--lumen-font) !important;
+}
+
+.AppDetailsMain .GamePlaySummaryContainer .TypeSeparator { background: var(--lumen-stroke-strong) !important; }
+
+/* Each achievement as a quiet row with a hover, its details on the whole row. */
+.AppDetailsMain .SummaryAchievement {
+    position: relative;
+    padding: 6px 8px;
+    border-radius: var(--lumen-radius-sm);
+    transition: background var(--lumen-dur) ease;
+}
+
+.AppDetailsMain .SummaryAchievement:hover { background: var(--lumen-card-hover); }
+
+.AppDetailsMain .SummaryAchievement .AchievementHoverContainer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+}
