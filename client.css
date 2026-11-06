@@ -1562,6 +1562,10 @@ div:has(> .ScrollToTopButton) { overflow: visible !important; }
 }
 .friendlist .titleBarContainer .online { border-bottom: 0 !important; }
 
+/* Your picture and name sit a little further in, closer to the "Friends"
+   label below. */
+.friendlist .titleBarContainer .online .AvatarAndUser { padding-left: 18px !important; box-sizing: border-box; }
+
 /* Round avatars with the status as a ring (friends) or a dot (you),
    instead of Steam's thin bar beside the picture. Steam's own status
    colours: in game green, online blue, offline grey; away is dimmed. */
