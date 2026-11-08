@@ -727,10 +727,27 @@ body {
     border-radius: var(--lumen-radius) !important;
 }
 
-.AppDetailsMain .ReviewContainer,
+/* "Would you recommend this game?" prompt: Steam nests
+   ReviewContainer > Inner > RatingContainer; only the outer box is the card,
+   so the content does not draw a second, narrower box inside it.
+   (RatingContainer on its own is the rating row in the activity feed.) */
 .AppDetailsMain .RatingContainer {
     background: var(--lumen-card-hover) !important;
     border-radius: var(--lumen-radius);
+}
+
+.AppDetailsMain .ReviewContainer {
+    background: var(--lumen-card) !important;
+    background-image: none !important;
+    border: 1px solid var(--lumen-stroke);
+    border-radius: var(--lumen-radius) !important;
+}
+
+.AppDetailsMain .ReviewContainer .Inner,
+.AppDetailsMain .ReviewContainer .RatingContainer {
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
 }
 
 .AppDetailsMain .ReviewThumbButton {
